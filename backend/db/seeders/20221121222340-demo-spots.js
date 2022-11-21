@@ -77,7 +77,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-
-    })
+      name: { [Op.in]: ['6Bed/4Bath', '1Bed/1Bath', '4Bed/2Bath', '5Bed/4Bath', '4Bed/4Bath'] }
+    }, {})
   }
 };
