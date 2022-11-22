@@ -12,13 +12,13 @@ module.exports = {
       {
         spotId: 1,
         userId: 1,
-        startDate: Date.now(),
+        startDate: new Date(2022, 11, 22),
         endDate: new Date(2022, 12, 1)
       },
       {
         spotId: 2,
         userId: 1,
-        startDate: new Date(),
+        startDate: new Date(2022, 11, 22),
         endDate: new Date(2022, 12, 2)
       },
       {
@@ -30,13 +30,13 @@ module.exports = {
       {
         spotId: 4,
         userId: 2,
-        startDate: Date.now(),
+        startDate: new Date(2022, 11, 22),
         endDate: new Date(2022, 12, 4)
       },
       {
         spotId: 3,
         userId: 3,
-        startDate: Date.now(),
+        startDate: new Date(2022, 11, 22),
         endDate: new Date(2022, 12, 5)
       }
     ])
