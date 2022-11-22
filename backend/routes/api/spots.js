@@ -56,19 +56,43 @@ router.get('/current', restoreUser, async (req, res) => {
     }
     const spots = await Spot.findAll({
         where,
-        include: {
-            model: SpotImage,
-            where: {
-                preview: true
+        include: [
+            {
+                model: SpotImage,
+                where: {
+                    preview: true
+                },
+                attributes: {
+                    exclude: ['id', 'spotId', 'createdAt', 'updatedAt']
+                }
             },
-            attributes: {
-                exclude: ['id', 'spotId', 'createdAt', 'updatedAt', 'preview']
+            {
+                model: Review,
             }
-        }
+        ]
     })
-
+    const Spots = [];
+    spots.forEach(spot => {
+        const newSpot = spot.toJSON();
+        Spots.push(newSpot)
+    })
+    Spots.forEach((spot) => {
+        spot.SpotImages.forEach( (image) => {
+            if (image.preview === true){
+                spot.previewImage = image.url
+            }
+        })
+        delete spot.SpotImages
+        let scores = 0
+        spot.Reviews.forEach(review => {
+            scores += review.stars
+        })
+        const stars = scores/spot.Reviews.length
+        spot.avgRating = stars
+        delete spot.Reviews
+    })
     return res.json({
-        spots
+        Spots
     })
 })
 
