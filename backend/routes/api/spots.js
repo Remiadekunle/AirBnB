@@ -96,4 +96,51 @@ router.get('/current', restoreUser, async (req, res) => {
     })
 })
 
+router.get('/:spotId', async(req, res, next) => {
+    const id = req.params.spotId
+    const spot = await Spot.findOne({
+        where: {
+            id
+        },
+        include: [
+            {
+                model: Review,
+            },
+            {
+                model: SpotImage,
+                attributes: {
+                    exclude: ['spotId', 'createdAt', 'updatedAt']
+                }
+            },
+            {
+                model: User,
+                attributes: {
+                    exclude: ['username', 'hashedPassword', 'createdAt', 'updatedAt', 'email']
+                }
+            }
+        ]
+    })
+
+    if (!spot) {
+        const err = new Error('Spot couldn\'t be found');
+        err.statusCode = 404;
+        err.message = 'Spot couldn\'t be found';
+        return next(err);
+    }
+    const newSpot = spot.toJSON();
+    newSpot.numReviews = newSpot.Reviews.length
+    let scores = 0
+    newSpot.Reviews.forEach(review => {
+        scores += review.stars
+    })
+    const stars = scores/spot.Reviews.length
+    newSpot.avgRating = stars
+    delete newSpot.Reviews
+    newSpot.Owner = newSpot.User
+    delete newSpot.User
+
+
+    return res.json(newSpot)
+})
+
 module.exports = router;
