@@ -54,6 +54,6 @@ module.exports = {
   },
   down: async(queryInterface, Sequelize) => {
     options.tableName = 'Reviews'
-    return queryInterface.dropTable('Reviews', options);
+    return queryInterface.dropTable(options, options);
   }
 };
