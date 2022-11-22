@@ -40,6 +40,7 @@ module.exports = {
     }, options);
   },
   down: async(queryInterface, Sequelize) => {
+    options.tableName = 'ReviewImages'
     return queryInterface.dropTable('ReviewImages', options);
   }
 };
