@@ -178,9 +178,9 @@ router.post('/', requireAuth, async(req, res, next) => {
         errorMessages.price = "Price per day is required";
     }
 
-    if (Object.values(errorMessages)){
+    if (Object.values(errorMessages).length > 0){
         const err = new Error('Please enter all required information');
-        err.statusCode = 400;
+        err.status = 400;
         err.errors = errorMessages
         return next(err)
     }
@@ -205,10 +205,10 @@ router.post('/:spotId/images', async(req, res, next) => {
     const { user } = req;
     const id = parseInt(req.params.spotId)
     const { url, preview} = req.body;
-    console.log(id)
+    console.log('hiiiiiiiiii',typeof id)
     const spot = await Spot.findOne({
         where: {
-            ownerId: id
+            id
         },
         include: {
             model: User
@@ -238,5 +238,3 @@ router.post('/:spotId/images', async(req, res, next) => {
 })
 
 module.exports = router;
-
-

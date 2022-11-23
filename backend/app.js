@@ -62,12 +62,13 @@ app.use((err, _req, _res, next) => {
 
 app.use((err, _req, res, _next) => {
     res.status(err.status || 500);
+    if (err.name === 'SequelizeUniqueConstraintError' ) err.status = 403
     console.error(err);
     res.json({
       title: err.title || 'Server Error',
       message: err.message,
       errors: err.errors,
-      statusCode: err.statusCode || 404,
+      statusCode: err.status,
       stack: isProduction ? null : err.stack
     });
 });
