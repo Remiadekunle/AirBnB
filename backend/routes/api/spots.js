@@ -1,8 +1,9 @@
 const express = require('express')
-const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, requireAuth, restoreUser, requireProperAuth } = require('../../utils/auth');
 const { Spot, User, SpotImage, Review, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { response } = require('../../app');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -143,4 +144,99 @@ router.get('/:spotId', async(req, res, next) => {
     return res.json(newSpot)
 })
 
+router.post('/', requireAuth, async(req, res, next) => {
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+
+    const { user } = req;
+    const id = user.id
+    const errorMessages = {}
+    if (!address){
+        errorMessages.address = 'Street address is required';
+    }
+    if (!city){
+        errorMessages.city = "City is required";
+    }
+    if (!state){
+        errorMessages.state = "State is required";
+    }
+    if (!country){
+        errorMessages.country = "Country is required";
+    }
+    if (!lat){
+        errorMessages.lat = "Latitude is not valid";
+    }
+    if (!lng){
+        errorMessages.lng = "Longitude is not valid";
+    }
+    if (!name){
+        errorMessages.name = "Name must be less than 50 characters";
+    }
+    if (!description){
+        errorMessages.description = "Description is required";
+    }
+    if (!price){
+        errorMessages.price = "Price per day is required";
+    }
+
+    if (Object.values(errorMessages)){
+        const err = new Error('Please enter all required information');
+        err.statusCode = 400;
+        err.errors = errorMessages
+        return next(err)
+    }
+
+    const newSpot = await Spot.create({
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+        ownerId: id
+    })
+
+    res.json(newSpot)
+})
+
+router.post('/:spotId/images', async(req, res, next) => {
+    const { user } = req;
+    const id = parseInt(req.params.spotId)
+    const { url, preview} = req.body;
+    console.log(id)
+    const spot = await Spot.findOne({
+        where: {
+            ownerId: id
+        },
+        include: {
+            model: User
+        }
+    })
+    if (!spot){
+        const err = new Error('Spot couldn\'t be found');
+        err.statusCode = 404;
+        err.message = 'Spot couldn\'t be found';
+        return next(err);
+    }
+
+    if (user.id !== spot.User.id){
+        requireProperAuth(req, res, next);
+    }
+
+    const newImage = await SpotImage.create({
+        url,
+        preview,
+        spotId: id
+    })
+    const image = newImage.toJSON();
+    delete image.updatedAt;
+    delete image.createddAt;
+    delete image.spotId;
+    res.json(image);
+})
+
 module.exports = router;
+
+
