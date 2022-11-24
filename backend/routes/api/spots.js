@@ -124,7 +124,7 @@ router.get('/:spotId', async(req, res, next) => {
 
     if (!spot) {
         const err = new Error('Spot couldn\'t be found');
-        err.statusCode = 404;
+        err.status = 404;
         err.message = 'Spot couldn\'t be found';
         return next(err);
     }
@@ -216,7 +216,7 @@ router.post('/:spotId/images', async(req, res, next) => {
     })
     if (!spot){
         const err = new Error('Spot couldn\'t be found');
-        err.statusCode = 404;
+        err.status = 404;
         err.message = 'Spot couldn\'t be found';
         return next(err);
     }
@@ -235,6 +235,51 @@ router.post('/:spotId/images', async(req, res, next) => {
     delete image.createddAt;
     delete image.spotId;
     res.json(image);
+});
+
+router.put('/:spotId', async(req, res, next) => {
+    const { user } = req;
+    const id = parseInt(req.params.spotId)
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+
+    let spot = await Spot.findOne({
+        where: {
+            id
+        },
+        include: {
+            model: User
+        }
+    })
+    if (!spot){
+        const err = new Error('Spot couldn\'t be found');
+        err.status = 404;
+        err.message = 'Spot couldn\'t be found';
+        return next(err);
+    }
+
+    if (user.id !== spot.User.id){
+        requireProperAuth(req, res, next);
+    }
+
+    const errors = {}
+    if (address) spot.address = address;
+    else errors.address = "Street address is required";
+    if (city) spot.city = city;
+    else errors.city = "City is required";
+    if (state) spot.state = state;
+    else errors.state = "State is required"
+    if (country) spot.country = country;
+    else errors.country = "Country is required"
+    if (lat) spot.lat = lat;
+    if (lng) spot.lng = lng;
+    if (name) spot.name = name;
+    if (description) spot.description = description;
+    if (price) spot.price = price;
+
+    spot.save();
+    spot = spot.toJSON();
+    delete spot.User;
+    res.json(spot);
 })
 
 module.exports = router;
