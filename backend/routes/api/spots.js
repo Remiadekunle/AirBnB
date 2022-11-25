@@ -222,7 +222,7 @@ router.post('/:spotId/images', async(req, res, next) => {
     }
 
     if (user.id !== spot.User.id){
-        requireProperAuth(req, res, next);
+        return requireProperAuth(req, res, next);
     }
 
     const newImage = await SpotImage.create({
@@ -258,7 +258,7 @@ router.put('/:spotId', async(req, res, next) => {
     }
 
     if (user.id !== spot.User.id){
-        requireProperAuth(req, res, next);
+        return requireProperAuth(req, res, next);
     }
 
     const errors = {}
@@ -271,10 +271,26 @@ router.put('/:spotId', async(req, res, next) => {
     if (country) spot.country = country;
     else errors.country = "Country is required"
     if (lat) spot.lat = lat;
+    else errors.lat = "Latitude is not valid";
     if (lng) spot.lng = lng;
+    else errors.lng = "Longitude is not valid";
     if (name) spot.name = name;
+    else errors.name = "Name must be less than 50 characters";
     if (description) spot.description = description;
-    if (price) spot.price = price;
+    else errors.description = "Description is required";
+    if (price) {
+        spot.price = price;
+    }
+    else {
+        errors.price = "Price per day is required";
+    }
+
+    if (Object.values(errors).length > 0){
+        const err = new Error('Validation Error');
+        err.status = 400;
+        err.errors = errors
+        return next(err)
+    }
 
     spot.save();
     spot = spot.toJSON();
