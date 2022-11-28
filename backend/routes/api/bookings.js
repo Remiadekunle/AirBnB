@@ -31,11 +31,11 @@ router.get('/current', requireAuth, async (req, res, next) => {
             }
         ]
     })
-    const newBookings = []
+    const Bookings = []
 
 
     for (let i = 0; i < bookings.length; i++){
-        let booking = bookings[9]
+        let booking = bookings[i]
         booking = booking.toJSON();
 
         let image = await SpotImage.findOne({
@@ -50,11 +50,11 @@ router.get('/current', requireAuth, async (req, res, next) => {
         booking.Spot.previewImage = image.url
 
         delete booking.Spot.SpotImages
-        newBookings.push(booking)
+        Bookings.push(booking)
     }
 
     res.json({
-        newBookings
+        Bookings
     })
 })
 
@@ -151,7 +151,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
         err.status = 404;
         return next(err)
     };
-    
+
     const spot = await Spot.findOne({
         where:{
             id: booking.spotId
