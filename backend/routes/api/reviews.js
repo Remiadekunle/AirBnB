@@ -86,6 +86,53 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     res.json(reviewImage)
 })
 
+router.put('/:reviewId', requireAuth, async (req, res, next) => {
+    const id = req.params.reviewId;
+
+    const {user} = req;
+
+    const {review, stars} = req.body;
+
+    const oldReview = await Review.findOne({
+        where:{
+            id
+        },
+    })
+    
+    if (!oldReview){
+        const err = new Error("Review couldn't be found")
+        err.status = 404;
+        return next(err)
+    }
+
+    if (user.id !== oldReview.userId){
+        requireProperAuth(req, res, next);
+    }
+
+    const errors = {}
+
+    if (!review){
+        errors.review = "Review text is required"
+    }
+    if (parseInt(stars) <= 0 && parseInt(stars) >= 5 ){
+        errors.stars = "Stars must be an integer from 1 to 5"
+    }
+
+    if (Object.values(errors).length > 0){
+        const err = new Error('Please enter all required information');
+        err.status = 400;
+        err.errors = errors
+        return next(err)
+    }
+
+    oldReview.review = review;
+    oldReview.stars = stars;
+    oldReview.updatedAt = new Date()
+
+    await oldReview.save();
+    res.json(oldReview)
+})
+
 
 
 module.exports = router;
