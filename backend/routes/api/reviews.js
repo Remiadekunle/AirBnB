@@ -13,7 +13,7 @@ router.get('/current', restoreUser,  async (req, res) =>  {
         where.userId = user.id
     }
     console.log(user.id)
-    const Reviews = await Review.findAll({
+    const reviews = await Review.findAll({
         where,
         include: [
             {
@@ -36,7 +36,32 @@ router.get('/current', restoreUser,  async (req, res) =>  {
             }
         ]
     })
+    const Reviews = []
 
+    for (let i = 0; i < reviews.length; i++){
+        let review = reviews[i]
+
+        review = review.toJSON();
+        const spotId = review.spotId
+        // console.log(spotId)
+        let image = await SpotImage.findOne({
+            where: {
+                spotId,
+                preview: true,
+            }
+        })
+        if (image){
+            review.Spot.previewImage = image.url
+            console.log('hi')
+        } else {
+            review.Spot.previewImage = 'Image not found'
+            console.log('Bye')
+        }
+        delete review.Spot.SpotImages;
+        console.log(review)
+        Reviews.push(review)
+    }
+    // console.log(image)
     return res.json({
         Reviews
     })
