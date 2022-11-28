@@ -7,45 +7,57 @@ const { response } = require('../../app');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    const spots = await Spot.findAll({
-        include: [
-            {
-                model: SpotImage,
-                where: {
-                    preview: true
-                },
-                attributes: {
-                    exclude: ['id', 'spotId', 'createdAt', 'updatedAt']
-                }
+    const spots = await Spot.findAll();
+
+
+    const newSpots = []
+    for (let i = 0; i < spots.length; i++){
+        let spot = spots[i]
+        spot = spot.toJSON();
+        let image = await SpotImage.findOne({
+            where: {
+                spotId: spot.id,
+                preview: true
             },
-            {
-                model: Review,
+            attributes: {
+                exclude: ['id', 'spotId', 'createdAt', 'updatedAt']
             }
-        ]
-    })
-    const Spots = [];
-    spots.forEach(spot => {
-        const newSpot = spot.toJSON();
-        Spots.push(newSpot)
-    })
-    Spots.forEach((spot) => {
-        spot.SpotImages.forEach( (image) => {
-            if (image.preview === true){
-                spot.previewImage = image.url
-            }
+        });
+        if (image){
+            const url = image.url
+            spot.previewImage = url;
+
+        }
+        else{
+            spot.previewImage = 'No preview image found'
+        }
+
+        let reviews = await Review.findAll({
+            where: {
+                spotId: spot.id
+            },
+
         })
-        delete spot.SpotImages
-        let scores = 0
-        spot.Reviews.forEach(review => {
-            scores += review.stars
-        })
-        const stars = scores/spot.Reviews.length
-        spot.avgRating = stars
-        delete spot.Reviews
-    })
+
+        let stars = 0;
+        count = 0
+        if (reviews.length > 0){
+            reviews.forEach(review => {
+                stars += review.stars
+                count++
+            })
+            stars = stars/count
+
+            spot.avgRating = stars
+        } else{
+            spot.avgRating = 'This restaurant has not been rated'
+        }
+
+        newSpots.push(spot)
+    }
 
     return res.json({
-        Spots
+        newSpots
     })
 })
 
@@ -53,47 +65,60 @@ router.get('/current', restoreUser, async (req, res) => {
     const { user } = req;
     const where = {}
     if (user){
-        where.id = user.id
+        where.ownerId = user.id
     }
     const spots = await Spot.findAll({
-        where,
-        include: [
-            {
-                model: SpotImage,
-                where: {
-                    preview: true
-                },
-                attributes: {
-                    exclude: ['id', 'spotId', 'createdAt', 'updatedAt']
-                }
+        where
+    })
+    console.log(spots)
+    const newSpots = []
+    for (let i = 0; i < spots.length; i++){
+        let spot = spots[i]
+        spot = spot.toJSON();
+        let image = await SpotImage.findOne({
+            where: {
+                spotId: spot.id,
+                preview: true
             },
-            {
-                model: Review,
+            attributes: {
+                exclude: ['id', 'spotId', 'createdAt', 'updatedAt']
             }
-        ]
-    })
-    const Spots = [];
-    spots.forEach(spot => {
-        const newSpot = spot.toJSON();
-        Spots.push(newSpot)
-    })
-    Spots.forEach((spot) => {
-        spot.SpotImages.forEach( (image) => {
-            if (image.preview === true){
-                spot.previewImage = image.url
-            }
+        });
+        if (image){
+            const url = image.url
+            spot.previewImage = url;
+
+        }
+        else{
+            spot.previewImage = 'No preview image found'
+        }
+
+        let reviews = await Review.findAll({
+            where: {
+                spotId: spot.id
+            },
+
         })
-        delete spot.SpotImages
-        let scores = 0
-        spot.Reviews.forEach(review => {
-            scores += review.stars
-        })
-        const stars = scores/spot.Reviews.length
-        spot.avgRating = stars
-        delete spot.Reviews
-    })
+
+        let stars = 0;
+        count = 0
+        if (reviews.length > 0){
+            reviews.forEach(review => {
+                stars += review.stars
+                count++
+            })
+            stars = stars/count
+
+            spot.avgRating = stars
+        } else{
+            spot.avgRating = 'This restaurant has not been rated'
+        }
+
+        newSpots.push(spot)
+    }
+
     return res.json({
-        Spots
+        newSpots
     })
 })
 
@@ -185,7 +210,7 @@ router.post('/', requireAuth, async(req, res, next) => {
         return next(err)
     }
 
-    const newSpot = await Spot.create({
+    const newSpot = await Spot.build({
         address,
         city,
         state,
@@ -197,6 +222,16 @@ router.post('/', requireAuth, async(req, res, next) => {
         price,
         ownerId: id
     })
+
+    await newSpot.save();
+
+    const check = await Spot.findOne({
+        where: {
+            price
+        }
+    })
+
+    console.log(check)
 
     res.json(newSpot)
 })
