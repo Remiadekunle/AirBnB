@@ -471,7 +471,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const booking = await Booking.build({
         startDate,
         endDate,
-        SpotId: spot.id,
+        spotId: spot.id,
         userId: user.id,
     })
 
