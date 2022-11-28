@@ -556,5 +556,38 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     }
 })
 
+router.delete('/:spotId', async(req, res, next) => {
+    const { user } = req;
+    const id = parseInt(req.params.spotId);
+
+    let spot = await Spot.findOne({
+        where: {
+            id
+        },
+        include: {
+            model: User
+        }
+    })
+
+    if (!spot){
+        const err = new Error('Spot couldn\'t be found');
+        err.status = 404;
+        err.message = 'Spot couldn\'t be found';
+        return next(err);
+    }
+
+    if (user.id !== spot.User.id){
+        return requireProperAuth(req, res, next);
+    }
+
+    await spot.destroy();
+    res.status = 200;
+    res.json({
+        message: "Successfully deleted",
+        statusCode: 200
+    })
+
+})
+
 
 module.exports = router;
