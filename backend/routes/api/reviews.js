@@ -98,7 +98,7 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
             id
         },
     })
-    
+
     if (!oldReview){
         const err = new Error("Review couldn't be found")
         err.status = 404;
@@ -131,6 +131,40 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
 
     await oldReview.save();
     res.json(oldReview)
+})
+
+
+router.delete('/:reviewId', requireAuth, async (req, res, next) =>  {
+    const id = req.params.reviewId;
+
+    const {user} = req;
+
+    const review = await Review.findOne({
+        where:{
+            id
+        }
+    })
+
+    if (!review){
+        const err = new Error("Review couldn't be found")
+        err.status = 404;
+        return next(err)
+    }
+    console.log(user.id)
+    console.log(review.userId)
+    console.log(review)
+    if (user.id !== review.userId){
+        requireProperAuth(req, res, next);
+    }
+
+
+
+    await review.destroy();
+
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+      })
 })
 
 
