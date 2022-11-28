@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     const spots = await Spot.findAll();
 
 
-    const newSpots = []
+    const Spots = []
     for (let i = 0; i < spots.length; i++){
         let spot = spots[i]
         spot = spot.toJSON();
@@ -53,11 +53,11 @@ router.get('/', async (req, res) => {
             spot.avgRating = 'This restaurant has not been rated'
         }
 
-        newSpots.push(spot)
+        Spots.push(spot)
     }
 
     return res.json({
-        newSpots
+        Spots
     })
 })
 
@@ -71,7 +71,7 @@ router.get('/current', restoreUser, async (req, res) => {
         where
     })
 
-    const newSpots = []
+    const Spots = []
     for (let i = 0; i < spots.length; i++){
         let spot = spots[i]
         spot = spot.toJSON();
@@ -114,11 +114,11 @@ router.get('/current', restoreUser, async (req, res) => {
             spot.avgRating = 'This restaurant has not been rated'
         }
 
-        newSpots.push(spot)
+        Spots.push(spot)
     }
 
     return res.json({
-        newSpots
+        Spots
     })
 })
 
@@ -160,7 +160,12 @@ router.get('/:spotId', async(req, res, next) => {
         scores += review.stars
     })
     const stars = scores/spot.Reviews.length
-    newSpot.avgRating = stars
+    if (stars){
+        newSpot.avgStarRating = stars
+    } else{
+        newSpot.avgStarRating = 'This spot has not been rated'
+    }
+
     delete newSpot.Reviews
     newSpot.Owner = newSpot.User
     delete newSpot.User
@@ -266,7 +271,7 @@ router.post('/:spotId/images', async(req, res, next) => {
     })
     const image = newImage.toJSON();
     delete image.updatedAt;
-    delete image.createddAt;
+    delete image.createdAt;
     delete image.spotId;
     res.json(image);
 });
@@ -334,7 +339,7 @@ router.put('/:spotId', async(req, res, next) => {
 
 router.get('/:spotId/reviews', async (req, res, next) => {
     const id = req.params.spotId;
-    const reviews = await Review.findAll({
+    const Reviews = await Review.findAll({
         where: {
             spotId: id,
         },
@@ -355,14 +360,14 @@ router.get('/:spotId/reviews', async (req, res, next) => {
         ]
     })
 
-    if (!reviews.length > 0){
+    if (!Reviews.length > 0){
         const err = new Error("Spot couldn\'t be found")
         err.status = 404;
         return next(err)
     }
 
     res.json({
-        reviews
+        Reviews
     })
 });
 
@@ -442,8 +447,13 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         },
     })
 
+    if (!spot){
+        const err = new Error("Spot couldn\'t be found")
+        err.status = 404;
+        return next(err)
+    }
     if (spot.ownerId == user.id){
-        const err = new Error("Cannot create a booking for this spot!!!")
+        const err = new Error("Owner cannot create a booking for this spot!!!")
         err.status = 404;
         return next(err)
     }
@@ -455,11 +465,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         return next(err)
     }
 
-    if (!spot){
-        const err = new Error("Spot couldn\'t be found")
-        err.status = 404;
-        return next(err)
-    }
 
     const bookings = await Booking.findAll()
 
@@ -533,7 +538,9 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 
     if (user.id === spot.ownerId){
-        res.json({
+        console.log(user.id);
+        console.log(spot.ownerId)
+        return res.json({
             bookings
         })
     } else{
@@ -541,16 +548,18 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
         for (let i = 0; i < bookings.length; i++){
             let booking = bookings[i]
             booking = booking.toJSON();
-            delete bookings.User;
-            delete bookings.userId;
-            delete bookings.createdAt;
-            delete bookings.updatedAt;
-            delete bookings.id;
+
+            delete booking.User;
+            delete booking.userId;
+            delete booking.createdAt;
+            delete booking.updatedAt;
+            delete booking.id;
+            console.log(booking)
             Bookings.push(booking)
         }
 
 
-        res.json({
+        return res.json({
             Bookings
         })
     }

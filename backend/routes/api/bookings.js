@@ -13,27 +13,15 @@ router.get('/current', requireAuth, async (req, res, next) => {
         where: {
             userId: user.id
         },
-        include: [
-            {
-                model: Spot,
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                },
-                include: {
-                    model: SpotImage,
-                    where: {
-                        preview: true
-                    },
-                    attributes: {
-                        exclude: ['createdAt', 'updatedAt', 'id', 'spotId']
-                    },
-                }
-            }
-        ]
     })
     const Bookings = []
 
-
+    if (bookings.length < 1){
+        const err = new Error("Booking couldn\'t be found")
+        err.status = 404;
+        return next(err)
+    }
+    // console.log(bookings)
     for (let i = 0; i < bookings.length; i++){
         let booking = bookings[i]
         booking = booking.toJSON();
@@ -46,8 +34,27 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 exclude: ['createdAt', 'updatedAt', 'id', 'spotId', 'preview']
             },
         })
+
+        let spot = await Spot.findOne({
+            where: {
+                id: booking.spotId
+            },
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            }
+        })
+
+        if (spot){
+            spot = spot.toJSON();
+            booking.Spot = spot
+        }
+        // console.log(spot)
         console.log(image)
-        booking.Spot.previewImage = image.url
+        if (image){
+            booking.Spot.previewImage = image.url
+        } else{
+            booking.Spot.previewImage = 'Image not found'
+        }
 
         delete booking.Spot.SpotImages
         Bookings.push(booking)
@@ -147,7 +154,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     });
 
     if (!booking){
-        const err = new Error("Spot couldn\'t be found")
+        const err = new Error("Booking couldn\'t be found")
         err.status = 404;
         return next(err)
     };
