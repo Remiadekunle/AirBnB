@@ -334,19 +334,36 @@ router.put('/:spotId', async(req, res, next) => {
 
 router.get('/:spotId/reviews', async (req, res, next) => {
     const id = req.params.spotId;
-    const reviews = await Review.findOne({
+    const reviews = await Review.findAll({
         where: {
-            spotId: id
+            spotId: id,
         },
+        include: [
+            {
+                model: User,
+                attributes: {
+                    exclude: ['spotId', 'createdAt', 'updatedAt', 'username', 'email', 'hashedPassword']
+                }
+            },
+            {
+                model: ReviewImage,
+                attributes: {
+                    exclude: ['reviewId', 'createdAt', 'updatedAt',]
+                }
+            }
+
+        ]
     })
 
-    if (!reviews){
+    if (!reviews.length > 0){
         const err = new Error("Spot couldn\'t be found")
         err.status = 404;
         return next(err)
     }
 
-    res.json(reviews)
+    res.json({
+        reviews
+    })
 });
 
 router.post('/:spotId/reviews', requireAuth, async (req, res, next) =>{

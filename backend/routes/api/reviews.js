@@ -10,7 +10,7 @@ router.get('/current', restoreUser,  async (req, res) =>  {
     const { user } = req;
     const where = {}
     if (user){
-        where.id = user.id
+        where.userId = user.id
     }
     console.log(user.id)
     const Reviews = await Review.findAll({
