@@ -139,7 +139,7 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
     if (!review){
         errors.review = "Review text is required"
     }
-    if (parseInt(stars) <= 0 && parseInt(stars) >= 5 ){
+    if (parseInt(stars) < 0 || parseInt(stars) > 5 ){
         errors.stars = "Stars must be an integer from 1 to 5"
     }
 
