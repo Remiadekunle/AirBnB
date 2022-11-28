@@ -71,7 +71,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
             id
         }
     });
-    
+
         if (!booking){
             const err = new Error("Booking couldn\'t be found")
             err.status = 404;
@@ -134,4 +134,50 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     res.json(booking)
 })
 
+
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    const {user} = req;
+
+    const id = req.params.bookingId;
+
+    const booking = await Booking.findOne({
+        where: {
+            id
+        }
+    });
+
+    if (!booking){
+        const err = new Error("Spot couldn\'t be found")
+        err.status = 404;
+        return next(err)
+    };
+    
+    const spot = await Spot.findOne({
+        where:{
+            id: booking.spotId
+        }
+    });
+
+
+    if ((user.id !== booking.userId) && (user.id !== spot.ownerId) ){
+        requireProperAuth(req, res, next);
+    };
+
+
+    const current = new Date();
+
+    if ((booking.startDate < current) && (booking.endDate > current)){
+        const err = new Error("Bookings that have been started can't be deleted")
+        err.status = 403;
+        return next(err)
+    }
+
+    await booking.destroy();
+
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+      })
+
+})
 module.exports = router;
