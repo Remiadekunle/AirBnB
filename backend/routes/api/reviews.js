@@ -42,6 +42,49 @@ router.get('/current', restoreUser,  async (req, res) =>  {
     })
 })
 
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+    const id = req.params.reviewId;
+
+    const {user} = req;
+
+    const review = await Review.findOne({
+        where:{
+            id
+        },
+        include: {
+            model: ReviewImage
+        }
+    })
+    if (!review){
+        const err = new Error("Review couldn't be found")
+        err.status = 404;
+        return next(err)
+    }
+
+    if (user.id !== review.userId){
+        requireProperAuth(req, res, next);
+    }
+
+    const {url} = req.body
+
+
+    if (review.ReviewImages.length > 10){
+        const err = new Error("Maximum number of images for this resource was reached")
+        err.status = 403;
+        return next(err)
+    }
+
+    let reviewImage = await ReviewImage.create({
+        url,
+        reviewId: review.id
+    })
+
+    reviewImage = reviewImage.toJSON();
+    delete reviewImage.updatedAt;
+    delete reviewImage.createdAt;
+    delete reviewImage.reviewId;
+    res.json(reviewImage)
+})
 
 
 

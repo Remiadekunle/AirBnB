@@ -70,7 +70,7 @@ router.get('/current', restoreUser, async (req, res) => {
     const spots = await Spot.findAll({
         where
     })
-    console.log(spots)
+
     const newSpots = []
     for (let i = 0; i < spots.length; i++){
         let spot = spots[i]
@@ -231,7 +231,7 @@ router.post('/', requireAuth, async(req, res, next) => {
         }
     })
 
-    console.log(check)
+
 
     res.json(newSpot)
 })
@@ -240,7 +240,6 @@ router.post('/:spotId/images', async(req, res, next) => {
     const { user } = req;
     const id = parseInt(req.params.spotId)
     const { url, preview} = req.body;
-    console.log('hiiiiiiiiii',typeof id)
     const spot = await Spot.findOne({
         where: {
             id
@@ -363,7 +362,6 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) =>{
         }
     });
 
-    console.log(reviews)
 
     reviews.forEach(review => {
         if (review.spotId === parseInt(id)){
