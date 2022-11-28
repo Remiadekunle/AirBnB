@@ -48,7 +48,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         })
         console.log(image)
         booking.Spot.previewImage = image.url
-        
+
         delete booking.Spot.SpotImages
         newBookings.push(booking)
     }
@@ -58,5 +58,80 @@ router.get('/current', requireAuth, async (req, res, next) => {
     })
 })
 
+// Edit a Booking
+router.put('/:bookingId', requireAuth, async (req, res, next) => {
+    const {user} = req;
+
+    const id = req.params.bookingId;
+
+    const {startDate, endDate} = req.body;
+
+    const booking = await Booking.findOne({
+        where: {
+            id
+        }
+    });
+    
+        if (!booking){
+            const err = new Error("Booking couldn\'t be found")
+            err.status = 404;
+            return next(err)
+        };
+
+    if (user.id !== booking.userId){
+        requireProperAuth(req, res, next);
+    };
+
+    if (endDate <= startDate){
+        const err = new Error("endDate cannot come before startDate");
+        err.status = 400;
+        return next(err);
+    };
+
+    const current = new Date()
+
+    if (booking.endDate < current){
+        const err = new Error("Past bookings can't be modified");
+        err.status = 403;
+        return next(err);
+    }
+    const errors = {}
+
+    booking.startDate = startDate;
+    booking.endDate = endDate;
+
+    const bookings = await Booking.findAll()
+
+    for (let i = 0; i < bookings.length; i++){
+        let bookingA = bookings[i];
+        let bStart = bookingA.startDate.getTime();
+        let bEnd = bookingA.endDate.getTime();
+
+        const start = booking.startDate.getTime();
+        const end = booking.endDate.getTime();
+
+        if ((start >= bStart) && (start <= bEnd)){
+            errors.startDate = "Start date conflicts with an existing booking";
+            break
+        }
+        if ((end >= bStart) && (end <= bEnd)){
+            errors.endDate = "End date conflicts with an existing booking";
+            break
+        }
+    }
+
+    if (Object.values(errors).length > 0){
+        const err = new Error("Sorry, this spot is already booked for the specified dates");
+        err.status = 403;
+        err.errors = errors
+        return next(err)
+    }
+
+
+
+
+    await booking.save();
+    res.json(booking)
+})
 
 module.exports = router;
