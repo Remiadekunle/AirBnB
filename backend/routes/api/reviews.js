@@ -42,31 +42,7 @@ router.get('/current', restoreUser,  async (req, res) =>  {
     })
 })
 
-router.get('/:spotId/reviews', async (req, res, next) => {
-    const id = req.params.spotId;
-    const spot = await Spot.findOne({
-        where: {
-            id
-        },
-        include: [
-            {
-                model: User
-            },
-            {
-                model: ReviewImage
-            }
-        ],
 
-    })
-
-    if (!spot){
-        const err = new Error("Spot couldn\'t be found")
-        err.status = 404;
-        return next(err)
-    }
-
-    res.json(spot)
-})
 
 
 module.exports = router;

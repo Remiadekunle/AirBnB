@@ -1,6 +1,6 @@
 const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser, requireProperAuth } = require('../../utils/auth');
-const { Spot, User, SpotImage, Review, sequelize } = require('../../db/models');
+const { Spot, User, SpotImage, Review, ReviewImage, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { response } = require('../../app');
@@ -332,5 +332,87 @@ router.put('/:spotId', async(req, res, next) => {
     delete spot.User;
     res.json(spot);
 })
+
+router.get('/:spotId/reviews', async (req, res, next) => {
+    const id = req.params.spotId;
+    const reviews = await Review.findOne({
+        where: {
+            spotId: id
+        },
+    })
+
+    if (!reviews){
+        const err = new Error("Spot couldn\'t be found")
+        err.status = 404;
+        return next(err)
+    }
+
+    res.json(reviews)
+});
+
+router.post('/:spotId/reviews', requireAuth, async (req, res, next) =>{
+    const id = req.params.spotId;
+    const {user} = req;
+
+    const {review, stars} = req.body;
+    const errors = {}
+
+    const reviews = await Review.findAll({
+        where: {
+            userId: user.id
+        }
+    });
+
+    console.log(reviews)
+
+    reviews.forEach(review => {
+        if (review.spotId === parseInt(id)){
+            const err = new Error('User already has a review for this spot')
+            err.status = 403;
+            return next(err)
+        }
+    })
+
+    if (!review){
+        errors.review = "Review text is required"
+    }
+    if (parseInt(stars) < 0 && parseInt(stars) > 5 ){
+        errors.stars = "Stars must be an integer from 1 to 5"
+    }
+
+    if (Object.values(errors).length > 0){
+        const err = new Error('Please enter all required information');
+        err.status = 400;
+        err.errors = errors
+        return next(err)
+    }
+
+    const where = {};
+
+    let spot = await Spot.findOne({
+        where: {
+            id
+        },
+    })
+
+    if (!spot){
+        const err = new Error("Spot couldn\'t be found")
+        err.status = 404;
+        return next(err)
+    }
+
+    const newReview = await Review.build({
+        review,
+        stars,
+        userId: user.id,
+        spotId: spot.id
+    })
+
+    await newReview.save();
+
+
+    res.json(newReview)
+})
+
 
 module.exports = router;
