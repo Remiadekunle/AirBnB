@@ -1,4 +1,5 @@
 
+// import { response } from "../../../backend/app";
 import { csrfFetch } from "./csrf"
 // frontend/src/store/session.js
 
@@ -32,6 +33,15 @@ export const login = (user) => async (dispatch) => {
   dispatch(setUser(data));
   return response;
 };
+
+export const restoreUser  = (user) => async dispatch => {
+    const res = await csrfFetch('/api/session')
+    if (res.ok){
+        const user = await res.json();
+        dispatch(setUser(user))
+        return res
+    }
+}
 
 const initialState = { user: null };
 
