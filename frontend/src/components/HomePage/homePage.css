@@ -1,0 +1,18 @@
+.home-Card{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column-reverse;
+    border-radius: 5px;
+
+}
+
+.home-page{
+    display: flex;
+    margin: 0px 50px;
+    justify-content: space-evenly;
+}
+
+
+.preview-img{
+    width: 50px;
+}
