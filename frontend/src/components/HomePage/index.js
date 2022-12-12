@@ -18,12 +18,18 @@ export function Home() {
     const spots = Object.values(initialSpots.allSpots)
 
     return (
-        <div className="home-page">
-            {
-                spots.map(spot => (
-                    <SpotIndex spot={spot}/>
-                ))
-            }
+        <div>
+            <div className="home-page">
+                {
+                    spots.map(spot => (
+                        <SpotIndex spot={spot}/>
+                    ))
+                }
+            </div>
+            <div className="footer">
+                TESTING
+                <div>TEST 2</div>
+            </div>
         </div>
     )
 }

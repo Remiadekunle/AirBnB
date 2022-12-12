@@ -1,5 +1,5 @@
 .home-Card{
-    border: 1px solid black;
+    border: 1px hidden black;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -15,6 +15,7 @@
     padding: 0px 40px;
     width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 
@@ -40,14 +41,20 @@
 }
 
 .card-info{
-    display: inline-flex;
-}
-
-.rating-location{
-    /* display: flex; */
+    display: flex;
 }
 
 .rating{
-    display: inline-flex;
-    justify-content: end
+    float: right;
+
+}
+.card-price{
+    margin-top: 8px;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0%;
+    border-top: 1px solid gray;
+    width: 100%;
 }
