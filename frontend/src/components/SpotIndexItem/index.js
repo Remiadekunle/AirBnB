@@ -5,6 +5,8 @@ import { fetchSingleSpot} from '../../store/spots'
 import './spotItem.css';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import CreateSpotModal from '../CreateSpotModal';
+import EditSpotModal from "../EditSpotModal";
+import DeleteSpotModal from "../DeleteSpotModal";
 
 function SpotIndex() {
     const { spotId } = useParams()
@@ -12,13 +14,21 @@ function SpotIndex() {
     const dispatch = useDispatch();
     // console.log('test', SpotImages)
     useEffect(() => {
+
         dispatch(fetchSingleSpot(spotId))
     }, [dispatch, spotId])
 
     if (!spot) return null
     const {name, SpotImages, description, price, Owner, city, state, country, avgStarRating, numReviews} = spot
-    console.log(SpotImages)
-    const mainImage = SpotImages.find(spot => spot.preview === true).url
+    console.log('this is the spot',spot)
+
+    console.log('spotImage', SpotImages)
+    let mainImage;
+    if (SpotImages.length < 1){
+        mainImage = 'https://media.istockphoto.com/id/1255835530/photo/modern-custom-suburban-home-exterior.jpg?s=612x612&w=0&k=20&c=0Dqjm3NunXjZtWVpsUvNKg2A4rK2gMvJ-827nb4AMU4='
+    } else {
+        mainImage = SpotImages.find(spot => spot.preview === true).url
+    }
     console.log(mainImage)
     console.log(Owner)
     return (
@@ -114,13 +124,13 @@ function SpotIndex() {
                 <OpenModalMenuItem
                     itemText="Edit Spot"
                     // onItemClick={closeMenu}
-                    modalComponent={<CreateSpotModal />}/>
+                    modalComponent={<EditSpotModal spot={spot} />}/>
                 </button>
                 <button>
                 <OpenModalMenuItem
                     itemText="Delete Spot"
                     // onItemClick={closeMenu}
-                    modalComponent={<CreateSpotModal />}/>
+                    modalComponent={<DeleteSpotModal spot={spot} />}/>
                 </button>
             </div>
             <div>

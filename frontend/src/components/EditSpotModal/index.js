@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 // import './SignupForm.css';
-import { createSpot } from '../../store/spots'
 
+import { updateSpot } from '../../store/spots'
 
-function CreateSpotModal() {
+function EditSpotModal({spot}) {
   const dispatch = useDispatch();
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -16,6 +17,7 @@ function CreateSpotModal() {
   const [price, setPrice] = useState(0)
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  const {id} = useParams();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +25,7 @@ function CreateSpotModal() {
     setErrors([]);
     const lat = 1;
     const lng = 2;
-
+    console.log(spot.id)
     const payload = {
         address,
         city,
@@ -38,25 +40,18 @@ function CreateSpotModal() {
 
     let errors;
 
-    await dispatch(createSpot(payload)).then(closeModal).catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      });
-    console.log('this is the errors', errors)
+    await dispatch(updateSpot(payload, spot.id)).then(closeModal)
 
-    // dispatch(sessionActions.signup({ address, city, state, country, name, price }))
-    // .then(closeModal)
     // .catch(async (res) => {
+    //     console.log('this is res',res)
     //     const data = await res.json();
     //     if (data && data.errors) setErrors(data.errors);
-    // });
-
-    // return setErrors(['Confirm name field must be the same as the name field']);
+    //   });
   };
 
   return (
     <>
-      <h1>Create New Spot</h1>
+      <h1>Edit Spot</h1>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -124,10 +119,10 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <button type="submit">Submit</button>
       </form>
     </>
   );
 }
 
-export default CreateSpotModal;
+export default EditSpotModal;

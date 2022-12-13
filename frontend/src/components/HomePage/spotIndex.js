@@ -9,8 +9,8 @@ export function SpotIndex( {spot} ){
         avgRating = 'NEW'
     }
 
-    console.log(previewImage[0])
-    if (previewImage[0] === 'N'){
+    // console.log(previewImage[0])
+    if (previewImage && previewImage[0] === 'N'){
         previewImage = 'https://st.depositphotos.com/1658611/2932/i/950/depositphotos_29329143-stock-photo-street-of-residential-houses.jpg'
     }
 
