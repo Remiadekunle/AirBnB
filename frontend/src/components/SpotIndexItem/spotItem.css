@@ -1,0 +1,110 @@
+.spot-page{
+    margin: 0px 380px;
+}
+
+.mainImage{
+    width: 600px;
+    height: 300px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.spotImage{
+    width: 270px;
+    height: 150px;
+}
+
+
+.image-border{
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+
+.spot-description{
+    display: block;
+}
+
+.profile-picture{
+    width: 50px;
+    height: auto;
+    border-radius: 50px;
+    float: right;
+}
+
+.spot-guests-container{
+    width: 650px;
+    padding-bottom:30px;
+    border-bottom: 1px solid gray;
+    margin-right: 0;
+}
+
+.spot-guests{
+    width: 580px;
+}
+
+.reserve-card{
+    position: sticky;
+    float: right;
+    width: 370px;
+    height: 100%;
+    border: 1px solid gray;
+    border-radius: 7px;
+    padding: 25px;
+}
+
+.reserve-price{
+    font-size: 25px;
+    padding-bottom: 15px;
+}
+
+.reserve-stats{
+    float: right;
+    font-size: 15px;
+    align-items: center;
+    gap: 50px;
+}
+
+.fa-star{
+    color: red;
+    padding-right: 5px;
+}
+
+#hosting-message{
+    margin: 10px 0px;
+}
+
+.spot-extra-info{
+    padding: 25px 0px;
+    border-bottom: 1px solid gray;
+    width: 650px;
+}
+
+.spot-extra-info .fa-solid{
+    padding-right: 10px;
+}
+
+.spot-perks{
+    margin-bottom: 25px;
+}
+
+.description-container{
+    width: 650px;
+    padding: 25px 0px;
+    border-bottom: 1px solid gray;
+}
+
+.amenities-container{
+    width: 650px;
+    padding: 25px 0px;
+    border-bottom: 1px solid gray;
+}
+
+.reviews-container{
+    padding: 25px 0px;
+    border-bottom: 1px solid gray;
+}
+
+.user-container{
+    padding: 25px 0px;
+    border-bottom: 1px solid gray;
+}

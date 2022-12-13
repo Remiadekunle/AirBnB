@@ -1,0 +1,60 @@
+.home-Card{
+    border: 1px hidden black;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 270px;
+}
+
+.home-page{
+    display: grid;
+    /* margin: 0px 50px; */
+    grid-template-columns: repeat(6, 280px);
+    grid-auto-flow: row dense;
+    grid-gap: 20px;
+    padding: 0px 40px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+
+.preview-img{
+    width: 270px;
+    height: 250px;
+    border-radius: 10px;
+}
+
+.img-border{
+    width: 270px;
+}
+
+.spot-contents{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.avg-rating{
+    display: flex;
+    justify-content: space-around
+}
+
+.card-info{
+    display: flex;
+}
+
+.rating{
+    float: right;
+
+}
+.card-price{
+    margin-top: 8px;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0%;
+    border-top: 1px solid gray;
+    width: 100%;
+}
