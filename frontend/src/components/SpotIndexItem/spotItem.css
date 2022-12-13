@@ -17,6 +17,7 @@
 
 .image-border{
     padding-top: 25px;
+    padding-bottom: 15px;
 }
 
 
@@ -29,6 +30,8 @@
 
 .spot-guests-container{
     width: 650px;
+    padding-bottom:30px;
+    border-bottom: 1px solid gray;
 }
 
 .spot-guests{
@@ -37,8 +40,66 @@
 
 .reserve-card{
     float: right;
+    width: 370px;
+    border: 1px solid gray;
+    border-radius: 7px;
+    padding: 25px;
+    position: sticky;
 }
 
-.reserve-booking{
-    border: 1px solid gray;
+.reserve-price{
+    font-size: 25px;
+    padding-bottom: 15px;
+}
+
+.reserve-stats{
+    float: right;
+    font-size: 15px;
+    align-items: center;
+    gap: 50px;
+}
+
+.fa-star{
+    color: red;
+    padding-right: 5px;
+}
+
+#hosting-message{
+    margin: 10px 0px;
+}
+
+.spot-extra-info{
+    padding: 25px 0px;
+    border-bottom: 1px solid gray;
+    width: 650px;
+}
+
+.spot-extra-info .fa-solid{
+    padding-right: 10px;
+}
+
+.spot-perks{
+    margin-bottom: 25px;
+}
+
+.description-container{
+    width: 650px;
+    padding: 25px 0px;
+    border-bottom: 1px solid gray;
+}
+
+.amenities-container{
+    width: 650px;
+    padding: 25px 0px;
+    border-bottom: 1px solid gray;
+}
+
+.reviews-container{
+    padding: 25px 0px;
+    border-bottom: 1px solid gray;
+}
+
+.user-container{
+    padding: 25px 0px;
+    border-bottom: 1px solid gray;
 }

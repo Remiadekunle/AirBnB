@@ -15,7 +15,7 @@ function SpotIndex() {
     }, [dispatch])
 
     if (!spot) return null
-    const {name, SpotImages, description, price, Owner, previewImage, city, state, country} = spot
+    const {name, SpotImages, description, price, Owner, previewImage, city, state, country, avgStarRating, numReviews} = spot
     console.log(SpotImages)
     const mainImage = SpotImages.find(spot => spot.preview === true).url
     console.log(mainImage)
@@ -40,9 +40,20 @@ function SpotIndex() {
                 <div className="reserve-card">
                     <div className="reserve-booking">
                         <div>
-                            <div>
+                            <div className="reserve-price">
                                 {`$${price} night`}
+                                <div className="reserve-stats">
+                                    <i class="fa-solid fa-star fa-xs"></i>
+                                    <span>{avgStarRating}</span>
+                                    <span>{' · '}</span>
+                                    <span style={{textDecoration: 'underline'}}>{`${numReviews} reviews`}</span>
+                                </div>
                             </div>
+                        </div>
+                        <div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
                         </div>
                         {'this is where bookings go'}
                     </div>
@@ -50,15 +61,43 @@ function SpotIndex() {
                 <div className="spot-guests-container">
                     <div className="spot-guests">
                         <img className="profile-picture" src="https://i.pinimg.com/originals/2b/9a/86/2b9a86cd82acb9924d3e80ff8b2201ee.jpg"></img>
-                        <h2>{`Entire vaction spot hosted by ${Owner.firstName}`}</h2>
+                        <h2 id="hosting-message">{`Entire vaction spot hosted by ${Owner.firstName}`}</h2>
                         <span>
                             {`6 guests 4 bedrooms 3 baths`}
                         </span>
                     </div>
                 </div>
+                <div className="spot-extra-info">
+                    <div className="spot-perks">
+                        <i class="fa-solid fa-book"></i>
+                        <span>{'Dedicated workspace'}</span>
+                    </div>
+                    <div className="spot-perks">
+                        <i class="fa-solid fa-door-open"></i>
+                        <span>{'Self check-in'}</span>
+                    </div>
+                    <div className="spot-perks">
+                        <i class="fa-solid fa-dumbbell"></i>
+                        {'Indoor Gym and Pool'}
+                    </div>
+                </div>
+                <div className="description-container">
+                    <div>
+                        {description}
+                    </div>
+                </div>
+                <div className="amenities-container">
+                    {'The amenities will go here'}
+                </div>
             </div>
-            <div></div>
-            <div></div>
+            <div className="reviews-container">
+                    {'The reviews will go here'}
+            </div>
+            <div className="user-container">
+                <div>
+                    {'The user info will go here'}
+                </div>
+            </div>
         </div>
     )
 }
