@@ -20,6 +20,9 @@
     padding-bottom: 15px;
 }
 
+.spot-description{
+    display: block;
+}
 
 .profile-picture{
     width: 50px;
@@ -32,6 +35,7 @@
     width: 650px;
     padding-bottom:30px;
     border-bottom: 1px solid gray;
+    margin-right: 0;
 }
 
 .spot-guests{
@@ -39,12 +43,13 @@
 }
 
 .reserve-card{
+    position: sticky;
     float: right;
     width: 370px;
+    height: 100%;
     border: 1px solid gray;
     border-radius: 7px;
     padding: 25px;
-    position: sticky;
 }
 
 .reserve-price{

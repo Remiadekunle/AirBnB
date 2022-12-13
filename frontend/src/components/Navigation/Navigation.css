@@ -7,6 +7,8 @@
     padding: 20px 40px;
     margin-bottom: 20px;
     align-items: center;
+    display: flex;
+    justify-content: space-between;
 }
 
 .profile-button{
@@ -29,4 +31,10 @@
     border-radius: 15px;
     border-width: 1px;
     padding: 5px 5px;
+}
+
+.create-spot-button{
+    color: red;
+    border-radius: 5px;
+    border-style: hidden;
 }
