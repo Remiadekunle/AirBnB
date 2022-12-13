@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import SpotIndex from "./spotIndex";
 import './homePage.css';
+import { NavLink } from "react-router-dom";
 
 export function Home() {
     const dispatch = useDispatch();

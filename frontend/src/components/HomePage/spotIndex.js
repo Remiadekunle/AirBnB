@@ -1,8 +1,9 @@
+import { NavLink } from 'react-router-dom';
 import './homePage.css';
 
 
 export function SpotIndex( {spot} ){
-    let { city, state, price, name, avgRating, previewImage} = spot
+    let { id, city, state, price, name, avgRating, previewImage} = spot
 
     if (typeof avgRating === 'string'){
         avgRating = 'NEW'
@@ -14,24 +15,26 @@ export function SpotIndex( {spot} ){
     }
 
     return (
-        <div className="home-Card">
-            <div className='img-border' >
-                <img alt='' className='preview-img'  src={`${previewImage}` }></img>
-            </div>
-            <div className='spot-contents'>
-                <div className='rating-location'>
-                    {`${city}, ${state}`}
-                    <div className='rating'>{avgRating}</div>
+        <NavLink key={name} to={`/spots/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="home-Card">
+                <div className='img-border' >
+                    <img alt='' className='preview-img'  src={`${previewImage}` }></img>
+                </div>
+                <div className='spot-contents'>
+                    <div className='rating-location'>
+                        {`${city}, ${state}`}
+                        <div className='rating'>{avgRating}</div>
 
-                </div>
-                <span className='card-info'>
-                {name}
-                </span>
-                <div className='card-price'>
-                {`$${price} night`}
+                    </div>
+                    <span className='card-info'>
+                    {name}
+                    </span>
+                    <div className='card-price'>
+                    {`$${price} night`}
+                    </div>
                 </div>
             </div>
-        </div>
+        </NavLink>
     )
 }
 

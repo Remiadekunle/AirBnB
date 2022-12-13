@@ -9,7 +9,6 @@ function Navigation({ isLoaded }){
 
   return (
     <div className='header'>
-
           <NavLink exact to="/" style={{ textDecoration: 'none' }}>
           <i className="fa-brands fa-airbnb fa-2xl"></i>
           <span className='home-text'> Fairbnb</span>

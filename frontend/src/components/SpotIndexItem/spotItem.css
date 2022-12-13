@@ -1,0 +1,44 @@
+.spot-page{
+    margin: 0px 380px;
+}
+
+.mainImage{
+    width: 600px;
+    height: 300px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.spotImage{
+    width: 270px;
+    height: 150px;
+}
+
+
+.image-border{
+    padding-top: 25px;
+}
+
+
+.profile-picture{
+    width: 50px;
+    height: auto;
+    border-radius: 50px;
+    float: right;
+}
+
+.spot-guests-container{
+    width: 650px;
+}
+
+.spot-guests{
+    width: 580px;
+}
+
+.reserve-card{
+    float: right;
+}
+
+.reserve-booking{
+    border: 1px solid gray;
+}
