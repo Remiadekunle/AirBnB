@@ -98,8 +98,8 @@ export const removeSpot = (spot) => async dispatch => {
     }
 }
 
-export const updateSpot = (spot, id) => async dispatch => {
-    const res = await csrfFetch(`/api/spots/${id}`, {
+export const updateSpot = (spot, oldSpot) => async dispatch => {
+    const res = await csrfFetch(`/api/spots/${oldSpot.id}`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(spot)
@@ -108,7 +108,21 @@ export const updateSpot = (spot, id) => async dispatch => {
     let body;
 
     if (res.ok){
-        await dispatch(editSpot(spot))
+        body = await res.json();
+        console.log('this is the body',body)
+        console.log('oldspot b4 the change', oldSpot)
+
+        oldSpot.address = body.address
+        oldSpot.city = body.city
+        oldSpot.state = body.state
+        oldSpot.country = body.country
+        oldSpot.lat = body.lat
+        oldSpot.lng = body.lng
+        oldSpot.name = body.name
+        oldSpot.price = body.price
+        oldSpot.description = body.description
+        console.log('oldspot after the change', oldSpot)
+        await dispatch(editSpot(oldSpot))
     }
 
 }
@@ -148,6 +162,7 @@ const spotReducer = (state = initialState, action) => {
             newState.allSpots = {...state.allSpots}
             const spot3 = action.spot
             newState.allSpots[spot3.id] = spot3
+            newState.singleSpot = {...spot3}
             return newState;
       default:
         return state;

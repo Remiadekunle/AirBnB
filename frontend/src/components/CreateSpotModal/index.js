@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 // import './SignupForm.css';
 import { createSpot } from '../../store/spots'
-
+import './index.css';
 
 function CreateSpotModal() {
   const dispatch = useDispatch();
@@ -68,6 +68,7 @@ function CreateSpotModal() {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
+            className="address-input"
           />
         </label>
         <label>
@@ -124,7 +125,7 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <button className="submitButton" type="submit">Sign Up</button>
       </form>
     </>
   );
