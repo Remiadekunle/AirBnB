@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 // import './SignupForm.css';
 
@@ -18,6 +18,8 @@ function EditSpotModal({spot}) {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const {id} = useParams();
+  const history = useHistory();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,8 +42,10 @@ function EditSpotModal({spot}) {
 
     let errors;
 
-    await dispatch(updateSpot(payload, spot.id)).then(closeModal)
+    await dispatch(updateSpot(payload, spot)).then(closeModal)
 
+    // history.push(`/spots/${spot.id}`)
+    // history.push(`/`)
     // .catch(async (res) => {
     //     console.log('this is res',res)
     //     const data = await res.json();

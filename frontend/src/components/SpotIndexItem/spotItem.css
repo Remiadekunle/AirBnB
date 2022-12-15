@@ -100,8 +100,13 @@
 }
 
 .reviews-container{
+
     padding: 25px 0px;
     border-bottom: 1px solid gray;
+}
+
+.comments-container{
+    display: flex;
 }
 
 .user-container{

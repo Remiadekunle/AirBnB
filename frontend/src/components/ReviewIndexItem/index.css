@@ -1,0 +1,15 @@
+.profile-pic{
+    width: 40px;
+}
+
+.review-container{
+    border: 1px gray hidden;
+    width: 450px;
+    height: 190px;
+}
+
+.profile-container{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
