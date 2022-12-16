@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom";
-import { fetchSingleSpot, fetchSpots, offLoadSpot} from '../../store/spots'
+import { fetchSingleSpot} from '../../store/spots'
 import './spotItem.css';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
-import CreateSpotModal from '../CreateSpotModal';
 import EditSpotModal from "../EditSpotModal";
 import DeleteSpotModal from "../DeleteSpotModal";
 import {fetchreviews} from '../../store/reviews'
 import ReviewIndex from "../ReviewIndexItem";
 import CreateReviewModal from "../CreateReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal";
-
+import ComingSoon from "../ComingSoon";
 
 function SpotIndex({isHome, setIsHome}) {
     const { spotId } = useParams()
     const spot = useSelector(state => state.spots.singleSpot)
-    const spots = useSelector(state => state.spots)
     let user = useSelector(state => state.session.user)
     const [reviewdd, setReviewdd] = useState(false);
     let reviewed;
@@ -33,7 +31,7 @@ function SpotIndex({isHome, setIsHome}) {
     }, [dispatch, spotId])
 
     if (!spot) return null
-    const {name, SpotImages, description, price, Owner, city, state, country, avgStarRating, numReviews} = spot
+    const {name, SpotImages, description, price, Owner, city, state, country} = spot
     console.log('this is the spot',spot)
 
     console.log('spotImage', SpotImages)
@@ -177,7 +175,11 @@ function SpotIndex({isHome, setIsHome}) {
                             </div>
                         </div>
                         <div className="reserve-button-container">
-                            <button id="reserve-button">Reserve Now</button>
+
+                            <button id="reserve-button"><OpenModalMenuItem
+                            itemText="Reserve Now"
+                            // onItemClick={closeMenu}
+                            modalComponent={<ComingSoon spot={spot} feature={'Bookings'}/>}/></button>
                         </div>
                     </div>
                 </div>
@@ -217,7 +219,7 @@ function SpotIndex({isHome, setIsHome}) {
                         </div>
                         <div id="user-name-joined">
                             <h2>{`Hosted by ${Owner.firstName}`}</h2>
-                            <div>{'Joined in May 2016'}</div>
+                            <div>{'Joined in December 2022'}</div>
                         </div>
                     </div>
                     <div>
@@ -226,7 +228,10 @@ function SpotIndex({isHome, setIsHome}) {
                             <span>Identity verified</span>
                         </div>
                         <div id="user-container-buttons">
-                            <button className="contact-host"> Contact Host</button>
+                            <button className="contact-host"> <OpenModalMenuItem
+                            itemText="Contact Host"
+                            // onItemClick={closeMenu}
+                            modalComponent={<ComingSoon spot={spot} feature={'Contact Host'}/>}/></button>
                         </div>
                     </div>
                 </div>

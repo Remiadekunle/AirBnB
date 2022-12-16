@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
@@ -8,8 +8,6 @@ import CreateSpotModal from '../CreateSpotModal';
 
 function Navigation({ isLoaded, isHome, setIsHome }){
   const sessionUser = useSelector(state => state.session.user);
-  const spot = useSelector(state => state.spots.singleSpot)
-  // const [isHome, setIsHome] = useState(true);
 
   const toggleNav = () => {
     console.log('clicked')
@@ -36,7 +34,7 @@ function Navigation({ isLoaded, isHome, setIsHome }){
           <div>
             {isLoaded && (
               <div className='profile-button'>
-                <ProfileButton user={sessionUser} />
+                <ProfileButton isHome={isHome} setIsHome={setIsHome} user={sessionUser} />
               </div>
             )}
           </div>

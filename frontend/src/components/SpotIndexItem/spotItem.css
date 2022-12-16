@@ -46,9 +46,7 @@
     width: 100%
 }
 
-#hosting-message{
 
-}
 .profile-picture2{
     height: auto;
     width: 65px;
@@ -168,10 +166,6 @@
     padding: 25px 0px;
     border-bottom: 1px solid gray;
     border-top: 1px solid gray;
-}
-
-.review-button-container{
-
 }
 
 #review-continer-stats{

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 // import './SignupForm.css';
 import { createSpot } from '../../store/spots'
 import './index.css';
+
 
 function CreateSpotModal() {
   const dispatch = useDispatch();
@@ -15,9 +16,18 @@ function CreateSpotModal() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0)
   const [url, setUrl] = useState('');
-  const [preview, setPreview] = useState();
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+
+  useEffect(() => {
+    let newErrors = []
+
+    if (price < 1) newErrors.push('Price needs to be greater than $0')
+    if (description.length < 50) newErrors.push('Description needs to be atleast 50 chars')
+    if (name.length < 1) newErrors.push('Name must be atleast 1 char')
+
+    setErrors(newErrors)
+  }, [address, city, state, country, name, description, price])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,12 +52,13 @@ function CreateSpotModal() {
       preview: true
     }
     let errors;
-   
+
+
     await dispatch(createSpot(payload, payload2)).then(closeModal).catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
+        if (data && data.errors) setErrors(Object.values(data.errors));
       });
-    console.log('this is the errors', errors)
+    // console.log('this is the errors', errors)
 
     // dispatch(sessionActions.signup({ address, city, state, country, name, price }))
     // .then(closeModal)
@@ -57,89 +68,107 @@ function CreateSpotModal() {
     // });
 
     // return setErrors(['Confirm name field must be the same as the name field']);
+    console.log('these are the errors', errors)
   };
 
   return (
     <>
       <h1>Create New Spot</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="create-form" onSubmit={handleSubmit}>
+        <div id="welcome-message">
+          Welcome to FairBnB
+        </div>
         <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          {errors && errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
-        <label>
-            address
+        <label className="create-label">
+          <div className="form-spot-details">
+            Spot Details
+          </div>
           <input
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
             className="address-input"
+            autoFocus
+            placeholder="Address"
           />
         </label>
         <label>
-          city
+
           <input
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             required
+            placeholder="City"
           />
         </label>
         <label>
-          State
+
           <input
             type="text"
             value={state}
             onChange={(e) => setState(e.target.value)}
             required
+            placeholder="State"
           />
         </label>
         <label>
-          Country
+
           <input
             type="text"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             required
+            placeholder="Country"
           />
         </label>
         <label>
-          Name
+
           <input
             type="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            placeholder="name"
           />
         </label>
-        <label>
-          Description
+        <label >
+
           <input
-            type="name"
+            type="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            placeholder="Description"
           />
         </label>
         <label>
-          Url
+
           <input
             type="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             required
+            placeholder="Url"
           />
         </label>
-        <label>
-          Price
+        <label >
+          <div id="create-price">
+            Price
+          </div>
           <input
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
+            // defaultValue={'none'}
+            placeholder="Price"
           />
         </label>
-        <button className="submitButton" type="submit">Sign Up</button>
+        <button className="submitButton" type="submit">Submit</button>
       </form>
     </>
   );

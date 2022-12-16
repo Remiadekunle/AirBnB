@@ -1,0 +1,25 @@
+
+.edit-form label {
+    display: flex;
+    flex-direction: column;
+}
+.edit-form label  input{
+    border-radius: 5px;
+    height: 30px;
+    padding: 10px;
+}
+
+
+#edit-price{
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px;
+    font-size: 24px;
+}
+
+.form-spot-details{
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px;
+    font-size: 24px;
+}

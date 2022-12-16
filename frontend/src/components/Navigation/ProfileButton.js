@@ -6,7 +6,7 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { demoLogIn } from "../../store/session";
 
-function ProfileButton({ user }) {
+function ProfileButton({ user, isHome, setIsHome }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -47,7 +47,7 @@ function ProfileButton({ user }) {
       closeMenu();
     };
 
-    const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+    const ulClassName = (isHome? "profile-dropdown": "profile-dropdown2") + (showMenu ? "" : " hidden");
 
     return (
       <>
@@ -58,27 +58,36 @@ function ProfileButton({ user }) {
         <ul className={ulClassName} ref={ulRef}>
           {user && user.id ? (
             <>
-            
+
               <li>{user.username}</li>
               <li>{user.firstName} {user.lastName}</li>
               <li>{user.email}</li>
-              <li>
-                <button onClick={logout}>Log Out</button>
-              </li>
+              <>
+                <button id="logout-button" onClick={logout}>
+                  <div id="logout-text">
+                    Log Out
+                  </div>
+                  </button>
+              </>
             </>
           ) : (
             <>
+            <button className="auth-buttons">
               <OpenModalMenuItem
                 itemText="Log In"
                 onItemClick={closeMenu}
                 modalComponent={<LoginFormModal />}
               />
+            </button>
+            <button className="auth-buttons">
               <OpenModalMenuItem
                 itemText="Sign Up"
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
-              <button className="demo-user" onClick={useDemo}>demoUser</button>
+            </button>
+
+              <button className="demo-user" onClick={useDemo}>Demo User</button>
             </>
           )}
         </ul>

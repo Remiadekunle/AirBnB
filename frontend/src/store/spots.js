@@ -79,22 +79,24 @@ export const createSpot = (spot, payload) => async dispatch => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(spot)
     })
-    let body;
+    let body = await res.json();
     const url = payload.url
     if (res.ok) {
-        body = await res.json();
         const res2 = await csrfFetch(`/api/spots/${body.id}/images`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         })
         await dispatch(addSpot(body, url))
-    } else {
-        body = await res.json();
-        console.log(('error check'))
-        const errors = body.errors
-        return errors
     }
+
+    return body
+    // else {
+    //     body = await res.json();
+    //     console.log(('error check'))
+    //     const errors = body.errors
+    //     return errors
+    // }
 
 }
 

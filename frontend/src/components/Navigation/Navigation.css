@@ -5,7 +5,7 @@
 .header{
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 99;
     box-sizing: border-box;
     background-color: white;
     border-bottom: 1px solid gray;
@@ -15,6 +15,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
+    height: 80px;
 }
 
 .header2{
@@ -30,6 +31,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
+    height: 80px;
 }
 
 .profile-button{
@@ -101,12 +103,109 @@
     border-radius: 10px;
 } */
 
-.profile-dropdown li {
-    z-index: 1000000;
-    border: 1px solid red;
+.profile-dropdown{
+    border: 1px hidden white;
     background-color: white;
-    position: relative;
-    left: 0;
-    width: 200px;
+    position: absolute;
+    right: 5%;
+    width: 175px;
+    list-style: none;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px darkgray;
+}
+
+.profile-dropdown2{
+    border: 1px hidden white;
+    background-color: white;
+    position: absolute;
+    right: 20%;
+    width: 175px;
+    list-style: none;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px darkgray;
+}
+
+.demo-user{
+    border-style: hidden;
+    width: 100%;
+    display: flex;
+    height: 38px;
+    padding: 10px;
+    cursor:pointer;
+}
+.demo-user:hover{
+    background-color: gray;
+}
+
+#logout-button{
+    border-style: hidden;
+    width: 100%;
+    display: flex;
+    height: 38px;
+    padding: 10px;
+    cursor:pointer;
+}
+
+#logout-text{
+    width: 100%;
+    display: flex;
+}
+
+.profile-dropdown li {
+    /* z-index: 1000000; */
+    /* border: 1px solid green; */
+    background-color: white;
+    /* position: relative; */
+    /* left: 0; */
+    width: 90%;
     /* position: absolute; */
+    /* cursor:pointer; */
+    padding: 10px;
+    margin: 0;
+}
+
+.profile-dropdown li:hover{
+    background-color: gray;
+    padding: 10px;
+    display: flex;
+    height: 20px;
+}
+
+.profile-dropdown2 li {
+    /* z-index: 1000000; */
+    /* border: 1px solid green; */
+    background-color: white;
+    /* position: relative; */
+    /* left: 0; */
+    width: 90%;
+    /* position: absolute; */
+    /* cursor:pointer; */
+    padding: 10px;
+    margin: 0;
+}
+
+.profile-dropdown2 li:hover{
+    background-color: gray;
+    padding: 10px;
+    display: flex;
+    height: 20px;
+}
+
+.auth-buttons{
+    width: 100%;
+    background-color: white;
+    border-style: hidden;
+    display: flex;
+    height: 38px;
+    padding: 10px;
+    cursor:pointer;
+}
+.auth-buttons:hover{
+    background-color: gray;
+}
+
+#logout-button:hover{
+    background-color: gray;
 }

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 // import './SignupForm.css';
-import { createSpot } from '../../store/spots'
-
+import './index.css';
 import {createReview} from '../../store/reviews'
+
 
 function CreateReviewModal({spot, toggleReviewed}) {
   const dispatch = useDispatch();
@@ -13,6 +13,14 @@ function CreateReviewModal({spot, toggleReviewed}) {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const user = useSelector(state => state.session.user)
+
+  useEffect(() => {
+    let newErrors = []
+
+    if (review.split(' ').length < 2) newErrors.push('Review must be atleast 2 words')
+
+    setErrors(newErrors)
+  }, [review, stars])
 
   if (!user){
     return (
@@ -41,27 +49,27 @@ function CreateReviewModal({spot, toggleReviewed}) {
   return (
     <>
       <h1>Create Review</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="create-form" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
         <label>
-            review
           <input
             type="text"
             value={review}
             onChange={(e) => setReview(e.target.value)}
             required
             className="review-input"
+            placeholder="Review"
           />
         </label>
         <label>
-          stars
           <input
             type="text"
             value={stars}
             onChange={(e) => setStars(e.target.value)}
             required
+            placeholder="Stars"
           />
         </label>
 

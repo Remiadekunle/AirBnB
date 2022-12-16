@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 // import './SignupForm.css';
-import { removeSpot } from '../../store/spots'
-import {removeReview} from '../../store/reviews'
 
+import {removeReview} from '../../store/reviews'
+import './index.css';
 
 function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
     const dispatch = useDispatch();
@@ -14,14 +13,11 @@ function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
     const userId = user.id
     console.log('finding the user', userId)
     const review = reviews.find(review => {
-        const reviewer = review.user
-
         return review.userId === +userId
     })
 
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
-    const history = useHistory();
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -49,7 +45,7 @@ function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
             <ul>
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
-            <label>
+            <label className="delete-label">
             Are you sure you want to delete?
             <input
                 type="checkbox"
@@ -58,7 +54,7 @@ function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
                 required
             />
             </label>
-            <button type="submit">Submit</button>
+            <button className="submitButton" type="submit">Submit</button>
         </form>
         </>
     );

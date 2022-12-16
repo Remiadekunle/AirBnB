@@ -4,16 +4,11 @@ import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 // import './SignupForm.css';
 import { removeSpot } from '../../store/spots'
+import './index.css';
 
 function DeleteSpotModal({spot}) {
     const dispatch = useDispatch();
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
     const [country, setCountry] = useState("");
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0)
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const history = useHistory();
@@ -48,20 +43,21 @@ function DeleteSpotModal({spot}) {
     return (
         <>
         <h1>Delete Spot</h1>
-        <form onSubmit={handleSubmit}>
+        <form className="delete-form" onSubmit={handleSubmit}>
             <ul>
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
-            <label>
+            <label className="delete-label">
             Are you sure you want to delete?
             <input
                 type="checkbox"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 required
+                className="delete-input"
             />
             </label>
-            <button type="submit">Submit</button>
+            <button className="submitButton" type="submit">Submit</button>
         </form>
         </>
     );
