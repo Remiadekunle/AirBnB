@@ -23,7 +23,7 @@ function App() {
             <Home isHome={isHome} setIsHome={setIsHome} />
           </Route>
           <Route path={'/spots/:spotId'}>
-            <SpotIndex />
+            <SpotIndex isHome={isHome} setIsHome={setIsHome} />
           </Route>
         </Switch>
       )}

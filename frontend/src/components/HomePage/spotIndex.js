@@ -19,7 +19,7 @@ export function SpotIndex( {spot, isHome, setIsHome} ){
       }
 
     return (
-        <NavLink onClick={toggleNav} key={name} to={`/spots/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <NavLink className={'spot-card-container'} onClick={toggleNav} key={name} to={`/spots/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className="home-Card">
                 <div className='img-border' >
                     <img  alt='' className='preview-img'  src={`${previewImage}` }></img>

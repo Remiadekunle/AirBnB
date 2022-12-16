@@ -10,7 +10,7 @@
     background-color: white;
     border-bottom: 1px solid gray;
     width: 100%;
-    padding: 20px 80px;
+    padding: 20px 5%;
     margin-bottom: 20px;
     align-items: center;
     display: flex;
@@ -18,14 +18,14 @@
 }
 
 .header2{
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     z-index: 999;
     box-sizing: border-box;
     background-color: white;
     border-bottom: 1px solid gray;
     width: 100%;
-    padding: 20px 380px;
+    padding: 20px 20%;
     margin-bottom: 20px;
     align-items: center;
     display: flex;
@@ -100,3 +100,13 @@
     align-items: center;
     border-radius: 10px;
 } */
+
+.profile-dropdown li {
+    z-index: 1000000;
+    border: 1px solid red;
+    background-color: white;
+    position: relative;
+    left: 0;
+    width: 200px;
+    /* position: absolute; */
+}
