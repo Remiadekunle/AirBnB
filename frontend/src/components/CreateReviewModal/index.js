@@ -6,7 +6,7 @@ import { createSpot } from '../../store/spots'
 
 import {createReview} from '../../store/reviews'
 
-function CreateReviewModal({spot}) {
+function CreateReviewModal({spot, toggleReviewed}) {
   const dispatch = useDispatch();
   const [review, setReview] = useState("");
   const [stars, setStars] = useState("");
@@ -30,14 +30,12 @@ function CreateReviewModal({spot}) {
         stars,
     }
     let errors;
-    await dispatch(createReview(payload, spot.id, user)).then(closeModal)
-
-    // .catch(async (res) => {
-    //     const data = await res.json();
-    //     if (data && data.errors) setErrors(data.errors);
-    //   });
+    await dispatch(createReview(payload, spot.id, user)).then(closeModal).catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(Object.values(data.errors));
+      });
     console.log('this is the errors', errors)
-
+    toggleReviewed()
   };
 
   return (

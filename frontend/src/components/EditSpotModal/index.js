@@ -42,15 +42,15 @@ function EditSpotModal({spot}) {
 
     let errors;
 
-    await dispatch(updateSpot(payload, spot)).then(closeModal)
+    await dispatch(updateSpot(payload, spot)).then(closeModal).catch(async (res) => {
+        console.log('this is res',res)
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      });
 
     // history.push(`/spots/${spot.id}`)
     // history.push(`/`)
-    // .catch(async (res) => {
-    //     console.log('this is res',res)
-    //     const data = await res.json();
-    //     if (data && data.errors) setErrors(data.errors);
-    //   });
+
   };
 
   return (

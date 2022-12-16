@@ -36,7 +36,7 @@ export const fetchreviews = (spotId) => async dispatch => {
     } else if (res.status === 404){
         console.log('hi we hit this spot')
         console.log(res.status)
-        const dummy = {Reviews : [{id: 'dummy', review: 'no reviews' }]}
+        const dummy = {Reviews : []}
         await dispatch(loadReviews(dummy))
     }
 }
