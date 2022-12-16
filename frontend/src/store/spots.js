@@ -8,6 +8,8 @@ const ADD_SPOT = 'spots/addSpot'
 
 const EDIT_SPOT = 'spots/editSpot'
 
+const OFFLOAD_SPOT = 'spots/offloadSpot'
+
 const DELETE_SPOT = 'spots/deleteSpot'
 
 export const loadSpots = (spots) => {
@@ -24,16 +26,24 @@ export const loadSpot = (spot) => {
     }
 }
 
-export const addSpot = (spot) => {
+export const addSpot = (spot, url) => {
     return {
         type: ADD_SPOT,
-        spot
+        spot,
+        url
     }
 }
 
 export const editSpot = (spot) => {
     return {
         type:EDIT_SPOT,
+        spot
+    }
+}
+
+export const offLoadSpot = (spot) => {
+    return{
+        type:OFFLOAD_SPOT,
         spot
     }
 }
@@ -63,23 +73,31 @@ export const fetchSingleSpot = (spotId) => async dispatch => {
     }
 }
 
-export const createSpot = (spot) => async dispatch => {
+export const createSpot = (spot, payload) => async dispatch => {
     const res = await csrfFetch('/api/spots', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(spot)
     })
     let body;
+    const url = payload.url
     if (res.ok) {
         body = await res.json();
-        await dispatch(addSpot(body))
+        const res2 = await csrfFetch(`/api/spots/${body.id}/images`, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        })
+        await dispatch(addSpot(body, url))
     } else {
         body = await res.json();
         console.log(('error check'))
         const errors = body.errors
         return errors
     }
+
 }
+
 
 export const removeSpot = (spot) => async dispatch => {
     const res = await csrfFetch(`/api/spots/${spot.id}`, {
@@ -148,6 +166,8 @@ const spotReducer = (state = initialState, action) => {
             newState = Object.assign({}, state)
             newState.allSpots = {...state.allSpots}
             const spot = action.spot
+            spot.previewImage = action.url
+            spot.avgRating = 'NEW'
             newState.allSpots[spot.id] = spot
             return newState;
         case DELETE_SPOT:
@@ -156,6 +176,10 @@ const spotReducer = (state = initialState, action) => {
             const spot2 = action.spot
             delete newState.allSpots[spot2.id]
             delete newState.singleSpot
+            return newState;
+        case OFFLOAD_SPOT:
+            newState = Object.assign({}, state)
+            newState.singleSpot = {}
             return newState;
         case EDIT_SPOT:
             newState = Object.assign({}, state)

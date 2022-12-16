@@ -14,6 +14,8 @@ function CreateSpotModal() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0)
+  const [url, setUrl] = useState('');
+  const [preview, setPreview] = useState();
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
@@ -35,10 +37,13 @@ function CreateSpotModal() {
         description,
         price
     }
-
+    const payload2 = {
+      url,
+      preview: true
+    }
     let errors;
-
-    await dispatch(createSpot(payload)).then(closeModal).catch(async (res) => {
+   
+    await dispatch(createSpot(payload, payload2)).then(closeModal).catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       });
@@ -117,9 +122,18 @@ function CreateSpotModal() {
           />
         </label>
         <label>
+          Url
+          <input
+            type="url"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            required
+          />
+        </label>
+        <label>
           Price
           <input
-            type="name"
+            type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required

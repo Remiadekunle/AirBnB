@@ -4,6 +4,7 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { demoLogIn } from "../../store/session";
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
@@ -14,6 +15,15 @@ function ProfileButton({ user }) {
       if (showMenu) return;
       setShowMenu(true);
     };
+
+    const useDemo = async () => {
+      const demo = {
+        credential: 'Ultimate Demo',
+        password: 'password'
+      }
+
+      await dispatch(demoLogIn(demo)).then(() => closeMenu())
+    }
 
     useEffect(() => {
       if (!showMenu) return;
@@ -43,10 +53,10 @@ function ProfileButton({ user }) {
       <>
         <button className="button-container" onClick={openMenu}>
           <i class="fa-solid fa-bars"></i>
-          <i className="fas fa-user-circle" />
+          <i className="fas fa-user-circle fa-xl" />
         </button>
         <ul className={ulClassName} ref={ulRef}>
-          {user ? (
+          {user && user.id ? (
             <>
               <li>{user.username}</li>
               <li>{user.firstName} {user.lastName}</li>
@@ -67,6 +77,7 @@ function ProfileButton({ user }) {
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
+              <button className="demo-user" onClick={useDemo}>demoUser</button>
             </>
           )}
         </ul>

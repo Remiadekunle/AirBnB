@@ -7,7 +7,7 @@ import { removeSpot } from '../../store/spots'
 import {removeReview} from '../../store/reviews'
 
 
-function DeleteReviewModal({spot, reviews, user, setReviewdd}) {
+function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
     const dispatch = useDispatch();
 
     const [country, setCountry] = useState("");
@@ -37,7 +37,7 @@ function DeleteReviewModal({spot, reviews, user, setReviewdd}) {
           });
         // console.log('this is the errors', errors)
         // console.log(res)
-
+        toggleReviewed()
 
 
     };

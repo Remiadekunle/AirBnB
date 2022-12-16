@@ -9,17 +9,18 @@ import SpotIndex from "./components/SpotIndexItem";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isHome, setIsHome] = useState(true);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return isLoaded && (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation isLoaded={isLoaded} isHome={isHome} setIsHome={setIsHome}/>
       {isLoaded && (
         <Switch>
           <Route exact path={'/'}>
-            <Home />
+            <Home isHome={isHome} setIsHome={setIsHome} />
           </Route>
           <Route path={'/spots/:spotId'}>
             <SpotIndex />

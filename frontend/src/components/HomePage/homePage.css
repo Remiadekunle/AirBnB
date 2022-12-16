@@ -9,15 +9,19 @@
 .home-page{
     display: grid;
     /* margin: 0px 50px; */
-    grid-template-columns: repeat(6, 280px);
+    grid-template-columns: repeat(6, 270px);
     grid-auto-flow: row dense;
     grid-gap: 20px;
-    padding: 0px 40px;
-    width: 100%;
+    padding: 0px 80px;
+    /* width: 100%; */
     overflow-x: auto;
     overflow-y: hidden;
 }
 
+.home-page-container{
+    width: 100%;
+    /* display: flex; */
+}
 
 .preview-img{
     width: 270px;
@@ -42,19 +46,52 @@
 
 .card-info{
     display: flex;
+    color: gray;
 }
 
 .rating{
-    float: right;
+    display: flex;
+    align-items: center;
+}
 
+.rating-location{
+    display: flex;
+    justify-content: space-between;
+    font-weight: 900;
+    margin-bottom: 2px;
 }
 .card-price{
     margin-top: 8px;
 }
 
 .footer{
-    position: fixed;
-    bottom: 0%;
+    position: sticky;
+    display: flex;
+    bottom: 0;
+    height: 40px;
+    align-items: center;
+    z-index: 999;
     border-top: 1px solid gray;
-    width: 100%;
+    /* width: 100%; */
+    background-color: white;
+    padding: 0px 80px;
+    gap: 5px;
+    justify-content: space-between;
+}
+
+#card-stars{
+    color: black;
+}
+
+#coding-components{
+    justify-self: flex-end;
+}
+#coding-components span {
+    padding-right: 7px;
+}
+
+.app-copyright{
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }

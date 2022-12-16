@@ -5,7 +5,7 @@ import SpotIndex from "./spotIndex";
 import './homePage.css';
 import { NavLink } from "react-router-dom";
 
-export function Home() {
+export function Home({isHome, setIsHome}) {
     const dispatch = useDispatch();
     const initialSpots = useSelector(state => state.spots);
 
@@ -20,16 +20,29 @@ export function Home() {
 
     return (
         <div>
-            <div className="home-page">
-                {
-                    spots.map(spot => (
-                        <SpotIndex spot={spot}/>
-                    ))
-                }
+            <div className="home-page-container">
+                <div className="home-page">
+                    {
+                        spots.map(spot => (
+                            <SpotIndex isHome={isHome} setIsHome={setIsHome} spot={spot}/>
+                        ))
+                    }
+                </div>
             </div>
             <div className="footer">
-                TESTING
-                <div>TEST 2</div>
+                <div className="app-copyright">
+                    <i class="fa-regular fa-copyright fa-xs"></i>
+                    <div>
+                        2022 Fairbnb,Inc.
+                    </div>
+                </div>
+                <div id="coding-components">
+                    <span>React</span>
+                    <span>{' · '}</span>
+                    <span>Redux</span>
+                    <span>{' · '}</span>
+                    <span>JavaScript</span>
+                </div>
             </div>
         </div>
     )

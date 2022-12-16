@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom";
-import { fetchSingleSpot, fetchSpots} from '../../store/spots'
+import { fetchSingleSpot, fetchSpots, offLoadSpot} from '../../store/spots'
 import './spotItem.css';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import CreateSpotModal from '../CreateSpotModal';
@@ -12,10 +12,11 @@ import ReviewIndex from "../ReviewIndexItem";
 import CreateReviewModal from "../CreateReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal";
 
+
 function SpotIndex() {
     const { spotId } = useParams()
     const spot = useSelector(state => state.spots.singleSpot)
-    const user = useSelector(state => state.session.user)
+    let user = useSelector(state => state.session.user)
     const [reviewdd, setReviewdd] = useState(false);
     let reviewed;
     let reviews = useSelector(state => state.reviews.spot)
@@ -25,7 +26,9 @@ function SpotIndex() {
 
         dispatch(fetchSingleSpot(spotId))
         dispatch(fetchreviews(spotId))
-        dispatch(fetchSpots())
+        // dispatch(fetchSpots())
+
+        // return () => dispatch(offLoadSpot(spot))
     }, [dispatch, spotId])
 
     if (!spot) return null
@@ -33,12 +36,22 @@ function SpotIndex() {
     console.log('this is the spot',spot)
 
     console.log('spotImage', SpotImages)
-    let mainImage;
-    if (SpotImages.length < 1){
-        mainImage = 'https://media.istockphoto.com/id/1255835530/photo/modern-custom-suburban-home-exterior.jpg?s=612x612&w=0&k=20&c=0Dqjm3NunXjZtWVpsUvNKg2A4rK2gMvJ-827nb4AMU4='
-    } else {
-        mainImage = SpotImages.find(spot => spot.preview === true).url
+    let mainImage = SpotImages.find(image => {
+        return image.preview == true
+    })
+
+    const toggleReviewed = () => {
+        console.log('clickling for the review')
+        setReviewdd(!reviewdd)
     }
+
+    if (!mainImage) mainImage = {url:'https://media.istockphoto.com/photos/beautiful-luxury-home-exterior-at-twilight-picture-id1026205392?b=1&k=20&m=1026205392&s=612x612&w=0&h=wChttFxmS4jrjBGOMWX597lrdVqHQvEqFrRaQi2rObk='}
+    console.log('this is new image', mainImage)
+    // if (SpotImages.length < 1){
+    //     mainImage = 'https://media.istockphoto.com/id/1255835530/photo/modern-custom-suburban-home-exterior.jpg?s=612x612&w=0&k=20&c=0Dqjm3NunXjZtWVpsUvNKg2A4rK2gMvJ-827nb4AMU4='
+    // } else {
+    //     mainImage = SpotImages.find(spot => spot.preview === true).url
+    // }
     if (!reviews) {
         console.log('bye this will stop the render')
         return null
@@ -64,6 +77,11 @@ function SpotIndex() {
         })
     }
 
+
+    // if (reviewed){
+    //     setReviewdd(true)
+    // }
+    // if (!user) user = {}
     console.log('these are the reviews',reviews)
     console.log(mainImage)
     console.log(Owner)
@@ -77,7 +95,7 @@ function SpotIndex() {
             </div>
             <div className="spot-images">
                 <div className="image-border">
-                    <img alt="house" className="mainImage" src={mainImage}></img>
+                    <img alt="house" className="mainImage" src={mainImage.url}></img>
                     {SpotImages.map(image => (
                         <img alt="house" className="spotImage" src={`${image.url}`}></img>
                     ))}
@@ -154,12 +172,12 @@ function SpotIndex() {
                 {!reviewed? <button><OpenModalMenuItem
                     itemText="Create Review"
                     // onItemClick={closeMenu}
-                    onModalClose={() => setReviewdd(true)}
-                    modalComponent={<CreateReviewModal spot={spot} />}/></button> : <button><OpenModalMenuItem
+                    // onItemClick={toggleReviewed}
+                    modalComponent={<CreateReviewModal toggleReviewed={toggleReviewed} spot={spot} />}/></button> : <button><OpenModalMenuItem
                     itemText="Delete Review"
                     // onItemClick={closeMenu}
                     onModalClose={() => setReviewdd(false)}
-                    modalComponent={<DeleteReviewModal spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/></button>}
+                    modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/></button>}
 
 
             </div>
@@ -172,7 +190,7 @@ function SpotIndex() {
                 <div> To protect your payment, never transfer money or communicate through FairBnB as this is a clone website of AirBnB.</div>
                 {'The user info will go here'}
                 </div>
-                <button>
+                {user && (user.id === +spot.ownerId) ? <><button>
                 <OpenModalMenuItem
                     itemText="Edit Spot"
                     // onItemClick={closeMenu}
@@ -183,7 +201,8 @@ function SpotIndex() {
                     itemText="Delete Spot"
                     // onItemClick={closeMenu}
                     modalComponent={<DeleteSpotModal spot={spot} />}/>
-                </button>
+                </button></> : ''}
+
             </div>
             <div>
                 <div>
