@@ -6,7 +6,7 @@ import { useModal } from "../../context/Modal";
 import { removeSpot } from '../../store/spots'
 import './index.css';
 
-function DeleteSpotModal({spot}) {
+function DeleteSpotModal({spot, setIsHome}) {
     const dispatch = useDispatch();
     const [country, setCountry] = useState("");
     const [errors, setErrors] = useState([]);
@@ -27,6 +27,7 @@ function DeleteSpotModal({spot}) {
           });
         // console.log('this is the errors', errors)
         console.log(res)
+        setIsHome(true)
         history.push('/')
 
         // console.log('this is the spot', spot)

@@ -257,7 +257,8 @@ function SpotIndex({isHome, setIsHome}) {
                         <OpenModalMenuItem
                             itemText="Delete Spot"
                             // onItemClick={closeMenu}
-                            modalComponent={<DeleteSpotModal spot={spot} />}/>
+                            // onModalClose={() => setIsHome(true)}
+                            modalComponent={<DeleteSpotModal spot={spot} setIsHome={setIsHome} />}/>
                         </button></> : ''}
                     </div>
                 </div>
