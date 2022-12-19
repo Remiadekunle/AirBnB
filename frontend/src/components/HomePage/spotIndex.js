@@ -3,7 +3,7 @@ import './homePage.css';
 
 
 export function SpotIndex( {spot, isHome, setIsHome} ){
-    let { id, city, state, price, name, avgRating, previewImage} = spot
+    let { id, city, state, price, name, avgRating, previewImage} = spot;
 
     const rounded = (num) => {
         return Number.parseFloat(num).toFixed(1);
@@ -17,7 +17,7 @@ export function SpotIndex( {spot, isHome, setIsHome} ){
     const toggleNav = () => {
         setIsHome(false)
       }
-
+      console.log('this is the prvw', previewImage )
     return (
         <NavLink className={'spot-card-container'} onClick={toggleNav} key={name} to={`/spots/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className="home-Card">
