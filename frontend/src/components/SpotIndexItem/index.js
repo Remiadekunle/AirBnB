@@ -154,9 +154,7 @@ function SpotIndex({isHome, setIsHome}) {
                         <div>Wifi</div>
                         <div>Free parking on premises</div>
                         <div>Gym</div>
-                        <div>Kitchen</div>
-                        <div>Patio or balcony</div>
-                        <div>Backyard</div>
+
                         {'The amenities will go here'}
                     </div>
                 </div>

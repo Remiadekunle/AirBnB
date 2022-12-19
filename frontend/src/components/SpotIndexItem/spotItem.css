@@ -89,7 +89,7 @@
     position: sticky;
     box-sizing: border-box;
     top: 0;
-    /* z-index: 999; */
+    /* z-index: -1; */
     width: 350px;
     /* height: 100%; */
     border: 1px solid gray;
@@ -155,7 +155,9 @@
 
 .amenities-container{
     width: 100%;
+    height: auto;
     padding: 25px 0px;
+    overflow-y: hidden;
     /* border-bottom: 1px solid gray; */
 }
 
@@ -187,7 +189,7 @@
 
 .spot-left-container{
     width: 55%;
-    height: 100%;
+    height: auto;
 }
 
 .spot-rigth-container{
