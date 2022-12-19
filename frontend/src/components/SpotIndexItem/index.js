@@ -80,6 +80,8 @@ function SpotIndex({isHome, setIsHome}) {
         return Number.parseFloat(num).toFixed(1);
     }
 
+
+
     // if (!spots.allSpots){
     //     console.log('hello sir')
     //     setIsHome(false)
@@ -178,7 +180,8 @@ function SpotIndex({isHome, setIsHome}) {
 
                             <button id="reserve-button"><OpenModalMenuItem
                             itemText="Reserve Now"
-                            // onItemClick={closeMenu}
+                            // onButtonClick={dimModal}
+                            // onModalClose={dimModal}
                             modalComponent={<ComingSoon spot={spot} feature={'Bookings'}/>}/></button>
                         </div>
                     </div>

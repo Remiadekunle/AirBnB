@@ -10,6 +10,7 @@ function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHome, setIsHome] = useState(true);
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -23,7 +24,7 @@ function App() {
             <Home isHome={isHome} setIsHome={setIsHome} />
           </Route>
           <Route path={'/spots/:spotId'}>
-            <SpotIndex isHome={isHome} setIsHome={setIsHome} />
+            <SpotIndex isHome={isHome} setIsHome={setIsHome}/>
           </Route>
         </Switch>
       )}

@@ -11,9 +11,13 @@ function LoginFormModal() {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
+
+
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(
@@ -28,6 +32,9 @@ function LoginFormModal() {
     <>
       <h1>Log In</h1>
       <form className="login-form" onSubmit={handleSubmit}>
+        <div id="welcome-message">
+          Welcome to FairBnB
+        </div>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>

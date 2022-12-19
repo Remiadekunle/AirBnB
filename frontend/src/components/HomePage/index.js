@@ -24,7 +24,7 @@ export function Home({isHome, setIsHome}) {
                 <div className="home-page">
                     {
                         spots.map(spot => (
-                            <SpotIndex isHome={isHome} setIsHome={setIsHome} spot={spot}/>
+                            <SpotIndex isHome={isHome} setIsHome={setIsHome} spot={spot} />
                         ))
                     }
                 </div>

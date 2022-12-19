@@ -75,6 +75,8 @@ function EditSpotModal({spot}) {
           </div>
           <input
             type="text"
+            name="address"
+            defaultValue={address}
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required

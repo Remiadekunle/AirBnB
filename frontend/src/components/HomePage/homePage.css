@@ -3,7 +3,8 @@
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    width: 100%
+    width: 100%;
+    height: 100%;
 }
 
 .home-page{
@@ -28,18 +29,22 @@
 
 .preview-img{
     width: 100%;
-    height: 250px;
+    height: 100%;
+    /* max-height: auto; */
     border-radius: 10px;
 }
 
 .img-border{
     width: 100%;
+    height: 70%;
 }
 
 .spot-contents{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    height: 30%;
+    font-size: 0.9vw;
 }
 
 .avg-rating{
@@ -62,6 +67,8 @@
     justify-content: space-between;
     font-weight: 900;
     margin-bottom: 2px;
+    /* font-size: 1vw; */
+    /* overflow: hidden; */
 }
 .card-price{
     margin-top: 8px;
@@ -70,10 +77,11 @@
 .footer{
     position: sticky;
     display: flex;
-    bottom: 0;
+    /* width: 100%; */
+    bottom: 0%;
     height: 40px;
     align-items: center;
-    z-index: 999;
+    /* z-index: 999; */
     border-top: 1px solid gray;
     /* width: 100%; */
     background-color: white;
@@ -102,4 +110,5 @@
 
 .spot-card-container{
     width: 100%;
+    height: 100%;
 }

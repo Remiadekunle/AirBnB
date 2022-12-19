@@ -6,7 +6,7 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { demoLogIn } from "../../store/session";
 
-function ProfileButton({ user, isHome, setIsHome }) {
+function ProfileButton({ user, isHome, setIsHome}) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -24,6 +24,9 @@ function ProfileButton({ user, isHome, setIsHome }) {
 
       await dispatch(demoLogIn(demo)).then(() => closeMenu())
     }
+
+
+    // console.log(typeof dimModal)
 
     useEffect(() => {
       if (!showMenu) return;
@@ -75,8 +78,10 @@ function ProfileButton({ user, isHome, setIsHome }) {
             <button className="auth-buttons">
               <OpenModalMenuItem
                 itemText="Log In"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
+                // onButtonClick={dimModal}
+                // onItemClick={dim2}
+                // onModalClose={() => dim2}
+                modalComponent={<LoginFormModal  />}
               />
             </button>
             <button className="auth-buttons">

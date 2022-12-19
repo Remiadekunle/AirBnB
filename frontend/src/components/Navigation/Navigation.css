@@ -5,7 +5,7 @@
 .header{
     position: sticky;
     top: 0;
-    z-index: 99;
+    /* z-index: 1; */
     box-sizing: border-box;
     background-color: white;
     border-bottom: 1px solid gray;
@@ -15,8 +15,10 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    height: 80px;
+    height: 8%;
 }
+
+
 
 .header2{
     /* position: sticky; */
@@ -33,6 +35,8 @@
     justify-content: space-between;
     height: 80px;
 }
+
+
 
 .profile-button{
     float: right;
@@ -208,4 +212,10 @@
 
 #logout-button:hover{
     background-color: gray;
+}
+
+.modal-button-text{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
 }
