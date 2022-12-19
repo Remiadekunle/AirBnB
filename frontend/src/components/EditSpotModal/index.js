@@ -76,8 +76,7 @@ function EditSpotModal({spot}) {
           <input
             type="text"
             name="address"
-            defaultValue={address}
-            value={address}
+            value={spot.address}
             onChange={(e) => setAddress(e.target.value)}
             required
             placeholder="Address"
@@ -86,7 +85,7 @@ function EditSpotModal({spot}) {
         <label>
           <input
             type="text"
-            value={city}
+            value={spot.city}
             onChange={(e) => setCity(e.target.value)}
             required
             placeholder="City"
@@ -95,7 +94,7 @@ function EditSpotModal({spot}) {
         <label>
           <input
             type="text"
-            value={state}
+            value={spot.state}
             onChange={(e) => setState(e.target.value)}
             required
             placeholder="State"
@@ -104,7 +103,7 @@ function EditSpotModal({spot}) {
         <label>
           <input
             type="text"
-            value={country}
+            value={spot.country}
             onChange={(e) => setCountry(e.target.value)}
             required
             placeholder="Country"
@@ -114,7 +113,7 @@ function EditSpotModal({spot}) {
 
           <input
             type="name"
-            value={name}
+            value={spot.name}
             onChange={(e) => setName(e.target.value)}
             required
             placeholder="Name"
@@ -124,7 +123,7 @@ function EditSpotModal({spot}) {
 
           <input
             type="name"
-            value={description}
+            value={spot.description}
             onChange={(e) => setDescription(e.target.value)}
             required
             placeholder="Description"
@@ -136,7 +135,7 @@ function EditSpotModal({spot}) {
           </div>
           <input
             type="name"
-            value={price}
+            value={spot.price}
             onChange={(e) => setPrice(e.target.value)}
             required
           />
