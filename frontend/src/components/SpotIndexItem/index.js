@@ -123,7 +123,9 @@ function SpotIndex({isHome, setIsHome}) {
                         <div className="spot-guests">
                             <div id="picture-hosting">
                                 <h2 id="hosting-message">{`Entire vaction spot hosted by ${Owner.firstName}`}</h2>
-                                <img alt="profile" className="profile-picture" src="https://i.pinimg.com/originals/2b/9a/86/2b9a86cd82acb9924d3e80ff8b2201ee.jpg"></img>
+                                <div id="hosting-image-container">
+                                    <img alt="profile" className="profile-picture" src="https://i.pinimg.com/originals/2b/9a/86/2b9a86cd82acb9924d3e80ff8b2201ee.jpg"></img>
+                                </div>
                             </div>
                             <span>
                                 {`6 guests · 4 bedrooms · 3 bathrooms`}
