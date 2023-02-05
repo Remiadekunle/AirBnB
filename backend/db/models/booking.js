@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+
     static associate(models) {
       // define association here
       Booking.belongsTo(models.Spot, {
@@ -37,6 +38,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Booking',
+    defaultScope: {
+      attributes: {
+        include: ['id', 'spotId', 'userId', 'startDate', 'endDate']
+      }
+    }
   });
   return Booking;
 };

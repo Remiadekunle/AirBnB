@@ -1,0 +1,12 @@
+.spot-reserve-booking-calendar{
+    height: 300px;
+    /* width: 100px; */
+}
+
+.bookings-submit-button{
+    padding: 5px 10px;
+    border-radius: 20px;
+    border-width: .5px;
+    cursor: pointer;
+    margin-top: 10px;
+}

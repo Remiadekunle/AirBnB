@@ -263,6 +263,13 @@
     border-radius: 10px;
     cursor:pointer;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+}
+
+#reserve-button > div{
+    display: flex;
+    justify-content: center;
 }
 
 /* #user-container-buttons{

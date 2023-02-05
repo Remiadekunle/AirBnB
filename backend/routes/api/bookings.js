@@ -76,8 +76,10 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const booking = await Booking.findOne({
         where: {
             id
-        }
+        },
+        include: Spot
     });
+
 
     if (!booking){
         const err = new Error("Booking couldn\'t be found")
@@ -107,7 +109,11 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     booking.startDate = startDate;
     booking.endDate = endDate;
 
-    const bookings = await Booking.findAll()
+    const bookings = await Booking.findAll({
+        where: {
+            spotId: booking.Spot.id
+        }
+    })
 
     for (let i = 0; i < bookings.length; i++){
         let bookingA = bookings[i];

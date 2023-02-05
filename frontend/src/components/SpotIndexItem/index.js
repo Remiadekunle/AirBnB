@@ -11,6 +11,10 @@ import ReviewIndex from "../ReviewIndexItem";
 import CreateReviewModal from "../CreateReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal";
 import ComingSoon from "../ComingSoon";
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css';
+import CalendarComponent from "../CalendarComponent";
+import { fetchBookings } from "../../store/booking";
 
 function SpotIndex({isHome, setIsHome}) {
     const { spotId } = useParams()
@@ -25,6 +29,7 @@ function SpotIndex({isHome, setIsHome}) {
 
         dispatch(fetchSingleSpot(spotId))
         dispatch(fetchreviews(spotId))
+        dispatch(fetchBookings(spotId))
         // dispatch(fetchSpots())
 
         // return () => dispatch(offLoadSpot(spot))
@@ -178,11 +183,9 @@ function SpotIndex({isHome, setIsHome}) {
                         </div>
                         <div className="reserve-button-container">
 
-                            <button id="reserve-button"><OpenModalMenuItem
-                            itemText="Reserve Now"
-                            // onButtonClick={dimModal}
-                            // onModalClose={dimModal}
-                            modalComponent={<ComingSoon spot={spot} feature={'Bookings'}/>}/></button>
+                            <button id="reserve-button">
+                                <OpenModalMenuItem itemText="Reserve Now" modalComponent={<CalendarComponent spot={spot} />} />
+                            </button>
                         </div>
                     </div>
                 </div>

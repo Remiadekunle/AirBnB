@@ -457,6 +457,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     const {startDate, endDate} = req.body;
 
+
+
     const spot = await Spot.findOne({
         where: {
             id
@@ -465,24 +467,36 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     if (!spot){
         const err = new Error("Spot couldn\'t be found")
+        err.errors = {"error": "Spot couldn\'t be found"}
         err.status = 404;
         return next(err)
     }
     if (spot.ownerId == user.id){
         const err = new Error("Owner cannot create a booking for this spot!!!")
+        err.errors = {"error": "Owner cannot create a booking for this spot!!!"}
         err.status = 404;
         return next(err)
     }
 
 
     if (endDate <= startDate){
+        console.log('what is the startDate', startDate)
+        console.log('what is the startDate', typeof startDate)
+        console.log('what is the endDate', endDate)
+        console.log('what is the endDate', typeof endDate)
+        console.log('fuck bro huh', endDate <= startDate)
         const err = new Error("endDate cannot be on or before startDate")
+        err.errors = {"error":"End Date cannot be on or before startDate"};
         err.status = 400;
         return next(err)
     }
 
 
-    const bookings = await Booking.findAll()
+    const bookings = await Booking.findAll({
+        where: {
+            spotId: spot.id
+        }
+    })
 
     const booking = await Booking.build({
         startDate,
@@ -519,6 +533,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     }
 
     await booking.save();
+
+
     res.json(booking)
 })
 
@@ -548,8 +564,9 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 attributes: {
                     exclude: ['createdAt', 'updatedAt',  'username', 'email', 'hashedPassword']
                 }
-            }
-        ]
+            },
+        ],
+        attributes: ['id', 'startDate', 'endDate', 'createdAt', 'updatedAt', 'spotId', 'userId']
     })
 
 
@@ -569,7 +586,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
             delete booking.userId;
             delete booking.createdAt;
             delete booking.updatedAt;
-            delete booking.id;
             console.log(booking)
             Bookings.push(booking)
         }
