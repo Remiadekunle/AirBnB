@@ -18,7 +18,7 @@ function ProfileButton({ user, isHome, setIsHome}) {
 
     const useDemo = async () => {
       const demo = {
-        credential: 'Ultimate Demo',
+        credential: 'Demo-lition',
         password: 'password'
       }
 
