@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/HomePage";
 import SpotIndex from "./components/SpotIndexItem";
+import { fetchSpots } from "./store/spots";
 
 function App() {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ function App() {
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    dispatch(fetchSpots())
   }, [dispatch]);
 
   return isLoaded && (
