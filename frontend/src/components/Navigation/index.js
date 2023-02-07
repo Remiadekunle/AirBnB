@@ -26,6 +26,9 @@ function Navigation({ isLoaded, isHome, setIsHome}){
           <span className='home-text'> Fairbnb</span>
           </NavLink>
         </div>
+        <form>
+          <input className='search-input' placeholder='Search'></input>
+        </form>
         <div className='profile-container2'>
           <div className='create-spot'>
             {(sessionUser && sessionUser.id) && (<button className='create-spot-button'>

@@ -19,7 +19,16 @@ export function Home({isHome, setIsHome}) {
     const spots = Object.values(initialSpots.allSpots)
 
     return (
-        <div>
+        <div style={{width: '100%', position: 'relative'}}>
+            <div className="search-filter-container">
+                <div style={{display: 'flex', alignItems: 'center', height: '100%', gap: '30px'}}>
+                    <button className="search-filter-buttons"><i class="fa-solid fa-dollar-sign fa-2xl"></i></button>
+                    <button className="search-filter-buttons"><i class="fa-solid fa-people-group fa-2xl"></i></button>
+                    <button className="search-filter-buttons"><i class="fa-solid fa-fire fa-2xl"></i></button>
+                    <button className="search-filter-buttons"><i class="fa-solid fa-key fa-2xl"></i></button>
+                    <button className="search-filter-buttons"><i class="fa-solid fa-shuffle fa-2xl"></i></button>
+                </div>
+            </div>
             <div className="home-page-container">
                 <div className="home-page">
                     {
@@ -29,6 +38,7 @@ export function Home({isHome, setIsHome}) {
                     }
                 </div>
             </div>
+            {/* <button>Show map</button> */}
             <div className="footer">
                 <div className="app-copyright">
                     <i class="fa-regular fa-copyright fa-xs"></i>

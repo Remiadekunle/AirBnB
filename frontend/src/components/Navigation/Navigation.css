@@ -10,15 +10,20 @@
     background-color: white;
     border-bottom: 1px solid gray;
     width: 100%;
-    padding: 20px 5%;
-    margin-bottom: 20px;
+    padding: 20px 4.5%;
+    /* margin-bottom: 20px; */
     align-items: center;
     display: flex;
     justify-content: space-between;
     height: 8%;
 }
 
-
+.search-input{
+    padding: 5px 10px;
+    border-radius: 10px;
+    border-width: 0.5px;
+    border-color: #222222;
+}
 
 .header2{
     /* position: sticky; */

@@ -12,6 +12,7 @@
     /* margin: 0px 50px; */
     grid-template-columns: repeat(6, 1fr);
     grid-auto-flow: row dense;
+    grid-template-rows: 350px;
     grid-gap: 20px;
     width: 100%;
     /* padding: 0px 80px; */
@@ -20,10 +21,29 @@
     overflow-y: hidden;
 }
 
+.search-filter-container{
+    /* border: 1px solid red; */
+    width: 100%;
+    height: 80px;
+    margin-bottom: 20px;
+    padding: 0px 4.5%;
+}
+
+.search-filter-buttons{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+}
+
 .home-page-container{
     display: flex;
     /* width: 100%; */
-    margin: 0 5%;
+    margin: 0 4.5%;
     /* display: flex; */
 }
 
