@@ -13,6 +13,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         where: {
             userId: user.id
         },
+        order: [['createdAt', 'DESC']]
     })
     const Bookings = []
 
@@ -61,7 +62,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     }
 
     res.json({
-        Bookings
+        bookings: Bookings
     })
 })
 

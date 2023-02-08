@@ -2,6 +2,8 @@ import { csrfFetch } from "./csrf"
 
 const LOAD_BOOKINGS = 'bookings/loadBookings'
 
+const LOAD_USERBOOKINGS = 'bookings/loadUserBookings'
+
 const ADD_BOOKING = 'bookings/addBooking'
 
 const DELETE_BOOKING = 'bookings/deleteBooking'
@@ -21,6 +23,13 @@ export const addBooking = (booking) => {
     }
 }
 
+export const loadUserBookings = (bookings) => {
+    return{
+        type:LOAD_USERBOOKINGS,
+        bookings
+    }
+}
+
 export const deleteBooking = (id) => {
     return{
         type: DELETE_BOOKING,
@@ -34,7 +43,16 @@ export const fetchBookings = (spotId) => async dispatch => {
     if (res.ok){
         const body = await res.json()
         console.log('these are the bookings', body)
-        await dispatch(loadBookings(body.Bookings))
+        await dispatch(loadBookings(body.bookings))
+    }
+}
+
+export const fetchUserBookings = () => async dispatch => {
+    const res = await csrfFetch(`/api/bookings/current`)
+    if (res.ok){
+        const body = await res.json()
+        console.log('these are the bookings', body)
+        await dispatch(loadUserBookings(body.bookings))
     }
 }
 
@@ -76,6 +94,14 @@ const bookingReducer = (state = initialState, action) => {
             newState.spot = {...newState.spot}
             const booking = action.booking
             newState.spot[booking.id] = booking
+            return newState;
+        case LOAD_USERBOOKINGS:
+            newState = Object.assign({}, state);
+            newState.user = {}
+            const bookings2 = action.bookings
+            bookings2.forEach((booking) => {
+                newState.user[booking.id] = booking
+            })
             return newState;
       default:
         return state;

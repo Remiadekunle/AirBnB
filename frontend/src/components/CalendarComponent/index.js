@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Calendar from 'react-calendar'
 import { useDispatch, useSelector } from 'react-redux'
+import { useModal } from '../../context/Modal';
 import { createBooking } from '../../store/booking';
 import './index.css'
 
@@ -15,6 +16,7 @@ const betweenDates = (date, bookings) => {
 
 function CalendarComponent({spot}){
     const dispatch = useDispatch();
+    const { closeModal } = useModal();
     const [dates, setDates] = useState([])
     const [errors, setErrors] = useState([])
     console.log('what is the dates varaible', dates)
@@ -98,7 +100,9 @@ function CalendarComponent({spot}){
         await dispatch(createBooking(spot.id, startList.join('-'), endList.join('-'))).catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(Object.values(data.errors));
-          });
+        });
+
+        closeModal()
         }
     let maxDate = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate())
     // maxDate = maxDate.setFullYear(now.getFullYear() + 1)

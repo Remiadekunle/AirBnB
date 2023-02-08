@@ -15,6 +15,7 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import CalendarComponent from "../CalendarComponent";
 import { fetchBookings } from "../../store/booking";
+import ViewReservations from "../CalendarComponent/ViewCalendar";
 
 function SpotIndex({isHome, setIsHome}) {
     const { spotId } = useParams()
@@ -185,6 +186,9 @@ function SpotIndex({isHome, setIsHome}) {
 
                             <button id="reserve-button">
                                 <OpenModalMenuItem itemText="Reserve Now" modalComponent={<CalendarComponent spot={spot} />} />
+                            </button>
+                            <button id="reserve-button">
+                                <OpenModalMenuItem itemText="View Reservations" modalComponent={<ViewReservations spot={spot} />} />
                             </button>
                         </div>
                     </div>
