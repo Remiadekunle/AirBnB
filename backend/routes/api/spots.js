@@ -567,7 +567,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
             },
         ],
         attributes: ['id', 'startDate', 'endDate', 'createdAt', 'updatedAt', 'spotId', 'userId'],
-        order: ['createdAt', 'DESC']
     })
 
 

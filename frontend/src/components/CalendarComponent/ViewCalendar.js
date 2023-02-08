@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchUserBookings } from "../../store/booking"
+import { deleteBooking, fetchUserBookings, removeBooking } from "../../store/booking"
 
 function ViewReservations({spot}){
     const dispatch = useDispatch()
@@ -24,19 +24,34 @@ function ViewReservations({spot}){
     return(
         <div style={{padding: '30px'}}>
             {filterd && filterd.map(booking => (
-                <div style={{display: 'flex', gap: '10px'}}>
-                    <div>
-                        From:
-                        {booking.startDate}
-                    </div>
-                    <div>
-                        To:
-                        {booking.endDate}
-                    </div>
-                </div>
+                <BookingIndex booking={booking} />
             ))}
         </div>
     )
 }
 
 export default ViewReservations
+
+
+export function BookingIndex({booking}){
+    const dispatch = useDispatch();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await dispatch(removeBooking(booking.id))
+        // await dispatch(fetchUserBookings())
+    }
+
+    return(
+        <div style={{display: 'flex', gap: '10px'}}>
+            <div>
+                From:
+                {booking.startDate}
+            </div>
+            <div>
+                To:
+                {booking.endDate}
+            </div>
+            <button onClick={handleSubmit}>Delete Booking</button>
+        </div>
+    )
+}
