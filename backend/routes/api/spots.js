@@ -5,6 +5,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { response } = require('../../app');
 const router = express.Router();
+const { Op } = require("sequelize");
 
 router.get('/', async (req, res) => {
     let {page, size} = req.query;
@@ -631,5 +632,26 @@ router.delete('/:spotId', async(req, res, next) => {
 
 })
 
+router.post('/search', async(req, res, next) => {
+    const { user } = req;
+
+    const {search} = req.body;
+    const spots = await Spot.findAll({
+        where: {
+            [Op.or]: [
+                {
+                    name: {
+                        [Op.like]: `%${search}`
+                    }
+                },
+                {
+                    description: {
+                        [Op.like]: `%${search}`
+                    }
+                }
+            ]
+        }
+    })
+})
 
 module.exports = router;

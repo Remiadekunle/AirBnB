@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import CreateSpotModal from '../CreateSpotModal';
+import { getSearch } from '../../store/search';
 
 function Navigation({ isLoaded, isHome, setIsHome}){
   const sessionUser = useSelector(state => state.session.user);
+  const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
+  const [search, setSearch] = useState('')
   const toggleNav = () => {
     console.log('clicked')
     setIsHome(true)
   }
   const placeholder = (!isHome? (isModal ? 'header4' : 'header2') :(isModal ? 'header3': 'header'))
   console.log(placeholder)
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    await dispatch(getSearch(search))
+  }
 
   const modalClassName = (!isHome? 'header2' :'header')
 
@@ -28,8 +36,8 @@ function Navigation({ isLoaded, isHome, setIsHome}){
             <span className='home-text'> Fairbnb</span>
             </NavLink>
           </div>
-          <form>
-            <input className='search-input' placeholder='Search'></input>
+          <form onSubmit={handleSearch}>
+            <input onChange={e => setSearch(e.target.value)} className='search-input' placeholder='Search' value={search}></input>
           </form>
           <div className='profile-container2'>
             <div className='create-spot'>
