@@ -125,11 +125,11 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         const end = booking.endDate.getTime();
 
         if ((start >= bStart) && (start <= bEnd)){
-            errors.startDate = "Start date conflicts with an existing booking";
+            errors.startDate = `Start date conflicts with an existing booking ${bookingA.startDate.toDateString()} - ${bookingA.endDate.toDateString()}`;
             break
         }
         if ((end >= bStart) && (end <= bEnd)){
-            errors.endDate = "End date conflicts with an existing booking";
+            errors.endDate = `End date conflicts with an existing booking ${bookingA.startDate.toDateString()} - ${bookingA.endDate.toDateString()}`;
             break
         }
     }
@@ -182,6 +182,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
 
     if ((booking.startDate < current) && (booking.endDate > current)){
         const err = new Error("Bookings that have been started can't be deleted")
+        err.errors = "Bookings that have been started can't be deleted"
         err.status = 403;
         return next(err)
     }

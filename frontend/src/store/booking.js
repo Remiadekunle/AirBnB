@@ -129,6 +129,7 @@ const bookingReducer = (state = initialState, action) => {
             newState.user = {...state.user}
             const booking = action.booking
             newState.spot[booking.id] = booking
+            newState.user[booking.id] = booking
             return newState;
         case LOAD_USERBOOKINGS:
             newState = Object.assign({}, state);

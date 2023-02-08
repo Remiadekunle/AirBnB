@@ -457,7 +457,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     const {startDate, endDate} = req.body;
 
-
+    const nextDate = new Date()
 
     const spot = await Spot.findOne({
         where: {
@@ -479,17 +479,17 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     }
 
 
-    if (endDate <= startDate){
-        console.log('what is the startDate', startDate)
-        console.log('what is the startDate', typeof startDate)
-        console.log('what is the endDate', endDate)
-        console.log('what is the endDate', typeof endDate)
-        console.log('fuck bro huh', endDate <= startDate)
-        const err = new Error("endDate cannot be on or before startDate")
-        err.errors = {"error":"End Date cannot be on or before startDate"};
-        err.status = 400;
-        return next(err)
-    }
+    // if (endDate <= startDate){
+    //     console.log('what is the startDate', startDate)
+    //     console.log('what is the startDate', typeof startDate)
+    //     console.log('what is the endDate', endDate)
+    //     console.log('what is the endDate', typeof endDate)
+    //     console.log('fuck bro huh', endDate <= startDate)
+    //     const err = new Error("endDate cannot be on or before startDate")
+    //     err.errors = {"error":"End Date cannot be on or before startDate"};
+    //     err.status = 400;
+    //     return next(err)
+    // }
 
 
     const bookings = await Booking.findAll({
@@ -497,6 +497,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             spotId: spot.id
         }
     })
+
 
     const booking = await Booking.build({
         startDate,
@@ -516,11 +517,11 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         const end = booking.endDate.getTime();
 
         if ((start >= bStart) && (start <= bEnd)){
-            errors.startDate = "Start date conflicts with an existing booking";
+            errors.startDate = `Start date conflicts with an existing booking ${bookingA.startDate.toDateString()} - ${bookingA.endDate.toDateString()}`;
             break
         }
         if ((end >= bStart) && (end <= bEnd)){
-            errors.endDate = "End date conflicts with an existing booking";
+            errors.endDate = `End date conflicts with an existing booking ${bookingA.startDate.toDateString()} - ${bookingA.endDate.toDateString()}`;
             break
         }
     }
