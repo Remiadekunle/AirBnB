@@ -47,7 +47,7 @@ export const getSearch = (search) => async dispatch => {
 
     if (res.ok){
         const body = await res.json()
-        dispatch(loadSearch(body.products))
+        dispatch(loadSearch(body.search))
         return body
     }
 }

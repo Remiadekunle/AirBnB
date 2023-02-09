@@ -641,16 +641,22 @@ router.post('/search', async(req, res, next) => {
             [Op.or]: [
                 {
                     name: {
-                        [Op.like]: `%${search}`
+                        [Op.like]: `%${search}%`
                     }
                 },
                 {
                     description: {
-                        [Op.like]: `%${search}`
+                        [Op.like]: `%${search}%`
                     }
                 }
             ]
         }
+    })
+
+    res.status = 200;
+    console.log('11111111111111111111111111111111111111111111111111', spots)
+    res.json({
+        search: spots
     })
 })
 
