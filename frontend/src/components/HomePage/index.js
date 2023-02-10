@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import SpotIndex from "./spotIndex";
 import './homePage.css';
 import { NavLink } from "react-router-dom";
+import Maps from '../Maps/Maps'
 
 export function Home({isHome, setIsHome}) {
     const dispatch = useDispatch();
@@ -44,6 +45,9 @@ export function Home({isHome, setIsHome}) {
                     <span>{' · '}</span>
                     <span>JavaScript</span>
                 </div>
+            </div>
+            <div style={{width: '90%', justifyContent: 'center', display: 'flex'}}>
+                <Maps />
             </div>
         </div>
     )
