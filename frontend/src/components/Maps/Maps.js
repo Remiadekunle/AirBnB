@@ -12,6 +12,7 @@ const center = {
 };
 
 const Maps = ({ apiKey }) => {
+  console.log('what is going on 22222222222222', typeof apiKey)
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,

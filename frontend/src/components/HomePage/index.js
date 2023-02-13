@@ -5,6 +5,7 @@ import SpotIndex from "./spotIndex";
 import './homePage.css';
 import { NavLink } from "react-router-dom";
 import Maps from '../Maps/Maps'
+import MapContainer from "../Maps";
 
 export function Home({isHome, setIsHome}) {
     const dispatch = useDispatch();
@@ -47,7 +48,7 @@ export function Home({isHome, setIsHome}) {
                 </div>
             </div>
             <div style={{width: '90%', justifyContent: 'center', display: 'flex'}}>
-                <Maps />
+                <MapContainer></MapContainer>
             </div>
         </div>
     )

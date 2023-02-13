@@ -5,6 +5,7 @@ import spotReducer from "./spots";
 import reviewReducer from "./reviews";
 import bookings from './booking'
 import search from './search'
+import maps from './maps'
 
 const rootReducer = combineReducers({
   // add reducer functions here
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   spots: spotReducer,
   reviews: reviewReducer,
   bookings,
-  search
+  search,
+  maps
 });
 
 let enhancer;
