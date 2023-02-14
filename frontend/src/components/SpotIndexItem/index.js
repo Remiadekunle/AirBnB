@@ -135,7 +135,7 @@ function SpotIndex({isHome, setIsHome}) {
                                 </div>
                             </div>
                             <span>
-                                {`6 guests · 4 bedrooms · 3 bathrooms`}
+                                {`6 guests · ${spot.beds} bedrooms · ${spot.baths} bathrooms`}
                             </span>
                         </div>
                     </div>
@@ -151,6 +151,11 @@ function SpotIndex({isHome, setIsHome}) {
                         <div className="spot-perks">
                             <i class="fa-solid fa-dumbbell"></i>
                             {'Indoor Gym and Pool'}
+                        </div>
+                    </div>
+                    <div className="description-container">
+                        <div>
+                            {'Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.'}
                         </div>
                     </div>
                     <div className="description-container">
@@ -223,7 +228,13 @@ function SpotIndex({isHome, setIsHome}) {
 
             </div>
             <div className="maps-container">
-                <MapContainer />
+                <h2>
+                    Where you'll be
+                </h2>
+                <MapContainer lat={spot.lat} lng={spot.lng} price={spot.price}/>
+                <div>
+                    {spot.description}
+                </div>
             </div>
             <div className="user-container">
                 <div>

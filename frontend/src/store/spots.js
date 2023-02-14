@@ -6,6 +6,8 @@ const LOAD_SPOT = 'spots/loadSpot'
 
 const ADD_SPOT = 'spots/addSpot'
 
+const FILTER_SPOT = 'spots/filterSpot'
+
 const EDIT_SPOT = 'spots/editSpot'
 
 const OFFLOAD_SPOT = 'spots/offloadSpot'
@@ -38,6 +40,13 @@ export const editSpot = (spot) => {
     return {
         type:EDIT_SPOT,
         spot
+    }
+}
+
+export const filterSpot = (filter) => {
+    return{
+        type: FILTER_SPOT,
+        filter
     }
 }
 
@@ -149,6 +158,16 @@ export const updateSpot = (spot, oldSpot) => async dispatch => {
 
 const initialState = {};
 
+function compare( a, b, param ) {
+    if ( a[param] < b[param] ){
+      return -1;
+    }
+    if ( a[param] > b[param] ){
+      return 1;
+    }
+    return 0;
+}
+
 const spotReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
@@ -183,6 +202,12 @@ const spotReducer = (state = initialState, action) => {
             newState = Object.assign({}, state)
             newState.singleSpot = {}
             return newState;
+        case FILTER_SPOT:
+            newState = Object.assign({}, state)
+            const nonSpots = Object.values(state.allSpots)
+            let newSpots = nonSpots.sort((a, b) => compare(a,b, action.filter))
+            newState.filter = {spots: newSpots, filter: action.filter}
+            return newState
         case EDIT_SPOT:
             newState = Object.assign({}, state)
             newState.allSpots = {...state.allSpots}

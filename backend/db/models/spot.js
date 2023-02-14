@@ -38,8 +38,39 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING,
     state: DataTypes.STRING,
     country: DataTypes.STRING,
-    lat: DataTypes.DECIMAL,
-    lng: DataTypes.DECIMAL,
+    lat: {
+      type:DataTypes.DECIMAL,
+      validate: {
+        len: [-90, 90]
+      }
+    },
+    lng: {
+      type:DataTypes.DECIMAL,
+      validate: {
+        len: [-180, 180]
+      }
+    },
+    beds: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: true,
+        min:1,
+      }
+    },
+    baths: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: true,
+        min:1,
+      }
+    },
+    guests: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: true,
+        min:1,
+      }
+    },
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     price: DataTypes.DECIMAL

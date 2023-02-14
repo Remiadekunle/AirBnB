@@ -6,8 +6,9 @@ import './Navigation.css';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import CreateSpotModal from '../CreateSpotModal';
 import { getSearch } from '../../store/search';
+import { filterSpot } from '../../store/spots';
 
-function Navigation({ isLoaded, isHome, setIsHome}){
+function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered}){
   const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
@@ -23,6 +24,13 @@ function Navigation({ isLoaded, isHome, setIsHome}){
     e.preventDefault();
     await dispatch(getSearch(search))
   }
+
+  const handleFilter = (filter) => {
+    console.log('clicked')
+    dispatch(filterSpot(filter))
+    setIsFiltered(true)
+  }
+
 
   const modalClassName = (!isHome? 'header2' :'header')
 
@@ -45,7 +53,7 @@ function Navigation({ isLoaded, isHome, setIsHome}){
                 <OpenModalMenuItem
                 itemText="Create New Spot"
                 // onItemClick={closeMenu}
-                modalComponent={<CreateSpotModal />}/>
+                modalComponent={<CreateSpotModal setIsFiltered={setIsFiltered} />}/>
               </button>)}
             </div>
             <div>
@@ -60,11 +68,11 @@ function Navigation({ isLoaded, isHome, setIsHome}){
       </div>
       {isHome? <div className="search-filter-container">
           <div style={{display: 'flex', alignItems: 'center', gap: '30px', padding: '0px 4.5%'}}>
-              <button className="search-filter-buttons"><i class="fa-solid fa-dollar-sign fa-2xl"></i></button>
-              <button className="search-filter-buttons"><i class="fa-solid fa-people-group fa-2xl"></i></button>
-              <button className="search-filter-buttons"><i class="fa-solid fa-fire fa-2xl"></i></button>
-              <button className="search-filter-buttons"><i class="fa-solid fa-key fa-2xl"></i></button>
-              <button className="search-filter-buttons"><i class="fa-solid fa-shuffle fa-2xl"></i></button>
+              <button onClick={() => handleFilter('price')} className="search-filter-buttons"><i class="fa-solid fa-dollar-sign fa-2xl"></i></button>
+              <button onClick={() => handleFilter('guests')} className="search-filter-buttons"><i class="fa-solid fa-people-group fa-2xl"></i></button>
+              <button onClick={() => handleFilter('baths')} className="search-filter-buttons"><i class="fa-solid fa-fire fa-2xl"></i></button>
+              <button onClick={() => handleFilter('beds')} className="search-filter-buttons"><i class="fa-solid fa-key fa-2xl"></i></button>
+              <button onClick={() => setIsFiltered(false)}className="search-filter-buttons"><i class="fa-solid fa-shuffle fa-2xl"></i></button>
           </div>
       </div> : <></>}
 

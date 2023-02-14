@@ -6,7 +6,7 @@ import { createSpot } from '../../store/spots'
 import './index.css';
 
 
-function CreateSpotModal() {
+function CreateSpotModal({setIsFiltered}) {
   const dispatch = useDispatch();
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -15,6 +15,9 @@ function CreateSpotModal() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0)
+  const [beds, setBeds] = useState(0)
+  const [baths, setBaths] = useState(0)
+  const [guests, setGuests] = useState(0)
   const [url, setUrl] = useState('');
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
@@ -45,7 +48,10 @@ function CreateSpotModal() {
         lng,
         name,
         description,
-        price
+        price,
+        beds,
+        baths,
+        guests
     }
     const payload2 = {
       url,
@@ -54,7 +60,7 @@ function CreateSpotModal() {
     let errors;
 
 
-    await dispatch(createSpot(payload, payload2)).then(closeModal).catch(async (res) => {
+    await dispatch(createSpot(payload, payload2)).then(() => setIsFiltered(false)).then(closeModal).catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(Object.values(data.errors));
       });
@@ -166,6 +172,45 @@ function CreateSpotModal() {
             required
             // defaultValue={'none'}
             placeholder="Price"
+          />
+        </label>
+        <label >
+          <div id="create-price">
+            Beds
+          </div>
+          <input
+            type="number"
+            value={beds}
+            onChange={(e) => setBeds(e.target.value)}
+            required
+            // defaultValue={'none'}
+            placeholder="Beds"
+          />
+        </label>
+        <label >
+          <div id="create-price">
+            Baths
+          </div>
+          <input
+            type="number"
+            value={baths}
+            onChange={(e) => setBaths(e.target.value)}
+            required
+            // defaultValue={'none'}
+            placeholder="Baths"
+          />
+        </label>
+        <label >
+          <div id="create-price">
+            Guests
+          </div>
+          <input
+            type="number"
+            value={guests}
+            onChange={(e) => setGuests(e.target.value)}
+            required
+            // defaultValue={'none'}
+            placeholder="Guests"
           />
         </label>
         <button className="submitButton" type="submit">Submit</button>

@@ -192,7 +192,7 @@ router.get('/:spotId', async(req, res, next) => {
 })
 
 router.post('/', requireAuth, async(req, res, next) => {
-    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+    const {address, city, state, country, lat, lng, name, description, price, beds, baths, guests} = req.body;
 
     const { user } = req;
     const id = user.id
@@ -242,6 +242,9 @@ router.post('/', requireAuth, async(req, res, next) => {
         name,
         description,
         price,
+        beds,
+        baths,
+        guests,
         ownerId: id
     })
 

@@ -11,6 +11,7 @@ function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHome, setIsHome] = useState(true);
+  const [isFiltered, setIsFiltered] = useState(false)
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
@@ -19,11 +20,11 @@ function App() {
 
   return isLoaded && (
     <>
-      <Navigation isLoaded={isLoaded} isHome={isHome} setIsHome={setIsHome}/>
+      <Navigation isLoaded={isLoaded} isHome={isHome} setIsHome={setIsHome} setIsFiltered={setIsFiltered}/>
       {isLoaded && (
         <Switch>
           <Route exact path={'/'}>
-            <Home isHome={isHome} setIsHome={setIsHome} />
+            <Home isHome={isHome} setIsHome={setIsHome} isFiltered={isFiltered} />
           </Route>
           <Route path={'/spots/:spotId'}>
             <SpotIndex isHome={isHome} setIsHome={setIsHome}/>

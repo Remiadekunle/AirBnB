@@ -16,6 +16,9 @@ function EditSpotModal({spot}) {
   const [name, setName] = useState(spot.name);
   const [description, setDescription] = useState(spot.description);
   const [price, setPrice] = useState(spot.price)
+  const [beds, setBeds] = useState(spot.beds)
+  const [baths, setBaths] = useState(spot.baths)
+  const [guests, setGuests] = useState(spot.guests)
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
@@ -47,7 +50,10 @@ function EditSpotModal({spot}) {
         lng,
         name,
         description,
-        price
+        price,
+        beds,
+        baths,
+        guests
     }
 
 
@@ -138,6 +144,45 @@ function EditSpotModal({spot}) {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
+          />
+        </label>
+        <label >
+          <div id="create-price">
+            Beds
+          </div>
+          <input
+            type="number"
+            value={beds}
+            onChange={(e) => setBeds(e.target.value)}
+            required
+            // defaultValue={'none'}
+            placeholder="Beds"
+          />
+        </label>
+        <label >
+          <div id="create-price">
+            Baths
+          </div>
+          <input
+            type="number"
+            value={baths}
+            onChange={(e) => setBaths(e.target.value)}
+            required
+            // defaultValue={'none'}
+            placeholder="Baths"
+          />
+        </label>
+        <label >
+          <div id="create-price">
+            Guests
+          </div>
+          <input
+            type="number"
+            value={guests}
+            onChange={(e) => setGuests(e.target.value)}
+            required
+            // defaultValue={'none'}
+            placeholder="Guests"
           />
         </label>
         <button className="submitButton" type="submit">Submit</button>
