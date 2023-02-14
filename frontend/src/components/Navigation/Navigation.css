@@ -21,9 +21,11 @@
 
 .search-input{
     padding: 5px 10px;
-    border-radius: 10px;
+    border-radius: 25px;
     border-width: 0.5px;
     border-color: #222222;
+    height: 30px;
+    width: 300px;
 }
 
 .header2{
@@ -40,6 +42,10 @@
     align-items: center;
     justify-content: space-between;
     height: 80px;
+}
+
+.filter-star{
+    color: #FFFFFF;
 }
 
 .search-filter-container{
@@ -74,6 +80,7 @@
 .search-filter-buttons:hover{
     border-bottom: 1px solid black;
 }
+
 
 .reg-header-container{
     display: flex;

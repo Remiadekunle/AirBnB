@@ -59,6 +59,7 @@
 .card-info{
     display: flex;
     color: gray;
+    font-size: 16px;
 }
 
 .rating{
@@ -147,5 +148,5 @@
         /* max-height: auto; */
         border-radius: 10px;
     }
-    
+
 }

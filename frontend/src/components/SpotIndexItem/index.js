@@ -232,7 +232,7 @@ function SpotIndex({isHome, setIsHome}) {
                     Where you'll be
                 </h2>
                 <MapContainer lat={spot.lat} lng={spot.lng} price={spot.price}/>
-                <div>
+                <div style={{marginTop: '20px'}}>
                     {spot.description}
                 </div>
             </div>

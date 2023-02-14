@@ -41,7 +41,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
     dispatch(filterSpot(filter, reverse));
     setIsFiltered(true);
   };
-  
+
   console.log('this is the windown heigh', window.screenTop)
   const modalClassName = !isHome ? "header2" : "header";
 
@@ -57,6 +57,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
             justifyContent: "space-between",
             width: "100%",
             alignItems: "center",
+            height: '60px',
           }}
         >
           <div className="home-logo">
@@ -151,7 +152,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               className="search-filter-buttons"
             >
               <div>
-                <i class="fa-solid fa-fire fa-2xl"></i>
+                <i class="fa-solid fa-bed fa-2xl"></i>
               </div>
               <div>Baths</div>
             </button>
@@ -160,7 +161,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               className="search-filter-buttons"
             >
               <div>
-                <i class="fa-solid fa-key fa-2xl"></i>
+                <i class="fa-solid fa-bath fa-2xl"></i>
               </div>
               <div>Beds</div>
             </button>
@@ -169,7 +170,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               className="search-filter-buttons"
             >
               <div>
-                <i class="fa-solid fa-key fa-2xl"></i>
+                <i class="fa-solid fa-star fa-2xl filter-star"></i>
               </div>
               <div>Ratings</div>
             </button>
