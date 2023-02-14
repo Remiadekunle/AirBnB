@@ -16,6 +16,7 @@ import 'react-calendar/dist/Calendar.css';
 import CalendarComponent from "../CalendarComponent";
 import { fetchBookings } from "../../store/booking";
 import ViewReservations from "../CalendarComponent/ViewCalendar";
+import MapContainer from "../Maps";
 
 function SpotIndex({isHome, setIsHome}) {
     const { spotId } = useParams()
@@ -220,6 +221,9 @@ function SpotIndex({isHome, setIsHome}) {
 
                 </div>
 
+            </div>
+            <div className="maps-container">
+                <MapContainer />
             </div>
             <div className="user-container">
                 <div>

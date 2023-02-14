@@ -55,6 +55,14 @@ module.exports = {
         type: Sequelize.STRING(256),
         allowNull: false,
       },
+      beds:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      baths:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       price: {
         type: Sequelize.DECIMAL,
         allowNull: false,

@@ -48,7 +48,7 @@ export function Home({isHome, setIsHome}) {
                 </div>
             </div>
             <div style={{width: '90%', justifyContent: 'center', display: 'flex'}}>
-                <MapContainer></MapContainer>
+                <MapContainer center={{lat: 37.5899371,lng: -122.0290482,}} />
             </div>
         </div>
     )
