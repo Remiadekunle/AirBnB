@@ -4,7 +4,7 @@
     flex-direction: column;
     border-radius: 10px;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     justify-content: space-between;
 }
 
@@ -20,6 +20,7 @@
     /* width: 100%; */
     overflow-x: hidden;
     overflow-y: hidden;
+    padding-bottom: 50px;
 }
 
 
@@ -114,4 +115,37 @@
 .spot-card-container{
     width: 100%;
     height: 100%;
+}
+
+
+@media screen and (max-width: 1444px) {
+    .home-page{
+        display: grid;
+        /* margin: 0px 50px; */
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-flow: row dense;
+        grid-auto-rows: 350px;
+        grid-gap: 20px;
+        width: 100%;
+        /* padding: 0px 80px; */
+        /* width: 100%; */
+        overflow-x: hidden;
+        overflow-y: hidden;
+        padding-bottom: 50px;
+    }
+
+    .home-page-container{
+        display: flex;
+        /* width: 100%; */
+        margin: 0 5%;
+        /* display: flex; */
+    }
+
+    .preview-img{
+        width: 100%;
+        height: 280px;
+        /* max-height: auto; */
+        border-radius: 10px;
+    }
+    
 }

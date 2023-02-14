@@ -75,6 +75,7 @@ const searchReducer = (state = initialState, action) => {
         case CLEAR_SEARCH:
             newState = Object.assign({}, state)
             newState.search = {}
+            newState.array = []
             return newState
       default:
         return state;

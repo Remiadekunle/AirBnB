@@ -43,10 +43,11 @@ export const editSpot = (spot) => {
     }
 }
 
-export const filterSpot = (filter) => {
+export const filterSpot = (filter, reverse) => {
     return{
         type: FILTER_SPOT,
-        filter
+        filter, 
+        reverse
     }
 }
 
@@ -158,12 +159,12 @@ export const updateSpot = (spot, oldSpot) => async dispatch => {
 
 const initialState = {};
 
-function compare( a, b, param ) {
+function compare( a, b, param, reverse ) {
     if ( a[param] < b[param] ){
-      return -1;
+      return reverse? 1 : -1;
     }
     if ( a[param] > b[param] ){
-      return 1;
+      return reverse? -1 : 1;
     }
     return 0;
 }
@@ -205,7 +206,7 @@ const spotReducer = (state = initialState, action) => {
         case FILTER_SPOT:
             newState = Object.assign({}, state)
             const nonSpots = Object.values(state.allSpots)
-            let newSpots = nonSpots.sort((a, b) => compare(a,b, action.filter))
+            let newSpots = nonSpots.sort((a, b) => compare(a,b, action.filter, action.reverse))
             newState.filter = {spots: newSpots, filter: action.filter}
             return newState
         case EDIT_SPOT:

@@ -28,8 +28,8 @@ export function SpotIndex( {spot, isHome, setIsHome} ){
                     <div className='rating-location'>
                         {`${city}, ${state}`}
                         <div className='rating'>
-                            <i id='card-stars' class="fa-solid fa-star fa-xs"></i>
-                            <div >{typeof avgRating === 'number' ? rounded(avgRating) : 'NEW'}</div>
+                            {typeof avgRating === 'number' ? <i id='card-stars' class="fa-solid fa-star fa-xs"></i> : <></>}
+                            <div >{typeof avgRating === 'number' ? rounded(avgRating) : <></>}</div>
                         </div>
 
                     </div>

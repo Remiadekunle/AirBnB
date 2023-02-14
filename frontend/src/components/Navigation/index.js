@@ -1,81 +1,192 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton';
-import './Navigation.css';
-import OpenModalMenuItem from './OpenModalMenuItem';
-import CreateSpotModal from '../CreateSpotModal';
-import { getSearch } from '../../store/search';
-import { filterSpot } from '../../store/spots';
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import ProfileButton from "./ProfileButton";
+import "./Navigation.css";
+import OpenModalMenuItem from "./OpenModalMenuItem";
+import CreateSpotModal from "../CreateSpotModal";
+import { getSearch } from "../../store/search";
+import { filterSpot } from "../../store/spots";
 
-function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered}){
-  const sessionUser = useSelector(state => state.session.user);
+function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
+  const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState("");
   const toggleNav = () => {
-    console.log('clicked')
-    setIsHome(true)
-  }
-  const placeholder = (!isHome? (isModal ? 'header4' : 'header2') :(isModal ? 'header3': 'header'))
-  console.log(placeholder)
+    console.log("clicked");
+    setIsHome(true);
+  };
+  let filterStyle
+  useEffect(() => {
+    filterStyle = document.body.scrollTop ? {borderBottom: '0.1px solid #EBEBEB'}: {}
+    console.log('we are running indeed', filterStyle, document.body.scrollTop)
+  });
+  const placeholder = !isHome
+    ? isModal
+      ? "header4"
+      : "header2"
+    : isModal
+    ? "header3"
+    : "header";
+  console.log(placeholder);
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    await dispatch(getSearch(search))
-  }
+    await dispatch(getSearch(search));
+  };
 
-  const handleFilter = (filter) => {
-    console.log('clicked')
-    dispatch(filterSpot(filter))
-    setIsFiltered(true)
-  }
-
-
-  const modalClassName = (!isHome? 'header2' :'header')
+  const handleFilter = (filter, reverse) => {
+    console.log("clicked");
+    dispatch(filterSpot(filter, reverse));
+    setIsFiltered(true);
+  };
+  
+  console.log('this is the windown heigh', window.screenTop)
+  const modalClassName = !isHome ? "header2" : "header";
 
   return (
     <div className={modalClassName}>
-      <div className={isHome ? 'reg-header-container' : 'reg-header-container2'} >
-        <div style={{padding: '10px 4.5%', display: 'flex', justifyContent: "space-between", width: '100%', alignItems: 'center'}}>
-          <div className='home-logo'>
-            <NavLink exact to="/" onClick={toggleNav} style={{ textDecoration: 'none' }}>
-            <i className="fa-brands fa-airbnb fa-2xl"></i>
-            <span className='home-text'> Fairbnb</span>
+      <div
+        className={isHome ? "reg-header-container" : "reg-header-container2"}
+      >
+        <div
+          style={{
+            padding: "10px 4.5%",
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            alignItems: "center",
+          }}
+        >
+          <div className="home-logo">
+            <NavLink
+              exact
+              to="/"
+              onClick={toggleNav}
+              style={{ textDecoration: "none" }}
+            >
+              <i className="fa-brands fa-airbnb fa-2xl"></i>
+              <span className="home-text"> Fairbnb</span>
             </NavLink>
           </div>
           <form onSubmit={handleSearch}>
-            <input onChange={e => setSearch(e.target.value)} className='search-input' placeholder='Search' value={search}></input>
+            <input
+              onChange={(e) => setSearch(e.target.value)}
+              className="search-input"
+              placeholder="Search"
+              value={search}
+            ></input>
           </form>
-          <div className='profile-container2'>
-            <div className='create-spot'>
-              {(sessionUser && sessionUser.id) && (<button className='create-spot-button'>
-                <OpenModalMenuItem
-                itemText="Create New Spot"
-                // onItemClick={closeMenu}
-                modalComponent={<CreateSpotModal setIsFiltered={setIsFiltered} />}/>
-              </button>)}
+          <div className="profile-container2">
+            <div className="create-spot">
+              {sessionUser && sessionUser.id && (
+                <button className="create-spot-button">
+                  <OpenModalMenuItem
+                    itemText="Create New Spot"
+                    // onItemClick={closeMenu}
+                    modalComponent={
+                      <CreateSpotModal setIsFiltered={setIsFiltered} />
+                    }
+                  />
+                </button>
+              )}
             </div>
             <div>
               {isLoaded && (
-                <div className='profile-button'>
-                  <ProfileButton isHome={isHome} setIsHome={setIsHome} user={sessionUser} isModal={isModal} setIsModal={setIsModal} />
+                <div className="profile-button">
+                  <ProfileButton
+                    isHome={isHome}
+                    setIsHome={setIsHome}
+                    user={sessionUser}
+                    isModal={isModal}
+                    setIsModal={setIsModal}
+                  />
                 </div>
               )}
             </div>
           </div>
         </div>
       </div>
-      {isHome? <div className="search-filter-container">
-          <div style={{display: 'flex', alignItems: 'center', gap: '30px', padding: '0px 4.5%'}}>
-              <button onClick={() => handleFilter('price')} className="search-filter-buttons"><i class="fa-solid fa-dollar-sign fa-2xl"></i></button>
-              <button onClick={() => handleFilter('guests')} className="search-filter-buttons"><i class="fa-solid fa-people-group fa-2xl"></i></button>
-              <button onClick={() => handleFilter('baths')} className="search-filter-buttons"><i class="fa-solid fa-fire fa-2xl"></i></button>
-              <button onClick={() => handleFilter('beds')} className="search-filter-buttons"><i class="fa-solid fa-key fa-2xl"></i></button>
-              <button onClick={() => setIsFiltered(false)}className="search-filter-buttons"><i class="fa-solid fa-shuffle fa-2xl"></i></button>
+      {isHome ? (
+        <div style={filterStyle} className="search-filter-container">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "30px",
+              padding: "0px 4.5%",
+              height: '100%',
+            }}
+          >
+            <button
+              onClick={() => handleFilter("price", true)}
+              className="search-filter-buttons"
+            >
+              <div>
+                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+              </div>
+              <div>Highest Price</div>
+            </button>
+            <button
+              onClick={() => handleFilter("price", false)}
+              className="search-filter-buttons"
+            >
+              <div>
+                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+              </div>
+              <div>Lowest Price</div>
+            </button>
+            <button
+              onClick={() => handleFilter("guests", false)}
+              className="search-filter-buttons"
+            >
+              <div>
+                <i class="fa-solid fa-people-group fa-2xl"></i>
+              </div>
+              <div>Guests</div>
+            </button>
+            <button
+              onClick={() => handleFilter("baths", false)}
+              className="search-filter-buttons"
+            >
+              <div>
+                <i class="fa-solid fa-fire fa-2xl"></i>
+              </div>
+              <div>Baths</div>
+            </button>
+            <button
+              onClick={() => handleFilter("beds", false)}
+              className="search-filter-buttons"
+            >
+              <div>
+                <i class="fa-solid fa-key fa-2xl"></i>
+              </div>
+              <div>Beds</div>
+            </button>
+            <button
+              onClick={() => handleFilter("avgRating", true)}
+              className="search-filter-buttons"
+            >
+              <div>
+                <i class="fa-solid fa-key fa-2xl"></i>
+              </div>
+              <div>Ratings</div>
+            </button>
+            <button
+              onClick={() => setIsFiltered(false)}
+              className="search-filter-buttons"
+            >
+              <div>
+                <i class="fa-solid fa-shuffle fa-2xl"></i>
+              </div>
+              <div>Reset</div>
+            </button>
           </div>
-      </div> : <></>}
-
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

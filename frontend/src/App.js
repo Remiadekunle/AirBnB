@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import Home from "./components/HomePage";
 import SpotIndex from "./components/SpotIndexItem";
 import { fetchSpots } from "./store/spots";
+import NavigationSpot from "./components/Navigation/nav2";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,13 +21,14 @@ function App() {
 
   return isLoaded && (
     <>
-      <Navigation isLoaded={isLoaded} isHome={isHome} setIsHome={setIsHome} setIsFiltered={setIsFiltered}/>
       {isLoaded && (
         <Switch>
           <Route exact path={'/'}>
+            <Navigation isLoaded={isLoaded} isHome={isHome} setIsHome={setIsHome} setIsFiltered={setIsFiltered}/>
             <Home isHome={isHome} setIsHome={setIsHome} isFiltered={isFiltered} />
           </Route>
           <Route path={'/spots/:spotId'}>
+            <NavigationSpot isLoaded={isLoaded} isHome={isHome} setIsHome={setIsHome} setIsFiltered={setIsFiltered} />
             <SpotIndex isHome={isHome} setIsHome={setIsHome}/>
           </Route>
         </Switch>
