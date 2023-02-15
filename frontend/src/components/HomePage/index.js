@@ -36,18 +36,20 @@ export function Home({isHome, setIsHome, isFiltered}) {
             </div>
             {/* <button>Show map</button> */}
             <div className="footer">
-                <div className="app-copyright">
-                    <i class="fa-regular fa-copyright fa-xs"></i>
-                    <div>
-                        2022 Fairbnb,Inc.
+                <div style={{display: 'flex', justifyContent: 'space-between', width: '90%', margin: '0 auto'}}>
+                    <div className="app-copyright">
+                        <i class="fa-regular fa-copyright fa-xs"></i>
+                        <div>
+                            2022 Fairbnb,Inc.
+                        </div>
                     </div>
-                </div>
-                <div id="coding-components">
-                    <span>React</span>
-                    <span>{' · '}</span>
-                    <span>Redux</span>
-                    <span>{' · '}</span>
-                    <span>JavaScript</span>
+                    <div id="coding-components">
+                        <span>React</span>
+                        <span>{' · '}</span>
+                        <span>Redux</span>
+                        <span>{' · '}</span>
+                        <span>JavaScript</span>
+                    </div>
                 </div>
             </div>
         </div>

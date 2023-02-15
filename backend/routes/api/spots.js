@@ -653,13 +653,59 @@ router.post('/search', async(req, res, next) => {
                     }
                 }
             ]
-        }
+        },
     })
+
+    const Spots = []
+    for (let i = 0; i < spots.length; i++){
+        let spot = spots[i]
+        spot = spot.toJSON();
+        let image = await SpotImage.findOne({
+            where: {
+                spotId: spot.id,
+                preview: true
+            },
+            attributes: {
+                exclude: ['id', 'spotId', 'createdAt', 'updatedAt']
+            },
+        });
+        if (image){
+            const url = image.url
+            spot.previewImage = url;
+
+        }
+        else{
+            spot.previewImage = 'No preview image found'
+        }
+
+        let reviews = await Review.findAll({
+            where: {
+                spotId: spot.id
+            },
+
+        })
+
+        let stars = 0;
+        count = 0
+        if (reviews.length > 0){
+            reviews.forEach(review => {
+                stars += review.stars
+                count++
+            })
+            stars = stars/count
+
+            spot.avgRating = stars
+        } else{
+            spot.avgRating = 'This restaurant has not been rated'
+        }
+
+        Spots.push(spot)
+    }
 
     res.status = 200;
     console.log('11111111111111111111111111111111111111111111111111', spots)
     res.json({
-        search: spots
+        search: Spots
     })
 })
 

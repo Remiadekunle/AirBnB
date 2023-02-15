@@ -6,7 +6,7 @@ import "./Navigation.css";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import CreateSpotModal from "../CreateSpotModal";
 import { getSearch } from "../../store/search";
-import { filterSpot } from "../../store/spots";
+import { filterSpot, loadCache, loadSpots } from "../../store/spots";
 
 function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -33,11 +33,14 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    await dispatch(getSearch(search));
+    if (search.trim().length < 1) return
+    const body = await dispatch(getSearch(search));
+    dispatch(loadSpots({"Spots": body}))
   };
 
   const handleFilter = (filter, reverse) => {
     console.log("clicked");
+
     dispatch(filterSpot(filter, reverse));
     setIsFiltered(true);
   };
@@ -71,13 +74,14 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               <span className="home-text"> Fairbnb</span>
             </NavLink>
           </div>
-          <form onSubmit={handleSearch}>
+          <form onSubmit={handleSearch} style={{position: 'relative'}}>
             <input
               onChange={(e) => setSearch(e.target.value)}
               className="search-input"
-              placeholder="Search"
+              placeholder="Search for your dream spot"
               value={search}
             ></input>
+            <button className="search-input-button" type="submit"><i class="fa-solid fa-magnifying-glass search-input-icon"></i></button>
           </form>
           <div className="profile-container2">
             <div className="create-spot">
@@ -175,7 +179,10 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               <div>Ratings</div>
             </button>
             <button
-              onClick={() => setIsFiltered(false)}
+              onClick={() => {
+                setIsFiltered(false)
+                dispatch(loadCache())
+              }}
               className="search-filter-buttons"
             >
               <div>

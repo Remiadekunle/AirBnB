@@ -14,6 +14,10 @@ const OFFLOAD_SPOT = 'spots/offloadSpot'
 
 const DELETE_SPOT = 'spots/deleteSpot'
 
+const LOAD_CACHE = 'spots/loadCache'
+
+const SET_CACHE = 'spots/setCache'
+
 export const loadSpots = (spots) => {
     return {
         type: LOAD_SPOTS,
@@ -43,10 +47,23 @@ export const editSpot = (spot) => {
     }
 }
 
+export const loadCache = () => {
+    return{
+        type: LOAD_CACHE
+    }
+}
+
+export const setCache = (spots) => {
+    return{
+        type:SET_CACHE,
+        spots
+    }
+}
+
 export const filterSpot = (filter, reverse) => {
     return{
         type: FILTER_SPOT,
-        filter, 
+        filter,
         reverse
     }
 }
@@ -71,6 +88,7 @@ export const fetchSpots = () => async dispatch => {
     if (res.ok){
         const spots = await res.json()
         await dispatch(loadSpots(spots))
+        dispatch(setCache(spots))
     }
 }
 
@@ -157,7 +175,7 @@ export const updateSpot = (spot, oldSpot) => async dispatch => {
 
 }
 
-const initialState = {};
+const initialState = { cache: {}, allSpots: {}};
 
 function compare( a, b, param, reverse ) {
     if ( a[param] < b[param] ){
@@ -174,11 +192,23 @@ const spotReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS:
             newState = Object.assign({}, state);
-            newState.allSpots = {...state.allSpots}
+            newState.allSpots = {}
             const spots = action.spots.Spots
             spots.forEach((spot) => {
                 newState.allSpots[spot.id] = spot
             })
+            return newState;
+        case SET_CACHE:
+            newState = Object.assign({}, state);
+            newState.allSpots = {...state.allSpots}
+            const spotsCache = action.spots?.Spots
+            spotsCache?.forEach((spot) => {
+                newState.cache[spot.id] = spot
+            })
+            return newState;
+        case LOAD_CACHE:
+            newState = Object.assign({}, state)
+            newState.allSpots = {...state.cache}
             return newState;
         case LOAD_SPOT:
             newState = Object.assign({}, state)

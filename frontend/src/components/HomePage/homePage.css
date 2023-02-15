@@ -82,7 +82,7 @@
 .footer{
     position: fixed;
     display: flex;
-    width: 89%;
+    width: 100%;
     bottom: 0%;
     height: 40px;
     align-items: center;
@@ -90,7 +90,7 @@
     border-top: 1px solid gray;
     /* width: 100%; */
     background-color: white;
-    padding: 0px 5%;
+    /* padding: 0px 5%; */
     gap: 5px;
     justify-content: space-between;
 }
