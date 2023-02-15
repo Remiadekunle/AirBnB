@@ -16,7 +16,11 @@ export function Home({isHome, setIsHome, isFiltered}) {
     }, [dispatch])
 
     if (Object.keys(initialSpots).length < 1){
-        return null
+        return(
+            <div style={{backgroundColor: 'red', height: '100%'}}>
+              No spots
+            </div>
+          )
     }
     const spots = Object.values(initialSpots.allSpots)
 

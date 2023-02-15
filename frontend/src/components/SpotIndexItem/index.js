@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom";
-import { fetchSingleSpot} from '../../store/spots'
+import { fetchSingleSpot, offLoadSpot} from '../../store/spots'
 import './spotItem.css';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import EditSpotModal from "../EditSpotModal";
@@ -38,14 +38,14 @@ function SpotIndex({isHome, setIsHome}) {
     }, [dispatch, spotId])
 
     if (!spot) return null
-    const {name, SpotImages, description, price, Owner, city, state, country} = spot
+    const {name, SpotImages, description, price, Owner, city, state, country, createdAt} = spot
     console.log('this is the spot',spot)
 
     console.log('spotImage', SpotImages)
-    let mainImage = SpotImages.find(image => {
+    let mainImage = SpotImages?.find(image => {
         return image.preview === true
     })
-
+    const months = ["January", "February", "March", "April", "May", 'June', "July", 'August', 'September', 'October', 'November ', 'December']
     const toggleReviewed = () => {
         console.log('clickling for the review')
         setReviewdd(!reviewdd)
@@ -129,13 +129,13 @@ function SpotIndex({isHome, setIsHome}) {
                     <div className="spot-guests-container">
                         <div className="spot-guests">
                             <div id="picture-hosting">
-                                <h2 id="hosting-message">{`Entire vaction spot hosted by ${Owner.firstName}`}</h2>
+                                <h2 id="hosting-message">{`Entire vaction spot hosted by ${Owner?.firstName}`}</h2>
                                 <div id="hosting-image-container">
                                     <img alt="profile" className="profile-picture" src="https://i.pinimg.com/originals/2b/9a/86/2b9a86cd82acb9924d3e80ff8b2201ee.jpg"></img>
                                 </div>
                             </div>
                             <span>
-                                {`6 guests · ${spot.beds} bedrooms · ${spot.baths} bathrooms`}
+                                {`6 guests · ${spot?.beds} bedrooms · ${spot?.baths} bathrooms`}
                             </span>
                         </div>
                     </div>
@@ -154,6 +154,10 @@ function SpotIndex({isHome, setIsHome}) {
                         </div>
                     </div>
                     <div className="description-container">
+                        <div style={{marginBottom: '10px'}}>
+                            <span className="spot-description-fair">fair</span>
+                            <span className="spot-description-cover">cover</span>
+                        </div>
                         <div>
                             {'Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.'}
                         </div>
@@ -165,11 +169,44 @@ function SpotIndex({isHome, setIsHome}) {
                     </div>
                     <div className="amenities-container">
                         <h2> What this place offers</h2>
-                        <div>Wifi</div>
-                        <div>Free parking on premises</div>
-                        <div>Gym</div>
-
-                        {'The amenities will go here'}
+                        <div style={{display: 'flex', gap: '40px'}}>
+                            <div  style={{display: 'flex', gap: '15px', flexDirection: 'column'}}>
+                                <div style={{display: 'flex', gap: '10px'}}>
+                                    <i class="fa-solid fa-wifi place-offer-class"></i>
+                                    <div>Wifi</div>
+                                </div>
+                                <div style={{display: 'flex', gap: '10px'}}>
+                                    <i class="fa-solid fa-car place-offer-class"></i>
+                                    <div>Free parking on premises</div>
+                                </div>
+                                <div style={{display: 'flex', gap: '10px'}}>
+                                    <i class="fa-solid fa-dumbbell place-offer-class"></i>
+                                    <div>Gym</div>
+                                </div>
+                                <div style={{display: 'flex', gap: '10px'}}>
+                                    <i class="fa-solid fa-tv place-offer-class"></i>
+                                    <div>TV</div>
+                                </div>
+                            </div>
+                            <div style={{display: 'flex', gap: '15px', flexDirection: 'column'}}>
+                                <div style={{display: 'flex', gap: '10px'}}>
+                                    <i class="fa-solid fa-kitchen-set place-offer-class"></i>
+                                    <div>Kitchen </div>
+                                </div>
+                                <div style={{display: 'flex', gap: '10px'}}>
+                                    <i class="fa-regular fa-snowflake place-offer-class"></i>
+                                    <div>Air conditioning </div>
+                                </div>
+                                <div style={{display: 'flex', gap: '10px'}}>
+                                    <i class="fa-solid fa-temperature-three-quarters place-offer-class"></i>
+                                    <div>Heating</div>
+                                </div>
+                                <div style={{display: 'flex', gap: '10px'}}>
+                                    <i class="fa-solid fa-bottle-water place-offer-class"></i>
+                                    <div>Free water</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -178,14 +215,16 @@ function SpotIndex({isHome, setIsHome}) {
                         <div className="reserve-booking">
                             <div>
                                 <div className="reserve-price">
-                                    {`$${price} night`}
+                                    {`$${price}`}<span>night</span>
                                 </div>
                             </div>
                             <div className="reserve-stats">
-                                <i class="fa-solid fa-star fa-xs"></i>
-                                <span>{totalStars ? rounded(totalStars/startCount) : 0}</span>
-                                <span>{' · '}</span>
-                                <span style={{textDecoration: 'underline'}}>{`${reviews.length} reviews`}</span>
+                                <div>
+                                    <i class="fa-solid fa-star fa-xs"></i>
+                                    <span>{totalStars ? rounded(totalStars/startCount) : 0}</span>
+                                    <span>{' · '}</span>
+                                    <span style={{textDecoration: 'underline'}}>{`${reviews.length} reviews`}</span>
+                                </div>
                             </div>
                         </div>
                         <div className="reserve-button-container">
@@ -231,6 +270,9 @@ function SpotIndex({isHome, setIsHome}) {
                 <h2>
                     Where you'll be
                 </h2>
+                <div style={{marginBottom: '20px'}}>
+                    {`${spot.city}, ${spot.state}, ${spot.country}`}
+                </div>
                 <MapContainer lat={spot.lat} lng={spot.lng} price={spot.price}/>
                 <div style={{marginTop: '20px'}}>
                     {spot.description}
@@ -243,13 +285,16 @@ function SpotIndex({isHome, setIsHome}) {
                             <img alt="profile" className="profile-picture2" src="https://i.pinimg.com/originals/2b/9a/86/2b9a86cd82acb9924d3e80ff8b2201ee.jpg"></img>
                         </div>
                         <div id="user-name-joined">
-                            <h2>{`Hosted by ${Owner.firstName}`}</h2>
-                            <div>{'Joined in December 2022'}</div>
+                            <h2 className="user-name-joined-h2">{`Hosted by ${Owner?.firstName}`}</h2>
+                            <div className="user-name-joined-time">{`Joined in ${months[new Date(createdAt).getMonth()]} ${new Date(createdAt).getFullYear()}`}</div>
                         </div>
                     </div>
                     <div>
                         <div className="user-facts">
-                            <i class="fa-solid fa-shield"></i>
+                            <div style={{position:'relative'}}>
+                                <i class="fa-solid fa-shield fa-lg"></i>
+                                <i class="fa-solid fa-check identity-checkmark"></i>
+                            </div>
                             <span>Identity verified</span>
                         </div>
                         <div id="user-container-buttons">

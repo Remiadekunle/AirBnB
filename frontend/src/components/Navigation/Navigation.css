@@ -25,7 +25,7 @@
     border-width: 0.5px;
     border-color: #222222;
     height: 30px;
-    width: 300px;
+    width: 330px;
 }
 
 .header2{
@@ -115,6 +115,10 @@
 .profile-button{
     float: right;
     align-self: center;
+}
+
+.home-logo{
+    width: 200px;
 }
 
 .home-text{

@@ -8,6 +8,7 @@ import CreateSpotModal from "../CreateSpotModal";
 import { getSearch } from "../../store/search";
 import { filterSpot, loadCache, loadSpots } from "../../store/spots";
 
+
 function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
@@ -85,17 +86,15 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
           </form>
           <div className="profile-container2">
             <div className="create-spot">
-              {sessionUser && sessionUser.id && (
                 <button className="create-spot-button">
                   <OpenModalMenuItem
                     itemText="Create New Spot"
                     // onItemClick={closeMenu}
                     modalComponent={
-                      <CreateSpotModal setIsFiltered={setIsFiltered} />
+                      <CreateSpotModal setIsFiltered={setIsFiltered} sessionUser={sessionUser} />
                     }
                   />
                 </button>
-              )}
             </div>
             <div>
               {isLoaded && (

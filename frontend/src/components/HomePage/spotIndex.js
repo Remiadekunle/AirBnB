@@ -6,7 +6,9 @@ export function SpotIndex( {spot, isHome, setIsHome} ){
     let { id, city, state, price, name, avgRating, previewImage} = spot;
     const preview2 = spot.SpotImages?.url
     const rounded = (num) => {
-        return Number.parseFloat(num).toFixed(1);
+        console.log('what is thius thing im doing', 5.0 % 1)
+        return Number.parseFloat(num).toFixed(2) % 1 === 0? Number.parseFloat(num).toFixed(1) : Number.parseFloat(num).toFixed(2);
+
     }
     // console.log(rounded(5.333333333333333))
     // console.log(previewImage[0])

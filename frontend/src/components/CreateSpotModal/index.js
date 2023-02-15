@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useSelector } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 // import './SignupForm.css';
@@ -6,7 +6,7 @@ import { createSpot } from '../../store/spots'
 import './index.css';
 
 
-function CreateSpotModal({setIsFiltered}) {
+function CreateSpotModal({setIsFiltered, sessionUser}) {
   const dispatch = useDispatch();
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -21,6 +21,7 @@ function CreateSpotModal({setIsFiltered}) {
   const [url, setUrl] = useState('');
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  // const sessionUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     let newErrors = []
@@ -32,6 +33,13 @@ function CreateSpotModal({setIsFiltered}) {
     setErrors(newErrors)
   }, [address, city, state, country, name, description, price])
 
+  if (!sessionUser) {
+    return(
+      <div>
+        Please sign in
+      </div>
+    )
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
