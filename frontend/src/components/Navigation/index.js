@@ -156,7 +156,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               className="search-filter-buttons"
             >
               <div>
-                <i class="fa-solid fa-bed fa-2xl"></i>
+                <i class="fa-solid fa-bath fa-2xl"></i>
               </div>
               <div>Baths</div>
             </button>
@@ -165,7 +165,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               className="search-filter-buttons"
             >
               <div>
-                <i class="fa-solid fa-bath fa-2xl"></i>
+                <i class="fa-solid fa-bed fa-2xl"></i>
               </div>
               <div>Beds</div>
             </button>
@@ -182,11 +182,14 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               onClick={() => {
                 setIsFiltered(false)
                 dispatch(loadCache())
+                console.log('what is the search length', search)
+                setSearch('')
               }}
               className="search-filter-buttons"
             >
               <div>
-                <i class="fa-solid fa-shuffle fa-2xl"></i>
+                {/* <i class="fa-solid fa-shuffle fa-2xl"></i> */}
+                <i class="fa-solid fa-arrows-spin fa-2xl"></i>
               </div>
               <div>Reset</div>
             </button>
