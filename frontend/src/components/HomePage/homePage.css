@@ -95,6 +95,23 @@
     justify-content: space-between;
 }
 
+.footer2{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    bottom: 0;
+    bottom: 0%;
+    height: 40px;
+    align-items: center;
+    /* z-index: 999; */
+    border-top: 1px solid gray;
+    /* width: 100%; */
+    background-color: white;
+    /* padding: 0px 5%; */
+    gap: 5px;
+    justify-content: space-between;
+}
+
 #card-stars{
     color: black;
 }

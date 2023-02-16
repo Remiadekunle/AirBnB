@@ -1,5 +1,8 @@
 .spot-page{
     margin: 0px 20%;
+    padding-bottom: 50px;
+    /* height: 100%; */
+    position: relative;
 }
 
 .mainImage{
@@ -203,13 +206,20 @@
 }
 
 .location-google-maps-button{
+    /* display: flex; */
     border-style: none;
     background-color: #FFFFFF;
     text-decoration: underline;
     cursor: pointer;
     font-size: 14px;
     padding: 0;
+    margin: 0;
+
 }
+
+/* .star-for-modal-reviews{
+    text-decoration: underline;
+} */
 
 .amenities-container{
     width: 100%;

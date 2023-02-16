@@ -50,19 +50,24 @@ export function AllReviews({ReviewIndex, reviews, reviewed, toggleReviewed, spot
     const isReviewed = useSelector(state => state.reviews.reviewed)
     console.log('yo whats the reviewed', isReviewed)
     return(
-        <div style={{width: '50vw', height: '99vh', display: 'flex', padding: '20px', overflow: 'hidden'}}>
-            {reviews.map(review => (
-                <ReviewIndex review={review}/>
-            ))}
-            {!isReviewed? <button className="review-buttons"><OpenModalMenuItem
-                        itemText="Create Review"
-                        // onItemClick={closeMenu}
-                        // onItemClick={toggleReviewed}
-                        modalComponent={<CreateReviewModal toggleReviewed={toggleReviewed} spot={spot} />}/></button> : <button className="review-buttons"><OpenModalMenuItem
-                        itemText="Delete Review"
-                        // onItemClick={closeMenu}
-                        onModalClose={() => setReviewdd(false)}
-                        modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/></button>}
+        <div style={{width: '50vw', height: '70vh', display: 'flex', padding: '20px', overflow: 'hidden',}}>
+            <div className='all-reviews-container'>
+                {reviews.map(review => (
+                    <ReviewIndex review={review}/>
+                ))}
+            </div>
+            <div style={{position: 'absolute', bottom: '2%', right: '2%'}}>
+                {!isReviewed? <button className="review-buttons"><OpenModalMenuItem
+                            itemText="Create Review"
+                            // onItemClick={closeMenu}
+                            // onItemClick={toggleReviewed}
+                            modalComponent={<CreateReviewModal toggleReviewed={toggleReviewed} spot={spot} />}/></button> : <button className="review-buttons"><OpenModalMenuItem
+                            itemText="Delete Your Review"
+                            // onItemClick={closeMenu}
+                            onModalClose={() => setReviewdd(false)}
+                            modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/>
+                    </button>}
+            </div>
         </div>
     )
 }

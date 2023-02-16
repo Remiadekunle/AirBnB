@@ -110,277 +110,296 @@ function SpotIndex({isHome, setIsHome}) {
     // console.log(mainImage)
     // console.log(Owner)
     return (
-        <div className="spot-page">
-            <div>
-                <div className="basic-info-container">
-                    <h1>{name}</h1>
-                    <i class="fa-solid fa-star fa-xs"></i>
-                    <span>{totalStars ? rounded(totalStars/startCount) : 0}</span>
-                    <span>{' · '}</span>
-                    {/* <span style={{textDecoration: 'underline'}}>{`${reviews.length} reviews`}</span> */}
-                    <button className="location-google-maps-button" >
-                        <OpenModalMenuItem
-                            itemText={`${reviews.length} reviews`}
-                            // onItemClick={closeMenu}
-                            // onModalClose={() => setIsHome(true)}
-                            modalComponent={<AllReviews
-                            ReviewIndex={ReviewIndex} reviews={reviews}
-                            reviewd={reviewed}
-                            user={user}
-                            spot={spot}
-                            setReviewdd={setReviewdd}
-                            toggleReviewed={toggleReviewed}
-                            />}/>
-                    </button>
-                    <span>{' · '}</span>
-                    {/* <span>{`${city}, ${state}, ${country}`}</span> */}
-                    <button className="location-google-maps-button">
-                            <OpenModalMenuItem itemText={`${city}, ${state}, ${country}`} modalComponent={<MapContainer2 lat={spot.lat} lng={spot.lng} price={spot.price}/>} />
-                    </button>
-                </div>
-            </div>
-            <div className="spot-images">
-                <div className="image-border">
-                    <img alt="house" className="mainImage" src={mainImage.url}></img>
-                    {/* {SpotImages.map(image => (
-                        <img alt="house" className="spotImage" src={`${image.url}`}></img>
-                    ))} */}
-                </div>
-            </div>
-            <div className="spot-description">
-
-
-                <div className="spot-left-container">
-                    <div className="spot-guests-container">
-                        <div className="spot-guests">
-                            <div id="picture-hosting">
-                                <h2 id="hosting-message">{`Entire vaction spot hosted by ${Owner?.firstName}`}</h2>
-                                <div id="hosting-image-container">
-                                    <img alt="profile" className="profile-picture" src="https://i.pinimg.com/originals/2b/9a/86/2b9a86cd82acb9924d3e80ff8b2201ee.jpg"></img>
-                                </div>
-                            </div>
-                            <span>
-                                {`6 guests · ${spot?.beds} bedrooms · ${spot?.baths} bathrooms`}
-                            </span>
-                        </div>
-                    </div>
-                    <div className="spot-extra-info">
-                        <div className="spot-perks">
-                            <i class="fa-solid fa-book"></i>
-                            <span>{'Dedicated workspace'}</span>
-                        </div>
-                        <div className="spot-perks">
-                            <i class="fa-solid fa-door-open"></i>
-                            <span>{'Self check-in'}</span>
-                        </div>
-                        <div className="spot-perks">
-                            <i class="fa-solid fa-dumbbell"></i>
-                            {'Indoor Gym and Pool'}
-                        </div>
-                    </div>
-                    <div className="description-container">
-                        <div style={{marginBottom: '10px'}}>
-                            <span className="spot-description-fair">fair</span>
-                            <span className="spot-description-cover">cover</span>
-                        </div>
-                        <div>
-                            {'Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.'}
-                        </div>
-                    </div>
-                    <div className="description-container">
-                        <div>
-                            {description}
-                        </div>
-                    </div>
-                    <div className="amenities-container">
-                        <h2> What this place offers</h2>
-                        <div style={{display: 'flex', gap: '40px'}}>
-                            <div  style={{display: 'flex', gap: '15px', flexDirection: 'column'}}>
-                                <div style={{display: 'flex', gap: '10px'}}>
-                                    <i class="fa-solid fa-wifi place-offer-class"></i>
-                                    <div>Wifi</div>
-                                </div>
-                                <div style={{display: 'flex', gap: '10px'}}>
-                                    <i class="fa-solid fa-car place-offer-class"></i>
-                                    <div>Free parking on premises</div>
-                                </div>
-                                <div style={{display: 'flex', gap: '10px'}}>
-                                    <i class="fa-solid fa-dumbbell place-offer-class"></i>
-                                    <div>Gym</div>
-                                </div>
-                                <div style={{display: 'flex', gap: '10px'}}>
-                                    <i class="fa-solid fa-tv place-offer-class"></i>
-                                    <div>TV</div>
-                                </div>
-                            </div>
-                            <div style={{display: 'flex', gap: '15px', flexDirection: 'column'}}>
-                                <div style={{display: 'flex', gap: '10px'}}>
-                                    <i class="fa-solid fa-kitchen-set place-offer-class"></i>
-                                    <div>Kitchen </div>
-                                </div>
-                                <div style={{display: 'flex', gap: '10px'}}>
-                                    <i class="fa-regular fa-snowflake place-offer-class"></i>
-                                    <div>Air conditioning </div>
-                                </div>
-                                <div style={{display: 'flex', gap: '10px'}}>
-                                    <i class="fa-solid fa-temperature-three-quarters place-offer-class"></i>
-                                    <div>Heating</div>
-                                </div>
-                                <div style={{display: 'flex', gap: '10px'}}>
-                                    <i class="fa-solid fa-bottle-water place-offer-class"></i>
-                                    <div>Free water</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="spot-rigth-container">
-                    <div className="reserve-card">
-                        <div className="reserve-booking">
-                            <div>
-                                <div className="reserve-price">
-                                    {`$${price}`}<span>night</span>
-                                </div>
-                            </div>
-                            <div className="reserve-stats">
-                                <div>
-                                    <i class="fa-solid fa-star fa-xs"></i>
-                                    <span>{totalStars ? rounded(totalStars/startCount) : 0}</span>
-                                    <span>{' · '}</span>
-                                    <button className="location-google-maps-button" >
-                                        <OpenModalMenuItem
-                                            itemText={`${reviews.length} reviews`}
-                                            // onItemClick={closeMenu}
-                                            // onModalClose={() => setIsHome(true)}
-                                            modalComponent={<AllReviews
-                                            ReviewIndex={ReviewIndex} reviews={reviews}
-                                            reviewd={reviewed}
-                                            user={user}
-                                            spot={spot}
-                                            setReviewdd={setReviewdd}
-                                            toggleReviewed={toggleReviewed}
-                                            />}/>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="reserve-button-container">
-
-                            <button id="reserve-button">
-                                <OpenModalMenuItem itemText="View Reservations" modalComponent={<ViewReservations spot={spot} />} />
-                            </button>
-                            <button id="reserve-button">
-                                <OpenModalMenuItem itemText="Reserve Now" modalComponent={<CalendarComponent spot={spot} />} />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                </div>
-            <div className="reviews-container">
-                <div id="review-continer-stats">
-                    <i class="fa-solid fa-star fa-xs"></i>
-                    <span>{totalStars ? rounded(totalStars/startCount) : 0}</span>
-                    <span>{' · '}</span>
-                    <span>{`${reviews.length} reviews`}</span>
-                </div>
-                <div className="comments-container">
-                    {reviews.map(review => (
-                        <ReviewIndex review={review}/>
-                    ))}
-                </div>
-                <div className="review-button-container">
-                    {!isReviewed? <button className="review-buttons"><OpenModalMenuItem
-                        itemText="Create Review"
-                        // onItemClick={closeMenu}
-                        // onItemClick={toggleReviewed}
-                        modalComponent={<CreateReviewModal toggleReviewed={toggleReviewed} spot={spot} />}/></button> : <button className="review-buttons"><OpenModalMenuItem
-                        itemText="Delete Review"
-                        // onItemClick={closeMenu}
-                        onModalClose={() => setReviewdd(false)}
-                        modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/></button>}
-
-                </div>
-
-            </div>
-            <div className="maps-container">
-                <h2>
-                    Where you'll be
-                </h2>
-                <div style={{marginBottom: '20px'}}>
-                    {`${spot.city}, ${spot.state}, ${spot.country}`}
-                </div>
-                <MapContainer lat={spot.lat} lng={spot.lng} price={spot.price}/>
-                <div style={{marginTop: '20px'}}>
-                    {spot.description}
-                </div>
-            </div>
-            <div className="user-container">
+        <div style={{position: 'relative'}}>
+            <div className="spot-page">
                 <div>
-                    <div className="user-profile-info">
-                        <div id="user-profile-container">
-                            <img alt="profile" className="profile-picture2" src="https://i.pinimg.com/originals/2b/9a/86/2b9a86cd82acb9924d3e80ff8b2201ee.jpg"></img>
-                        </div>
-                        <div id="user-name-joined">
-                            <h2 className="user-name-joined-h2">{`Hosted by ${Owner?.firstName}`}</h2>
-                            <div className="user-name-joined-time">{`Joined in ${months[new Date(createdAt).getMonth()]} ${new Date(createdAt).getFullYear()}`}</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="user-facts">
-                            <div style={{position:'relative'}}>
-                                <i class="fa-solid fa-shield fa-lg"></i>
-                                <i class="fa-solid fa-check identity-checkmark"></i>
-                            </div>
-                            <span>Identity verified</span>
-                        </div>
-                        <div id="user-container-buttons">
-                            <button className="contact-host"> <OpenModalMenuItem
-                            itemText="Contact Host"
-                            // onItemClick={closeMenu}
-                            modalComponent={<ComingSoon spot={spot} feature={'Contact Host'}/>}/></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="protection-info-container">
-                    <div id="protection-logo-description">
-                        <i class="fa-solid fa-lock fa-xl"></i>
-                        <div id="protection-info">
-                            To protect your payment, never transfer money or communicate through FairBnB as this is a clone website of AirBnB.
-                        </div>
-                    </div>
-                    <div className="spot-edit-buttons">
-                        {user && (user.id === +spot.ownerId) ? <><button className="review-buttons" >
-                        <OpenModalMenuItem
-                            itemText="Edit Spot"
-                            // onItemClick={closeMenu}
-                            modalComponent={<EditSpotModal spot={spot} />}/>
+                    <div className="basic-info-container">
+                        <h1>{name}</h1>
+                        <i class="fa-solid fa-star fa-xs star-for-modal-reviews"></i>
+                        {/* <span style={{textDecoration: 'underline'}}>{`${reviews.length}`}</span> */}
+                        <span style={{fontSize: '14px', marginRight: '0px'}}>{`${totalStars ? rounded(totalStars/startCount) : 0}`}</span>
+                        <span>{' · '}</span>
+                        <button className="location-google-maps-button" >
+                            <OpenModalMenuItem
+                                itemText={`${reviews.length} reviews`}
+                                // onItemClick={closeMenu}
+                                // onModalClose={() => setIsHome(true)}
+                                modalComponent={<AllReviews
+                                ReviewIndex={ReviewIndex} reviews={reviews}
+                                reviewd={reviewed}
+                                user={user}
+                                spot={spot}
+                                setReviewdd={setReviewdd}
+                                toggleReviewed={toggleReviewed}
+                                />}/>
                         </button>
-                        <button className="review-buttons" >
-                        <OpenModalMenuItem
-                            itemText="Delete Spot"
+                        <span>{' · '}</span>
+                        {/* <span>{`${city}, ${state}, ${country}`}</span> */}
+                        <button className="location-google-maps-button">
+                                <OpenModalMenuItem itemText={`${city}, ${state}, ${country}`} modalComponent={<MapContainer2 lat={spot.lat} lng={spot.lng} price={spot.price}/>} />
+                        </button>
+                    </div>
+                </div>
+                <div className="spot-images">
+                    <div className="image-border">
+                        <img alt="house" className="mainImage" src={mainImage.url}></img>
+                        {/* {SpotImages.map(image => (
+                            <img alt="house" className="spotImage" src={`${image.url}`}></img>
+                        ))} */}
+                    </div>
+                </div>
+                <div className="spot-description">
+
+
+                    <div className="spot-left-container">
+                        <div className="spot-guests-container">
+                            <div className="spot-guests">
+                                <div id="picture-hosting">
+                                    <h2 id="hosting-message">{`Entire vaction spot hosted by ${Owner?.firstName}`}</h2>
+                                    <div id="hosting-image-container">
+                                        <img alt="profile" className="profile-picture" src="https://i.pinimg.com/originals/2b/9a/86/2b9a86cd82acb9924d3e80ff8b2201ee.jpg"></img>
+                                    </div>
+                                </div>
+                                <span>
+                                    {`6 guests · ${spot?.beds} bedrooms · ${spot?.baths} bathrooms`}
+                                </span>
+                            </div>
+                        </div>
+                        <div className="spot-extra-info">
+                            <div className="spot-perks">
+                                <i class="fa-solid fa-book"></i>
+                                <span>{'Dedicated workspace'}</span>
+                            </div>
+                            <div className="spot-perks">
+                                <i class="fa-solid fa-door-open"></i>
+                                <span>{'Self check-in'}</span>
+                            </div>
+                            <div className="spot-perks">
+                                <i class="fa-solid fa-dumbbell"></i>
+                                {'Indoor Gym and Pool'}
+                            </div>
+                        </div>
+                        <div className="description-container">
+                            <div style={{marginBottom: '10px'}}>
+                                <span className="spot-description-fair">fair</span>
+                                <span className="spot-description-cover">cover</span>
+                            </div>
+                            <div>
+                                {'Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.'}
+                            </div>
+                        </div>
+                        <div className="description-container">
+                            <div>
+                                {description}
+                            </div>
+                        </div>
+                        <div className="amenities-container">
+                            <h2> What this place offers</h2>
+                            <div style={{display: 'flex', gap: '40px'}}>
+                                <div  style={{display: 'flex', gap: '15px', flexDirection: 'column'}}>
+                                    <div style={{display: 'flex', gap: '10px'}}>
+                                        <i class="fa-solid fa-wifi place-offer-class"></i>
+                                        <div>Wifi</div>
+                                    </div>
+                                    <div style={{display: 'flex', gap: '10px'}}>
+                                        <i class="fa-solid fa-car place-offer-class"></i>
+                                        <div>Free parking on premises</div>
+                                    </div>
+                                    <div style={{display: 'flex', gap: '10px'}}>
+                                        <i class="fa-solid fa-dumbbell place-offer-class"></i>
+                                        <div>Gym</div>
+                                    </div>
+                                    <div style={{display: 'flex', gap: '10px'}}>
+                                        <i class="fa-solid fa-tv place-offer-class"></i>
+                                        <div>TV</div>
+                                    </div>
+                                </div>
+                                <div style={{display: 'flex', gap: '15px', flexDirection: 'column'}}>
+                                    <div style={{display: 'flex', gap: '10px'}}>
+                                        <i class="fa-solid fa-kitchen-set place-offer-class"></i>
+                                        <div>Kitchen </div>
+                                    </div>
+                                    <div style={{display: 'flex', gap: '10px'}}>
+                                        <i class="fa-regular fa-snowflake place-offer-class"></i>
+                                        <div>Air conditioning </div>
+                                    </div>
+                                    <div style={{display: 'flex', gap: '10px'}}>
+                                        <i class="fa-solid fa-temperature-three-quarters place-offer-class"></i>
+                                        <div>Heating</div>
+                                    </div>
+                                    <div style={{display: 'flex', gap: '10px'}}>
+                                        <i class="fa-solid fa-bottle-water place-offer-class"></i>
+                                        <div>Free water</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="spot-rigth-container">
+                        <div className="reserve-card">
+                            <div className="reserve-booking">
+                                <div>
+                                    <div className="reserve-price">
+                                        {`$${price}`}<span>night</span>
+                                    </div>
+                                </div>
+                                <div className="reserve-stats">
+                                    <div>
+                                        <i class="fa-solid fa-star fa-xs"></i>
+                                        <span>{totalStars ? rounded(totalStars/startCount) : 0}</span>
+                                        <span>{' · '}</span>
+                                        <button className="location-google-maps-button" >
+                                            <OpenModalMenuItem
+                                                itemText={`${reviews.length} reviews`}
+                                                // onItemClick={closeMenu}
+                                                // onModalClose={() => setIsHome(true)}
+                                                modalComponent={<AllReviews
+                                                ReviewIndex={ReviewIndex} reviews={reviews}
+                                                reviewd={reviewed}
+                                                user={user}
+                                                spot={spot}
+                                                setReviewdd={setReviewdd}
+                                                toggleReviewed={toggleReviewed}
+                                                />}/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="reserve-button-container">
+
+                                <button id="reserve-button">
+                                    <OpenModalMenuItem itemText="View Reservations" modalComponent={<ViewReservations spot={spot} />} />
+                                </button>
+                                <button id="reserve-button">
+                                    <OpenModalMenuItem itemText="Reserve Now" modalComponent={<CalendarComponent spot={spot} />} />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                <div className="reviews-container">
+                    <div id="review-continer-stats">
+                        <i class="fa-solid fa-star fa-xs"></i>
+                        <span>{totalStars ? rounded(totalStars/startCount) : 0}</span>
+                        <span>{' · '}</span>
+                        <span>{`${reviews.length} reviews`}</span>
+                    </div>
+                    <div className="comments-container">
+                        {reviews.map(review => (
+                            <ReviewIndex review={review}/>
+                        ))}
+                    </div>
+                    <div className="review-button-container">
+                        {!isReviewed? <button className="review-buttons"><OpenModalMenuItem
+                            itemText="Create Review"
                             // onItemClick={closeMenu}
-                            // onModalClose={() => setIsHome(true)}
-                            modalComponent={<DeleteSpotModal spot={spot} setIsHome={setIsHome} />}/>
-                        </button></> : ''}
+                            // onItemClick={toggleReviewed}
+                            modalComponent={<CreateReviewModal toggleReviewed={toggleReviewed} spot={spot} />}/></button> : <button className="review-buttons"><OpenModalMenuItem
+                            itemText="Delete Review"
+                            // onItemClick={closeMenu}
+                            onModalClose={() => setReviewdd(false)}
+                            modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/></button>}
+
+                    </div>
+
+                </div>
+                <div className="maps-container">
+                    <h2>
+                        Where you'll be
+                    </h2>
+                    <div style={{marginBottom: '20px'}}>
+                        {`${spot.city}, ${spot.state}, ${spot.country}`}
+                    </div>
+                    <MapContainer lat={spot.lat} lng={spot.lng} price={spot.price}/>
+                    <div style={{marginTop: '20px'}}>
+                        {spot.description}
+                    </div>
+                </div>
+                <div className="user-container">
+                    <div>
+                        <div className="user-profile-info">
+                            <div id="user-profile-container">
+                                <img alt="profile" className="profile-picture2" src="https://i.pinimg.com/originals/2b/9a/86/2b9a86cd82acb9924d3e80ff8b2201ee.jpg"></img>
+                            </div>
+                            <div id="user-name-joined">
+                                <h2 className="user-name-joined-h2">{`Hosted by ${Owner?.firstName}`}</h2>
+                                <div className="user-name-joined-time">{`Joined in ${months[new Date(createdAt).getMonth()]} ${new Date(createdAt).getFullYear()}`}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="user-facts">
+                                <div style={{position:'relative'}}>
+                                    <i class="fa-solid fa-shield fa-lg"></i>
+                                    <i class="fa-solid fa-check identity-checkmark"></i>
+                                </div>
+                                <span>Identity verified</span>
+                            </div>
+                            <div id="user-container-buttons">
+                                <button className="contact-host"> <OpenModalMenuItem
+                                itemText="Contact Host"
+                                // onItemClick={closeMenu}
+                                modalComponent={<ComingSoon spot={spot} feature={'Contact Host'}/>}/></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="protection-info-container">
+                        <div id="protection-logo-description">
+                            <i class="fa-solid fa-lock fa-xl"></i>
+                            <div id="protection-info">
+                                To protect your payment, never transfer money or communicate through FairBnB as this is a clone website of AirBnB.
+                            </div>
+                        </div>
+                        <div className="spot-edit-buttons">
+                            {user && (user.id === +spot.ownerId) ? <><button className="review-buttons" >
+                            <OpenModalMenuItem
+                                itemText="Edit Spot"
+                                // onItemClick={closeMenu}
+                                modalComponent={<EditSpotModal spot={spot} />}/>
+                            </button>
+                            <button className="review-buttons" >
+                            <OpenModalMenuItem
+                                itemText="Delete Spot"
+                                // onItemClick={closeMenu}
+                                // onModalClose={() => setIsHome(true)}
+                                modalComponent={<DeleteSpotModal spot={spot} setIsHome={setIsHome} />}/>
+                            </button></> : ''}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <h2>Things to Know</h2>
+                    </div>
+                    <div id="spot-rules">
+                        <div>
+                            <h3>House rules</h3>
+                        </div>
+                        <div>
+                            <h3>Safety & property</h3>
+                        </div>
+                        <div>
+                            <h3> Cancellation policy</h3>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <div>
-                    <h2>Things to Know</h2>
-                </div>
-                <div id="spot-rules">
-                    <div>
-                        <h3>House rules</h3>
+            <div className="footer2">
+                <div style={{display: 'flex', justifyContent: 'space-between', width: '60%', margin: '0 auto'}}>
+                    <div className="app-copyright">
+                        <i class="fa-regular fa-copyright fa-xs"></i>
+                        <div>
+                            {new Date().getFullYear()} Fairbnb,Inc.
+                        </div>
                     </div>
-                    <div>
-                        <h3>Safety & property</h3>
-                    </div>
-                    <div>
-                        <h3> Cancellation policy</h3>
+                    <div id="coding-components">
+                        <span>React</span>
+                        <span>{' · '}</span>
+                        <span>Redux</span>
+                        <span>{' · '}</span>
+                        <span>JavaScript</span>
                     </div>
                 </div>
             </div>
