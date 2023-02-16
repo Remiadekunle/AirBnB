@@ -7,6 +7,7 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import CreateSpotModal from "../CreateSpotModal";
 import { getSearch } from "../../store/search";
 import { filterSpot } from "../../store/spots";
+import ProfileButton2 from "./ProfileButton2";
 
 function NavigationSpot({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -81,7 +82,7 @@ function NavigationSpot({ isLoaded, isHome, setIsHome, setIsFiltered }) {
             <div>
               {isLoaded && (
                 <div className="profile-button">
-                  <ProfileButton
+                  <ProfileButton2
                     isHome={isHome}
                     setIsHome={setIsHome}
                     user={sessionUser}

@@ -52,10 +52,10 @@ form{
 }
 
 
-#create-form{
+.create-form{
     display: flex;
     overflow-y: scroll;
-
+    height: 80vh;
 }
 
 #create-price{

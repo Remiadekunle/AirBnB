@@ -5,6 +5,14 @@
     position: relative;
 }
 
+.things-to-know-containers{
+    width: 330px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .mainImage{
     width: 100%;
     height: auto;
@@ -371,4 +379,31 @@
     border-bottom: 0.5px solid #DDDDDD;
     padding-bottom: 30px;
     z-index: 0;
+}
+
+.footer2-container{
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 0 auto;
+}
+
+/* display: 'flex', justifyContent: 'space-between', width: '60%', margin: '0 auto' */
+
+
+@media screen and (max-width: 1444px) {
+    .spot-page{
+        margin: 0 10%;
+    }
+
+    .header2{
+        padding: 20px 6%;
+    }
+    
+    .footer2-container{
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin: 0 auto;
+    }
 }

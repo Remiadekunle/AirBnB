@@ -369,25 +369,33 @@ function SpotIndex({isHome, setIsHome}) {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div style={{paddingBottom: '40px'}}>
                     <div>
                         <h2>Things to Know</h2>
                     </div>
                     <div id="spot-rules">
-                        <div>
+                        <div className="things-to-know-containers">
                             <h3>House rules</h3>
+                            <div>Check in after 4:00PM</div>
+                            <div>Checkout before 11:00 AM</div>
+                            <div>{`${spot.guests} guests maximum`}</div>
                         </div>
-                        <div>
+                        <div className="things-to-know-containers">
                             <h3>Safety & property</h3>
+                            <div>Security camera/recording device</div>
+                            <div>Carbon monoxide alarm</div>
+                            <div>Smoke alarm installed</div>
                         </div>
-                        <div>
+                        <div className="things-to-know-containers">
                             <h3> Cancellation policy</h3>
+                            <div style={{width: '100%'}}>This reservation is non-refundable.</div>
+                            <div style={{width: '100%'}}>Review the Host’s full cancellation policy which applies even if you cancel for illness or disruptions caused by COVID-19.</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="footer2">
-                <div style={{display: 'flex', justifyContent: 'space-between', width: '60%', margin: '0 auto'}}>
+                <div className="footer2-container" >
                     <div className="app-copyright">
                         <i class="fa-regular fa-copyright fa-xs"></i>
                         <div>

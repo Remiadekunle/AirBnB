@@ -75,7 +75,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               <span className="home-text"> Fairbnb</span>
             </NavLink>
           </div>
-          <form onSubmit={handleSearch} style={{position: 'relative'}}>
+          <form className="search-form" onSubmit={handleSearch}>
             <input
               onChange={(e) => setSearch(e.target.value)}
               className="search-input"
