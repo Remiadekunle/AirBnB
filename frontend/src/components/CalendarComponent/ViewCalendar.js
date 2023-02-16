@@ -17,17 +17,34 @@ function ViewReservations({spot}){
     console.log('did we get anything useful?', filterd)
     if (filterd.length < 1){
         return(
-            <div style={{width: '250px', height: '200px'}}>
-                No Reservations for this spot
+            <div style={{padding: '30px', width: '800px', height: '500px'}}>
+                <h2 style={{width: '100%', display: 'flex', justifyContent: 'center', fontSize: '32px', marginBottom: '40px'}}>
+                    Welcome to {spot.name}
+                </h2>
+                <div style={{width: '100%', display: 'flex', fontSize: '24px', marginBottom: '20px'}}>
+                    Your Bookings:
+                </div>
+                <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '65%'}}>
+                    No Reservations for this spot
+                </div>
             </div>
         )
     }
     // const userBookings =
     return(
-        <div style={{padding: '30px', width: '800px'}}>
-            {filterd && filterd.map(booking => (
-                <BookingIndex booking={booking} />
-            ))}
+        <div className="view-reservations-container" >
+            <h2 style={{width: '100%', display: 'flex', fontSize: '32px', marginBottom: '20px'}}>
+                Welcome to {spot.name}
+            </h2>
+
+            <div style={{width: '100%', display: 'flex', fontSize: '24px', marginBottom: '20px'}}>
+                Your Bookings:
+            </div>
+            <div style={{margin: '0 auto', width: '65%'}}>
+                {filterd && filterd.map(booking => (
+                    <BookingIndex booking={booking} />
+                ))}
+            </div>
         </div>
     )
 }
@@ -64,35 +81,54 @@ export function BookingIndex({booking}){
             if (data && data.errors) return setErrors(Object.values(data.errors));
         });
     }
-
     const toggleDisplay = () => {
         setDisplay(!display)
     }
 
     return(
-        <div style={{display: 'flex', gap: '10px'}}>
+        <div style={{display: new Date(endDate) < new Date() ? 'none': 'flex', gap: '10px', width: '100%'}}>
             <div>
-                {errors.map(error => (
-                    <div>
-                        {error}
-                    </div>
-                ))}
-            </div>
-            <div>
-                From:
-                {booking.startDate}
-            </div>
-            <div>
-                To:
-                {booking.endDate}
-            </div>
-            {display ? <div>
-                <Calendar  className={'spot-reserve-booking-calendar'} defaultValue={dates}  selectRange={true} minDate={new Date()} onChange={setDates}  />
-                <button onClick={handeEdit}>Submit Booking</button>
-            </div> : <></>}
 
-            <button onClick={toggleDisplay}>{display ? 'Cancel' : 'Edit Booking'}</button>
-            <button onClick={handleSubmit}>Delete Booking</button>
+            </div>
+            <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
+                <div>
+                    {errors.map(error => (
+                        <div>
+                            {error}
+                        </div>
+                    ))}
+                </div>
+                <div style={{display: 'flex', width: '100%'}}>
+                    <div style={{display: 'flex', width: '30%', flexDirection: 'column'}}>
+                        <div>
+                            From:
+                        </div>
+                        {new Date(booking.startDate).toDateString()}
+                    </div>
+                    <div style={{display: 'flex', width: '30%', flexDirection: 'column'}}>
+                        <div>
+                            To:
+                        </div>
+                        {new Date(booking.endDate).toDateString()}
+                    </div>
+
+                </div>
+                {display ? <div>
+                    <Calendar  className={'spot-reserve-booking-calendar'} defaultValue={dates}  selectRange={true} minDate={new Date()} onChange={setDates}  />
+                    <div style={{display: 'flex', width: '70%', marginLeft: '20%', marginBottom: '20px'}}>
+                        <button className='bookings-submit-buttons' onClick={handeEdit}>Submit Booking</button>
+                    </div>
+                </div> : <></>}
+                <div>
+                    <button className="bookings-submit-buttons" onClick={() => {
+                        toggleDisplay()
+                        if (display) setErrors([])
+                    }
+                    }>{display ? 'Cancel' : 'Edit Booking'}</button>
+                    <button className="bookings-submit-buttons" onClick={handleSubmit}>Delete Booking</button>
+                </div>
+
+            </div>
         </div>
     )
 }

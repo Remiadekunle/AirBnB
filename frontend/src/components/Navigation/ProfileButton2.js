@@ -70,8 +70,8 @@ function ProfileButton2({ user, isHome, setIsHome}) {
             <>
 
               <li>{user.username}</li>
-              <li>{user.firstName} {user.lastName}</li>
-              <li>{user.email}</li>
+              {/* <li>{user.firstName} {user.lastName}</li>
+              <li>{user.email}</li> */}
               <>
                 <button id="logout-button" onClick={logout}>
                   <div id="logout-text">

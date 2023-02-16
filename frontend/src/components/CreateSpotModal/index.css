@@ -58,6 +58,10 @@ form{
     height: 80vh;
 }
 
+.create-form::-webkit-scrollbar{
+    display: none;
+}
+
 #create-price{
     display: flex;
     justify-content: center;

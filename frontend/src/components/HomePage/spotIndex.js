@@ -6,7 +6,7 @@ export function SpotIndex( {spot, isHome, setIsHome} ){
     let { id, city, state, price, name, avgRating, previewImage} = spot;
     const preview2 = spot.SpotImages?.url
     const rounded = (num) => {
-        console.log('what is thius thing im doing', 5.0 % 1)
+        // console.log('what is thius thing im doing', 5.0 % 1)
         return Number.parseFloat(num).toFixed(2) % 1 === 0? Number.parseFloat(num).toFixed(1) : Number.parseFloat(num).toFixed(2);
 
     }
@@ -20,7 +20,7 @@ export function SpotIndex( {spot, isHome, setIsHome} ){
         setIsHome(false)
       }
     //   console.log('this is the prvw', previewImage )
-    console.log('what is the previewimg', preview2)
+    // console.log('what is the previewimg', preview2)
     return (
         <NavLink className={'spot-card-container'} onClick={toggleNav} key={name} to={`/spots/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className="home-Card">
@@ -40,7 +40,7 @@ export function SpotIndex( {spot, isHome, setIsHome} ){
                     {name}
                     </span>
                     <div className='card-price'>
-                    {`$${price} night`}
+                        <span style={{fontWeight: 'bold'}}>{`$${price}`}</span> night
                     </div>
                 </div>
             </div>
