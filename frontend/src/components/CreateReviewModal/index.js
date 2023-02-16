@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 // import './SignupForm.css';
 import './index.css';
-import {createReview} from '../../store/reviews'
+import {createReview, setReviewed} from '../../store/reviews'
 
 
 function CreateReviewModal({spot, toggleReviewed}) {
@@ -22,14 +22,13 @@ function CreateReviewModal({spot, toggleReviewed}) {
     setErrors(newErrors)
   }, [review, stars])
 
-  if (!user){
-    return (
-        <div>
-            Need to be loginIn
-        </div>
+  if ( !user || Object?.values(user)?.length < 1) {
+    return(
+      <div>
+        Please sign in
+      </div>
     )
   }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
@@ -43,6 +42,7 @@ function CreateReviewModal({spot, toggleReviewed}) {
         if (data && data.errors) setErrors(Object.values(data.errors));
       });
     console.log('this is the errors', errors)
+    dispatch(setReviewed())
     toggleReviewed()
   };
 

@@ -2,10 +2,7 @@ import React from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import './index.css'
 
-const containerStyle = {
-  width: '100%',
-  height: '500px',
-};
+
 
 const center = {
   lat: 37.5899371,
@@ -14,8 +11,8 @@ const center = {
 
 
 
-const Maps = ({ apiKey, lat, lng, price }) => {
-  console.log('what is going on 22222222222222', typeof apiKey)
+const Maps = ({ apiKey, lat, lng, price,  containerStyle, scrollwheel}) => {
+  // console.log('what is going on 22222222222222', typeof apiKey)
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
@@ -23,7 +20,7 @@ const Maps = ({ apiKey, lat, lng, price }) => {
   const defaultMapOptions = {
     fullscreenControl: false,
     fullscreenControl: false,
-    scrollwheel: false,
+    scrollwheel: scrollwheel,
     mapTypeControl: false,
     streetViewControlOptions: {
       position: window.google?.maps.ControlPosition.RIGHT_TOP

@@ -23,7 +23,8 @@ module.exports = {
         guests: 5,
         name: 'Nice townhouse in the suburbs',
         description: 'BSHBDEINDOW',
-        price: 300
+        price: 300,
+        isTrendy: true
       },
       {
         ownerId: 2,
@@ -38,7 +39,8 @@ module.exports = {
         lng : -122.26112276992751,
         name: 'Nice townhouse in the suburbs',
         description: 'anksovnornvr',
-        price: 500
+        price: 500,
+        isTrendy: true
       },
       {
         ownerId: 3,
@@ -53,7 +55,8 @@ module.exports = {
         guests: 4,
         name: 'Nice townhouse in the suburbs',
         description: 'DnuiNSDiNDWOi',
-        price: 600
+        price: 600,
+        isTrendy: false
       },
       {
         ownerId: 1,
@@ -68,7 +71,8 @@ module.exports = {
         guests: 2,
         name: 'Nice townhouse in the suburbs',
         description: 'WDjbdiabdawDW',
-        price: 400
+        price: 400,
+        isTrendy: false
       },
       {
         ownerId: 3,
@@ -83,8 +87,8 @@ module.exports = {
         baths: 4,
         name: 'Nice townhouse in the suburbs',
         description: 'SHEEEEEEEEEEESH',
-        price: 800
-
+        price: 800,
+        isTrendy: true
       },
       {
         ownerId: 1,
@@ -99,7 +103,8 @@ module.exports = {
         guests: 6,
         name: 'Nice townhouse in the suburbs',
         description: 'BSHBDEINDOW',
-        price: 300
+        price: 300,
+        isTrendy: false
       },
       {
         ownerId: 2,
@@ -114,7 +119,8 @@ module.exports = {
         guests: 5,
         name: 'Nice townhouse in the suburbs',
         description: 'anksovnornvr',
-        price: 500
+        price: 500,
+        isTrendy: true
       },
       {
         ownerId: 3,
@@ -129,7 +135,8 @@ module.exports = {
         guests: 8,
         name: 'Nice townhouse in the suburbs',
         description: 'DnuiNSDiNDWOi',
-        price: 600
+        price: 600,
+        isTrendy: false
       },
       {
         ownerId: 1,
@@ -144,7 +151,8 @@ module.exports = {
         guests: 3,
         name: 'Nice townhouse in the suburbs',
         description: 'WDjbdiabdawDW',
-        price: 400
+        price: 400,
+        isTrendy: true
       },
       {
         ownerId: 3,
@@ -159,7 +167,8 @@ module.exports = {
         guests: 10,
         name: 'Nice townhouse in the suburbs',
         description: 'SHEEEEEEEEEEESH',
-        price: 800
+        price: 800,
+        isTrendy: false
       },
     ])
   },

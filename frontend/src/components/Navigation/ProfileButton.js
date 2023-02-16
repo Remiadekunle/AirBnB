@@ -1,16 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { demoLogIn } from "../../store/session";
+import { checkIfReviewed, setReviewed, setReviewedFalse } from "../../store/reviews";
+import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user, isHome, setIsHome}) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
-
+    const history = useHistory()
+    let reviews = useSelector(state => state.reviews.spot)
+    if (reviews === undefined) reviews = {'Reviews': []}
+    console.log('bro wtf plz', reviews)
+    const reviewObj = {"Reviews": Object?.values(reviews)}
     const openMenu = () => {
       if (showMenu) return;
       setShowMenu(true);
@@ -22,7 +28,7 @@ function ProfileButton({ user, isHome, setIsHome}) {
         password: 'password'
       }
 
-      await dispatch(demoLogIn(demo)).then(() => closeMenu())
+      await dispatch(demoLogIn(demo)).then((userId) => checkIfReviewed(userId, reviewObj , dispatch)).then(() => closeMenu())
     }
 
 
@@ -47,6 +53,7 @@ function ProfileButton({ user, isHome, setIsHome}) {
     const logout = (e) => {
       e.preventDefault();
       dispatch(sessionActions.logout());
+      dispatch(setReviewedFalse())
       closeMenu();
     };
 

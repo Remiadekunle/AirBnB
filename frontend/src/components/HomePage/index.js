@@ -44,7 +44,7 @@ export function Home({isHome, setIsHome, isFiltered}) {
                     <div className="app-copyright">
                         <i class="fa-regular fa-copyright fa-xs"></i>
                         <div>
-                            2022 Fairbnb,Inc.
+                            {new Date().getFullYear()} Fairbnb,Inc.
                         </div>
                     </div>
                     <div id="coding-components">

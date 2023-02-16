@@ -6,8 +6,8 @@ import './spotItem.css';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import EditSpotModal from "../EditSpotModal";
 import DeleteSpotModal from "../DeleteSpotModal";
-import {fetchreviews} from '../../store/reviews'
-import ReviewIndex from "../ReviewIndexItem";
+import {fetchreviews, setReviewed, setReviewedFalse} from '../../store/reviews'
+import ReviewIndex, { AllReviews } from "../ReviewIndexItem";
 import CreateReviewModal from "../CreateReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal";
 import ComingSoon from "../ComingSoon";
@@ -16,12 +16,13 @@ import 'react-calendar/dist/Calendar.css';
 import CalendarComponent from "../CalendarComponent";
 import { fetchBookings } from "../../store/booking";
 import ViewReservations from "../CalendarComponent/ViewCalendar";
-import MapContainer from "../Maps";
+import MapContainer, { MapContainer2 } from "../Maps";
 
 function SpotIndex({isHome, setIsHome}) {
     const { spotId } = useParams()
     const spot = useSelector(state => state.spots.singleSpot)
     let user = useSelector(state => state.session.user)
+    const isReviewed = useSelector(state => state.reviews.reviewed)
     const [reviewdd, setReviewdd] = useState(false);
     let reviewed;
     let reviews = useSelector(state => state.reviews.spot)
@@ -30,58 +31,65 @@ function SpotIndex({isHome, setIsHome}) {
     useEffect(() => {
 
         dispatch(fetchSingleSpot(spotId))
-        dispatch(fetchreviews(spotId))
+        dispatch(fetchreviews(spotId, user?.id))
         dispatch(fetchBookings(spotId))
         // dispatch(fetchSpots())
 
-        // return () => dispatch(offLoadSpot(spot))
+        return () => {
+            setIsHome(true)
+            console.log('hey we just left the spot page')
+            dispatch(setReviewedFalse())
+        }
     }, [dispatch, spotId])
 
     if (!spot) return null
     const {name, SpotImages, description, price, Owner, city, state, country, createdAt} = spot
-    console.log('this is the spot',spot)
+    // console.log('this is the spot',spot)
 
-    console.log('spotImage', SpotImages)
+    // console.log('spotImage', SpotImages)
     let mainImage = SpotImages?.find(image => {
         return image.preview === true
     })
     const months = ["January", "February", "March", "April", "May", 'June', "July", 'August', 'September', 'October', 'November ', 'December']
     const toggleReviewed = () => {
-        console.log('clickling for the review')
+        // console.log('clickling for the review')
         setReviewdd(!reviewdd)
     }
 
     if (!mainImage) mainImage = {url:'https://media.istockphoto.com/photos/beautiful-luxury-home-exterior-at-twilight-picture-id1026205392?b=1&k=20&m=1026205392&s=612x612&w=0&h=wChttFxmS4jrjBGOMWX597lrdVqHQvEqFrRaQi2rObk='}
-    console.log('this is new image', mainImage)
+    // console.log('this is new image', mainImage)
     // if (SpotImages.length < 1){
     //     mainImage = 'https://media.istockphoto.com/id/1255835530/photo/modern-custom-suburban-home-exterior.jpg?s=612x612&w=0&k=20&c=0Dqjm3NunXjZtWVpsUvNKg2A4rK2gMvJ-827nb4AMU4='
     // } else {
     //     mainImage = SpotImages.find(spot => spot.preview === true).url
     // }
     if (!reviews) {
-        console.log('bye this will stop the render')
+        // console.log('bye this will stop the render')
         return null
     }
     reviews = Object.values(reviews)
     let totalStars = 0;
     let startCount = 0;
     reviews.forEach(review => {
-        console.log('before count', totalStars)
+        // console.log('before count', totalStars)
         const star = parseInt(review.stars)
         console.log(star)
         totalStars += star
         startCount++
-        console.log('after count' , totalStars)
+        // console.log('after count' , totalStars)
     })
-    console.log(totalStars, 'this', startCount)
-    if (user){
-        reviews.forEach(review => {
-            if (review.userId === +user.id){
-                // setReviewdd(true)
-                reviewed = true
-            }
-        })
-    }
+    // console.log(totalStars, 'this', startCount)
+    // if (user){
+    //     reviews.forEach(review => {
+    //         console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMM', review, user)
+    //         if (review.userId === +user.id){
+    //             // setReviewdd(true)
+    //             console.log(' Ummmmmmmmmmmmmmmmmmmmmmmmmmmmmm',review.userId,  user.id)
+    //             reviewed = true
+    //             dispatch(setReviewed())
+    //         }
+    //     })
+    // }
 
     const rounded = (num) => {
         return Number.parseFloat(num).toFixed(1);
@@ -98,9 +106,9 @@ function SpotIndex({isHome, setIsHome}) {
     //     setReviewdd(true)
     // }
     // if (!user) user = {}
-    console.log('these are the reviews',reviews)
-    console.log(mainImage)
-    console.log(Owner)
+    // console.log('these are the reviews',reviews)
+    // console.log(mainImage)
+    // console.log(Owner)
     return (
         <div className="spot-page">
             <div>
@@ -109,9 +117,26 @@ function SpotIndex({isHome, setIsHome}) {
                     <i class="fa-solid fa-star fa-xs"></i>
                     <span>{totalStars ? rounded(totalStars/startCount) : 0}</span>
                     <span>{' · '}</span>
-                    <span style={{textDecoration: 'underline'}}>{`${reviews.length} reviews`}</span>
+                    {/* <span style={{textDecoration: 'underline'}}>{`${reviews.length} reviews`}</span> */}
+                    <button className="location-google-maps-button" >
+                        <OpenModalMenuItem
+                            itemText={`${reviews.length} reviews`}
+                            // onItemClick={closeMenu}
+                            // onModalClose={() => setIsHome(true)}
+                            modalComponent={<AllReviews
+                            ReviewIndex={ReviewIndex} reviews={reviews}
+                            reviewd={reviewed}
+                            user={user}
+                            spot={spot}
+                            setReviewdd={setReviewdd}
+                            toggleReviewed={toggleReviewed}
+                            />}/>
+                    </button>
                     <span>{' · '}</span>
-                    <span>{`${city}, ${state}, ${country}`}</span>
+                    {/* <span>{`${city}, ${state}, ${country}`}</span> */}
+                    <button className="location-google-maps-button">
+                            <OpenModalMenuItem itemText={`${city}, ${state}, ${country}`} modalComponent={<MapContainer2 lat={spot.lat} lng={spot.lng} price={spot.price}/>} />
+                    </button>
                 </div>
             </div>
             <div className="spot-images">
@@ -223,17 +248,30 @@ function SpotIndex({isHome, setIsHome}) {
                                     <i class="fa-solid fa-star fa-xs"></i>
                                     <span>{totalStars ? rounded(totalStars/startCount) : 0}</span>
                                     <span>{' · '}</span>
-                                    <span style={{textDecoration: 'underline'}}>{`${reviews.length} reviews`}</span>
+                                    <button className="location-google-maps-button" >
+                                        <OpenModalMenuItem
+                                            itemText={`${reviews.length} reviews`}
+                                            // onItemClick={closeMenu}
+                                            // onModalClose={() => setIsHome(true)}
+                                            modalComponent={<AllReviews
+                                            ReviewIndex={ReviewIndex} reviews={reviews}
+                                            reviewd={reviewed}
+                                            user={user}
+                                            spot={spot}
+                                            setReviewdd={setReviewdd}
+                                            toggleReviewed={toggleReviewed}
+                                            />}/>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                         <div className="reserve-button-container">
 
                             <button id="reserve-button">
-                                <OpenModalMenuItem itemText="Reserve Now" modalComponent={<CalendarComponent spot={spot} />} />
+                                <OpenModalMenuItem itemText="View Reservations" modalComponent={<ViewReservations spot={spot} />} />
                             </button>
                             <button id="reserve-button">
-                                <OpenModalMenuItem itemText="View Reservations" modalComponent={<ViewReservations spot={spot} />} />
+                                <OpenModalMenuItem itemText="Reserve Now" modalComponent={<CalendarComponent spot={spot} />} />
                             </button>
                         </div>
                     </div>
@@ -253,7 +291,7 @@ function SpotIndex({isHome, setIsHome}) {
                     ))}
                 </div>
                 <div className="review-button-container">
-                    {!reviewed? <button className="review-buttons"><OpenModalMenuItem
+                    {!isReviewed? <button className="review-buttons"><OpenModalMenuItem
                         itemText="Create Review"
                         // onItemClick={closeMenu}
                         // onItemClick={toggleReviewed}

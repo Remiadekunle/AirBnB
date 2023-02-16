@@ -121,6 +121,8 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               gap: "30px",
               padding: "0px 4.5%",
               height: '100%',
+              width: '100%',
+              justifyContent: 'space-between'
             }}
           >
             <button
@@ -128,7 +130,8 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               className="search-filter-buttons"
             >
               <div>
-                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+                {/* <i class="fa-solid fa-dollar-sign fa-2xl"></i> */}
+                <i class="fa-solid fa-money-bill-wave fa-2xl"></i>
               </div>
               <div>Highest Price</div>
             </button>
@@ -137,12 +140,13 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               className="search-filter-buttons"
             >
               <div>
-                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+                {/* <i class="fa-solid fa-dollar-sign fa-2xl"></i> */}
+                <i class="fa-solid fa-money-bill-wave fa-2xl"></i>
               </div>
               <div>Lowest Price</div>
             </button>
             <button
-              onClick={() => handleFilter("guests", false)}
+              onClick={() => handleFilter("guests", true)}
               className="search-filter-buttons"
             >
               <div>
@@ -151,7 +155,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               <div>Guests</div>
             </button>
             <button
-              onClick={() => handleFilter("baths", false)}
+              onClick={() => handleFilter("baths", true)}
               className="search-filter-buttons"
             >
               <div>
@@ -160,7 +164,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               <div>Baths</div>
             </button>
             <button
-              onClick={() => handleFilter("beds", false)}
+              onClick={() => handleFilter("beds", true)}
               className="search-filter-buttons"
             >
               <div>
@@ -177,6 +181,47 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               </div>
               <div>Ratings</div>
             </button>
+            <button
+              onClick={() => handleFilter("isTrendy", true)}
+              className="search-filter-buttons"
+            >
+              <div>
+                <i class="fa-solid fa-fire fa-2xl"></i>
+              </div>
+              <div>Trendy</div>
+            </button>
+            <button
+              onClick={() => handleFilter("createdAt", true)}
+              className="search-filter-buttons stars-special"
+            >
+              <div className="stars-contianer-search">
+                {/* <i class="fa-solid fa-clock fa-2xl"></i> */}
+                <div style={{display: 'flex', justifyContent: 'space-around', marginBottom: '10px', width: '100%'}}>
+                  <i class="fa-solid fa-star fa-2xs filter-star"></i>
+                  <i class="fa-solid fa-star fa-2xs filter-star"></i>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '5px', width: '100%'}}>
+                  <i class="fa-solid fa-star fa-2xs filter-star"></i>
+                  <i class="fa-solid fa-star fa-2xs filter-star"></i>
+                  <i class="fa-solid fa-star fa-2xs filter-star"></i>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-around', marginTop: '5px', width: '100%'}}>
+                  <i class="fa-solid fa-star fa-2xs filter-star"></i>
+                  <i class="fa-solid fa-star fa-2xs filter-star"></i>
+                </div>
+              </div>
+              <div>Newest</div>
+            </button>
+            <button
+              onClick={() => handleFilter("createdAt", false)}
+              className="search-filter-buttons"
+            >
+              <div>
+              <i class="fa-solid fa-clock fa-2xl"></i>
+              </div>
+              <div>Oldest</div>
+            </button>
+
             <button
               onClick={() => {
                 setIsFiltered(false)

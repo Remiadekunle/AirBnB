@@ -2,7 +2,7 @@ import React, { useEffect, useState, useSelector } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 // import './SignupForm.css';
-import { createSpot } from '../../store/spots'
+import { createSpot, fetchSpots } from '../../store/spots'
 import './index.css';
 
 
@@ -33,7 +33,7 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
     setErrors(newErrors)
   }, [address, city, state, country, name, description, price])
 
-  if (!sessionUser) {
+  if ( !sessionUser || Object?.values(sessionUser)?.length < 1) {
     return(
       <div>
         Please sign in
@@ -68,12 +68,15 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
     let errors;
 
 
-    await dispatch(createSpot(payload, payload2)).then(() => setIsFiltered(false)).then(closeModal).catch(async (res) => {
+    await dispatch(createSpot(payload, payload2)).then(() => setIsFiltered(false)).catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(Object.values(data.errors));
-      });
-    // console.log('this is the errors', errors)
+    });
+    await dispatch(fetchSpots())
+    console.log('these are the errors', errors)
+    return closeModal()
 
+    // console.log('this is the errors', errors)
     // dispatch(sessionActions.signup({ address, city, state, country, name, price }))
     // .then(closeModal)
     // .catch(async (res) => {
@@ -82,7 +85,6 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
     // });
 
     // return setErrors(['Confirm name field must be the same as the name field']);
-    console.log('these are the errors', errors)
   };
 
   return (

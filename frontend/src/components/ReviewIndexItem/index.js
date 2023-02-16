@@ -1,5 +1,8 @@
+import { useSelector } from 'react-redux'
+import CreateReviewModal from '../CreateReviewModal'
+import DeleteReviewModal from '../DeleteReviewModal'
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem'
 import './index.css'
-
 function ReviewIndex({review}){
 
     console.log(review.User)
@@ -41,3 +44,25 @@ function ReviewIndex({review}){
 }
 
 export default ReviewIndex
+
+
+export function AllReviews({ReviewIndex, reviews, reviewed, toggleReviewed, spot, setReviewdd, user}){
+    const isReviewed = useSelector(state => state.reviews.reviewed)
+    console.log('yo whats the reviewed', isReviewed)
+    return(
+        <div style={{width: '50vw', height: '99vh', display: 'flex', padding: '20px', overflow: 'hidden'}}>
+            {reviews.map(review => (
+                <ReviewIndex review={review}/>
+            ))}
+            {!isReviewed? <button className="review-buttons"><OpenModalMenuItem
+                        itemText="Create Review"
+                        // onItemClick={closeMenu}
+                        // onItemClick={toggleReviewed}
+                        modalComponent={<CreateReviewModal toggleReviewed={toggleReviewed} spot={spot} />}/></button> : <button className="review-buttons"><OpenModalMenuItem
+                        itemText="Delete Review"
+                        // onItemClick={closeMenu}
+                        onModalClose={() => setReviewdd(false)}
+                        modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/></button>}
+        </div>
+    )
+}

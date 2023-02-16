@@ -71,6 +71,11 @@ module.exports = (sequelize, DataTypes) => {
         min:1,
       }
     },
+    isTrendy: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     price: DataTypes.DECIMAL

@@ -6,6 +6,9 @@ const ADD_REVIEW = 'reviews/addReview'
 
 const DELETE_REVIEW = 'reviews/deleteReview'
 
+const SET_REVIEWED = 'reviews/setReviewed'
+const SET_REVIEWED_FALSE = 'reviews/setReviewedFalse'
+
 export const loadReviews = (reviews) => {
     return {
         type: LOAD_REVIEWS,
@@ -27,11 +30,44 @@ export const deleteReview = (review) => {
     }
 }
 
-export const fetchreviews = (spotId) => async dispatch => {
+export const setReviewed = () => {
+    return{
+        type: SET_REVIEWED
+    }
+}
+export const setReviewedFalse = () => {
+    return{
+        type: SET_REVIEWED_FALSE
+    }
+}
+
+export const checkIfReviewed = (id, reviews, dispatch) => {
+    console.log('yyyyyyyyyyyyyyyyyyyyy we ran')
+    console.log('what are the reviews here plz again', reviews, id)
+    reviews.Reviews.forEach(review => {
+        // console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMM', review, user)
+        if (review.userId === id){
+            // setReviewdd(true)
+            console.log(' Ummmmmmmmmmmmmmmmmmmmmmmmmmmmmm',review.userId,  id)
+            dispatch(setReviewed())
+        }
+    })
+}
+
+export const fetchreviews = (spotId, userId) => async dispatch => {
     const res = await fetch(`/api/spots/${spotId}/reviews`)
     // console.log('we are dispatching')
     if (res.ok){
         const reviews = await res.json()
+        // reviews.Reviews.forEach(review => {
+        //     // console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMM', review, user)
+        //     if (review.userId === userId){
+        //         // setReviewdd(true)
+        //         // console.log(' Ummmmmmmmmmmmmmmmmmmmmmmmmmmmmm',review.userId,  user.id)
+        //         dispatch(setReviewed())
+        //     }
+        // })
+        checkIfReviewed(userId, reviews, dispatch)
         await dispatch(loadReviews(reviews))
     } else if (res.status === 404){
         console.log('hi we hit this spot')
@@ -74,7 +110,7 @@ export const removeReview = ( spotId, review) => async dispatch => {
     }
 }
 
-const initialState = {};
+const initialState = { reviewed: false};
 
 const reviewReducer = (state = initialState, action) => {
     let newState;
@@ -98,6 +134,14 @@ const reviewReducer = (state = initialState, action) => {
             newState.spot = {...state.spot}
             const review2 = action.review
             delete newState.spot[review2.id]
+            return newState
+        case SET_REVIEWED:
+            newState = Object.assign({}, state);
+            newState.reviewed = true
+            return newState
+        case SET_REVIEWED_FALSE:
+            newState = Object.assign({}, state);
+            newState.reviewed = false
             return newState
       default:
         return state;

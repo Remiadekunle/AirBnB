@@ -71,6 +71,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      isTrendy: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
