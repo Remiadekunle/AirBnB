@@ -72,7 +72,7 @@ function NavigationSpot({ isLoaded, isHome, setIsHome, setIsFiltered }) {
                     itemText="Create New Spot"
                     // onItemClick={closeMenu}
                     modalComponent={
-                      <CreateSpotModal setIsFiltered={setIsFiltered} />
+                      <CreateSpotModal sessionUser={sessionUser} setIsFiltered={setIsFiltered} />
                     }
                   />
                 </button>
