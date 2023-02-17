@@ -29,6 +29,7 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
     if (price < 1) newErrors.push('Price needs to be greater than $0')
     if (description.length < 50) newErrors.push('Description needs to be atleast 50 chars')
     if (name.length < 1) newErrors.push('Name must be atleast 1 char')
+    if (country.trim().length !== 2) newErrors.push('Please enter the 2 digit country code')
 
     setErrors(newErrors)
   }, [address, city, state, country, name, description, price])
@@ -42,7 +43,7 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (country.trim().length !== 2) return
     setErrors([]);
     const lat = 1;
     const lng = 2;
@@ -68,12 +69,20 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
     let errors;
 
 
-    await dispatch(createSpot(payload, payload2)).then(() => setIsFiltered(false)).catch(async (res) => {
+    const check = await dispatch(createSpot(payload, payload2)).then(() => setIsFiltered(false)).catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(Object.values(data.errors));
+        console.log('ummmmm are u catching')
+        console.log('ummmmmmmmm what is the data', data)
+        if (data && (data.errors || data.message)) {
+          console.log('did we get here?')
+          setErrors(Object.values(data.errors));
+          return false
+        }
     });
     await dispatch(fetchSpots())
+    if (check === false) return
     console.log('these are the errors', errors)
+    console.log('these are the errors', check)
     return closeModal()
 
     // console.log('this is the errors', errors)

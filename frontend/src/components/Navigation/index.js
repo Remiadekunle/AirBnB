@@ -6,11 +6,12 @@ import "./Navigation.css";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import CreateSpotModal from "../CreateSpotModal";
 import { getSearch } from "../../store/search";
-import { filterSpot, loadCache, loadSpots } from "../../store/spots";
+import { filterSpot, loadCache, loadSpots, validateAddress } from "../../store/spots";
 
 
 function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   const sessionUser = useSelector((state) => state.session.user);
+  const key = useSelector((state) => state.maps.key);
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
   const [search, setSearch] = useState("");
@@ -45,6 +46,15 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
     dispatch(filterSpot(filter, reverse));
     setIsFiltered(true);
   };
+  const payload = {
+    address: {
+        regionCode: 'United States',
+        locality: 'Union City',
+        addressLines: ['address']
+    },
+  }
+
+  validateAddress(payload, key)
 
   console.log('this is the windown heigh', window.screenTop)
   const modalClassName = !isHome ? "header2" : "header";

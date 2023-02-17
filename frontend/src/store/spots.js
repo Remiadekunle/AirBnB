@@ -101,6 +101,7 @@ export const fetchSingleSpot = (spotId) => async dispatch => {
     }
 }
 
+
 export const createSpot = (spot, payload, key, address) => async dispatch => {
 
     const res = await csrfFetch('/api/spots', {
@@ -157,11 +158,17 @@ export const validateAddress = async (payload, key) => {
     if (res.ok){
         const body = await res.json()
         console.log('what is the body rn', body)
-        const {latitude, longitude} = body.result.geocode.location
-        const { addressComplete } = body.result.verdict
-        const {unconfirmedComponentTypes} = body.result.address
-        console.log('yooooo plz lmk what this value is', addressComplete)
-
+        console.log('what is the data here',  body.result.geocode)
+        let latitude = body.result.geocode.location.latitude? body.result.geocode.location.latitude : 0
+        let longitude = body.result.geocode.location.longitude? body.result.geocode.location.longitude : 0
+        let addressComplete = body.result?.verdict.addressComplete? body.result?.verdict.addressComplete : false
+        let unconfirmedComponentTypes = body.result.address.unconfirmedComponentTypes?  body.result.address.unconfirmedComponentTypes : false
+        // console.log('what ended uyp being the payload', {
+        //     latitude,
+        //     longitude,
+        //     addressComplete,
+        //     unconfirmedComponentTypes
+        // } )
         return {
             latitude,
             longitude,
