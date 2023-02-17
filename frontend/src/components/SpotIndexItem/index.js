@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom";
-import { fetchSingleSpot, offLoadSpot} from '../../store/spots'
+import { fetchSingleSpot, offLoadSpot, validateAddress} from '../../store/spots'
 import './spotItem.css';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import EditSpotModal from "../EditSpotModal";
@@ -21,6 +21,7 @@ import MapContainer, { MapContainer2 } from "../Maps";
 function SpotIndex({isHome, setIsHome}) {
     const { spotId } = useParams()
     const spot = useSelector(state => state.spots.singleSpot)
+    const key = useSelector((state) => state.maps.key);
     let user = useSelector(state => state.session.user)
     const isReviewed = useSelector(state => state.reviews.reviewed)
     const [reviewdd, setReviewdd] = useState(false);
@@ -94,8 +95,21 @@ function SpotIndex({isHome, setIsHome}) {
     const rounded = (num) => {
         return Number.parseFloat(num).toFixed(1);
     }
-
-
+    const payload = {
+        address: {
+            regionCode: "US",
+            locality: "Chicago",
+            addressLines: ["400 WEST LANE Pkwy"]
+        },
+    }
+    const payload2 = {
+        address: {
+            regionCode: "US",
+            locality: "Mountain View",
+            addressLines: ["1600 Amphithtre Pkwy"]
+        },
+    }
+    // validateAddress(payload, key)
 
     // if (!spots.allSpots){
     //     console.log('hello sir')

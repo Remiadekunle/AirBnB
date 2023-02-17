@@ -101,7 +101,8 @@ export const fetchSingleSpot = (spotId) => async dispatch => {
     }
 }
 
-export const createSpot = (spot, payload) => async dispatch => {
+export const createSpot = (spot, payload, key, address) => async dispatch => {
+
     const res = await csrfFetch('/api/spots', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -143,6 +144,30 @@ export const removeSpot = (spot) => async dispatch => {
         body = await res.json();
         const errors = body.errors
         return errors
+    }
+}
+
+export const validateAddress = async (payload, key) => {
+    const res = await fetch(`https://addressvalidation.googleapis.com/v1:validateAddress?key=${key}`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    })
+
+    if (res.ok){
+        const body = await res.json()
+        console.log('what is the body rn', body)
+        const {latitude, longitude} = body.result.geocode.location
+        const { addressComplete } = body.result.verdict
+        const {unconfirmedComponentTypes} = body.result.address
+        console.log('yooooo plz lmk what this value is', addressComplete)
+
+        return {
+            latitude,
+            longitude,
+            addressComplete,
+            unconfirmedComponentTypes
+        }
     }
 }
 

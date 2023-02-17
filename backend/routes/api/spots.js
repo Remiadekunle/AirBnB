@@ -4,7 +4,10 @@ const { Spot, User, SpotImage, Review, ReviewImage, Booking, sequelize } = requi
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { response } = require('../../app');
+const fetch = require("node-fetch");
+// import fetch from "node-fetch";
 const router = express.Router();
+const { googleMapsAPIKey } = require('../../config');
 const { Op } = require("sequelize");
 
 router.get('/', async (req, res) => {
@@ -191,6 +194,30 @@ router.get('/:spotId', async(req, res, next) => {
     return res.json(newSpot)
 })
 
+const validateAddress = async (payload) => {
+    const res = await fetch(`https://addressvalidation.googleapis.com/v1:validateAddress?key=${googleMapsAPIKey}`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    })
+
+    if (res.ok){
+        const body = await res.json()
+        console.log('what is the body rn', body)
+        const {latitude, longitude} = body.result.geocode.location
+        const { addressComplete } = body.result.verdict
+        const {unconfirmedComponentTypes} = body.result.address
+        console.log('yooooo plz lmk what this value is', addressComplete)
+
+        return {
+            latitude,
+            longitude,
+            addressComplete,
+            unconfirmedComponentTypes
+        }
+    }
+}
+
 router.post('/', requireAuth, async(req, res, next) => {
     const {address, city, state, country, lat, lng, name, description, price, beds, baths, guests} = req.body;
 
@@ -232,13 +259,29 @@ router.post('/', requireAuth, async(req, res, next) => {
         return next(err)
     }
 
+    const payload = {
+        address: {
+            regionCode: country,
+            locality: state,
+            addressLines: [address]
+        },
+    }
+
+    const { latitude, longitude, addressComplete, unconfirmedComponentTypes } = await validateAddress(payload)
+    if (!addressComplete){
+        const resp = {
+            errors: `The address you provided is invalid:${unconfirmedComponentTypes.join(', ')}` 
+        }
+        return next(resp)
+    }
+
     const newSpot = await Spot.build({
         address,
         city,
         state,
         country,
-        lat,
-        lng,
+        latitude,
+        longitude,
         name,
         description,
         price,
