@@ -199,16 +199,29 @@ const validateAddress = async (payload) => {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
-    })
+    }).catch(async (res) => {
+        const data = await res.json();
+
+        if (data && (data.errors || data.message || data.error)) {
+          console.log('did we get here?')
+          return next(data.errors);
+        }
+    });
 
     if (res.ok){
         const body = await res.json()
-        console.log('what is the body rn', body)
-        const {latitude, longitude} = body.result.geocode.location
-        const { addressComplete } = body.result.verdict
-        const {unconfirmedComponentTypes} = body.result.address
-        console.log('yooooo plz lmk what this value is', addressComplete)
-
+        // console.log('what is the body rn', body)
+        // console.log('what is the data here',  body.result.geocode)
+        let latitude = body.result.geocode.location.latitude? body.result.geocode.location.latitude : 0
+        let longitude = body.result.geocode.location.longitude? body.result.geocode.location.longitude : 0
+        let addressComplete = body.result?.verdict.addressComplete? body.result?.verdict.addressComplete : false
+        let unconfirmedComponentTypes = body.result.address.unconfirmedComponentTypes?  body.result.address.unconfirmedComponentTypes : false
+        // console.log('what ended uyp being the payload', {
+        //     latitude,
+        //     longitude,
+        //     addressComplete,
+        //     unconfirmedComponentTypes
+        // } )
         return {
             latitude,
             longitude,
@@ -262,27 +275,40 @@ router.post('/', requireAuth, async(req, res, next) => {
     const payload = {
         address: {
             regionCode: country,
-            locality: state,
+            locality: city,
             addressLines: [address]
         },
     }
-
-    const { latitude, longitude, addressComplete, unconfirmedComponentTypes } = await validateAddress(payload)
-    if (!addressComplete){
-        const resp = {
-            errors: `The address you provided is invalid:${unconfirmedComponentTypes.join(', ')}` 
+    const validated = await validateAddress(payload).catch(async (res) => {
+        const data = await res.json();
+        console.log('ummmmm are u catching')
+        console.log('ummmmmmmmm what is the data', data)
+        if (data && (data.errors || data.message || data.error)) {
+          console.log('did we get here?')
+          return next(data.errors);
         }
+    });
+    console.log('what is the validation rn', validated)
+    if (!validated?.addressComplete){
+        console.log('what is the validation rn in the iff ', validated)
+        const err = new Error('Please enter all required information');
+        err.status = 400;
+        const resp = {
+            errors: `The address you provided is invalid:${validated?.unconfirmedComponentTypes.join(', ')}`
+        }
+        err.errors = resp
         resp.status = 400;
-        return next(resp)
+        return next(err)
     }
-
+    const { latitude, longitude, unconfirmedComponentTypes } = validated
+    console.log('what are the details here', latitude, longitude)
     const newSpot = await Spot.build({
         address,
         city,
         state,
         country,
-        latitude,
-        longitude,
+        lat: latitude,
+        lng: longitude,
         name,
         description,
         price,
