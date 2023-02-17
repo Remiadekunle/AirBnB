@@ -272,6 +272,7 @@ router.post('/', requireAuth, async(req, res, next) => {
         const resp = {
             errors: `The address you provided is invalid:${unconfirmedComponentTypes.join(', ')}` 
         }
+        resp.status = 400;
         return next(resp)
     }
 
