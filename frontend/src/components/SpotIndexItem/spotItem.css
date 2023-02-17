@@ -311,9 +311,11 @@
 }
 
 .contact-host{
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
     border-radius: 5px;
     cursor:pointer;
+    height: 45px;
+    width: 150px;
     border: 1px solid black;
     background-color: #FFFFFF;
 }
@@ -323,11 +325,14 @@
 }
 
 .review-buttons{
-    padding: 20px 20px;
+    /* padding: 20px 20px; */
     border-radius: 10px;
     width: 160px;
     /* height: 40; */
     cursor:pointer;
+    height: 60px;
+    display: flex;
+    justify-content: center;
     border: 1px solid black;
     background-color: white;
 }

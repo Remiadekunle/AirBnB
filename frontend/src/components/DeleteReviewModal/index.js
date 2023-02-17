@@ -40,7 +40,7 @@ function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
 
     return (
         <>
-        <h1>Delete Spot</h1>
+        <h1>Delete Review</h1>
         <form onSubmit={handleSubmit}>
             <ul>
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}

@@ -49,7 +49,7 @@ function CreateReviewModal({spot, toggleReviewed}) {
   return (
     <>
       <h1>Create Review</h1>
-      <form className="create-form" onSubmit={handleSubmit}>
+      <form className="create-reviews-form" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
@@ -72,8 +72,9 @@ function CreateReviewModal({spot, toggleReviewed}) {
             placeholder="Stars"
           />
         </label>
-
-        <button className="submitButton" type="submit">Submit</button>
+        <div style={{width: '100%', justifyContent: 'center', display: 'flex'}}>
+          <button className="submitButton reviews-submit" type="submit">Submit</button>
+        </div>
       </form>
     </>
   );
