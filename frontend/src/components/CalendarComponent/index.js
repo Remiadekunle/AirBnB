@@ -9,6 +9,7 @@ import './index.css'
 function CalendarComponent({spot}){
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    const sessionUser = useSelector((state) => state.session.user);
     const [dates, setDates] = useState([])
     const [total, setTotal] = useState(0)
     const [errors, setErrors] = useState([])
@@ -51,6 +52,13 @@ function CalendarComponent({spot}){
             const data = await res.json();
             if (data && data.errors) return setErrors(Object.values(data.errors));
         });
+    }
+    if ( !sessionUser || Object?.values(sessionUser)?.length < 1) {
+        return(
+          <div>
+            Please sign in
+          </div>
+        )
     }
     let maxDate = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate())
     // maxDate = maxDate.setFullYear(now.getFullYear() + 1)

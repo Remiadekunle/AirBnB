@@ -110,7 +110,7 @@ export const removeBooking = (bookingId, startDate, endDate) => async dispatch =
     }
 }
 
-const initialState = {};
+const initialState = { spot: {}, user: {}};
 
 const bookingReducer = (state = initialState, action) => {
     let newState;

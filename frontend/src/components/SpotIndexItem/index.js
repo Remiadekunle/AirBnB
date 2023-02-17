@@ -291,17 +291,33 @@ function SpotIndex({isHome, setIsHome}) {
                             <ReviewIndex review={review}/>
                         ))}
                     </div>
-                    <div className="review-button-container">
-                        {!isReviewed? <button className="review-buttons"><OpenModalMenuItem
-                            itemText="Create Review"
-                            // onItemClick={closeMenu}
-                            // onItemClick={toggleReviewed}
-                            modalComponent={<CreateReviewModal toggleReviewed={toggleReviewed} spot={spot} />}/></button> : <button className="review-buttons"><OpenModalMenuItem
-                            itemText="Delete Review"
-                            // onItemClick={closeMenu}
-                            onModalClose={() => setReviewdd(false)}
-                            modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/></button>}
+                    <div style={{display: 'flex'}}>
+                        <button className="view-all-reviews-button" style={{display: reviews.length > 6 ? 'block' : 'none'}} >
+                                <OpenModalMenuItem
+                                    itemText={`Show all ${reviews.length} reviews`}
+                                    // onItemClick={closeMenu}
+                                    // onModalClose={() => setIsHome(true)}
+                                    modalComponent={<AllReviews
+                                    ReviewIndex={ReviewIndex} reviews={reviews}
+                                    reviewd={reviewed}
+                                    user={user}
+                                    spot={spot}
+                                    setReviewdd={setReviewdd}
+                                    toggleReviewed={toggleReviewed}
+                                    />}/>
+                            </button>
+                        <div className="review-button-container">
+                            {!isReviewed? <button className="review-buttons"><OpenModalMenuItem
+                                itemText="Create Review"
+                                // onItemClick={closeMenu}
+                                // onItemClick={toggleReviewed}
+                                modalComponent={<CreateReviewModal toggleReviewed={toggleReviewed} spot={spot} />}/></button> : <button className="review-buttons"><OpenModalMenuItem
+                                itemText="Delete Review"
+                                // onItemClick={closeMenu}
+                                onModalClose={() => setReviewdd(false)}
+                                modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/></button>}
 
+                        </div>
                     </div>
 
                 </div>

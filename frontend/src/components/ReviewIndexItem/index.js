@@ -48,13 +48,18 @@ export default ReviewIndex
 
 export function AllReviews({ReviewIndex, reviews, reviewed, toggleReviewed, spot, setReviewdd, user}){
     const isReviewed = useSelector(state => state.reviews.reviewed)
+
+   
     console.log('yo whats the reviewed', isReviewed)
     return(
         <div style={{width: '50vw', height: '70vh', display: 'flex', padding: '20px', overflow: 'hidden',}}>
-            <div className='all-reviews-container'>
+            <div className='all-reviews-container' style={{display: reviews.length < 1 ? 'none' : 'flex'}}>
                 {reviews.map(review => (
                     <ReviewIndex review={review}/>
                 ))}
+            </div>
+            <div style={{width: '100%', fontSize: '24px', justifyContent: 'center', height: '60vh', display: reviews.length < 1 ? 'flex' : 'none', padding: '20px', overflow: 'hidden', alignItems: 'center'}}>
+                No reviews
             </div>
             <div style={{position: 'absolute', bottom: '2%', right: '2%'}}>
                 {!isReviewed? <button className="review-buttons"><OpenModalMenuItem

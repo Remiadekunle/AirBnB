@@ -244,6 +244,7 @@
     padding: 25px 0px;
     border-bottom: 0.5px solid #DDDDDD;
     border-top: 0.5px solid #DDDDDD;
+    position: relative;
 }
 
 #review-continer-stats{
@@ -266,7 +267,21 @@
 .comments-container{
     width: 100%;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    max-height: 560px;
+    overflow-y: hidden;
+}
+
+.view-all-reviews-button{
+    width: 160px;
+    /* height: 40px; */
+    padding: 0px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid black;
+    background-color: white;
+    margin-right: 10px;
 }
 
 .user-container{
@@ -308,8 +323,10 @@
 }
 
 .review-buttons{
-    padding: 10px 20px;
+    padding: 20px 20px;
     border-radius: 10px;
+    width: 160px;
+    /* height: 40; */
     cursor:pointer;
     border: 1px solid black;
     background-color: white;

@@ -6,6 +6,7 @@ import { deleteBooking, fetchUserBookings, removeBooking, updateBooking } from "
 
 function ViewReservations({spot}){
     const dispatch = useDispatch()
+    const [count, setCount] = useState(0)
     useEffect(() => {
         dispatch(fetchUserBookings())
     }, [dispatch])
@@ -15,7 +16,7 @@ function ViewReservations({spot}){
     const bookings = Object?.values(userBookings)
     const filterd = bookings.filter(booking => booking.spotId === spot.id)
     console.log('did we get anything useful?', filterd)
-    if (filterd.length < 1){
+    if (filterd.length - count < 1){
         return(
             <div style={{padding: '30px', width: '800px', height: '500px'}}>
                 <h2 style={{width: '100%', display: 'flex', justifyContent: 'center', fontSize: '32px', marginBottom: '40px'}}>
@@ -42,7 +43,7 @@ function ViewReservations({spot}){
             </div>
             <div style={{margin: '0 auto', width: '65%'}}>
                 {filterd && filterd.map(booking => (
-                    <BookingIndex booking={booking} />
+                    <BookingIndex setCount={setCount} count={count} booking={booking} />
                 ))}
             </div>
         </div>
@@ -52,7 +53,7 @@ function ViewReservations({spot}){
 export default ViewReservations
 
 
-export function BookingIndex({booking}){
+export function BookingIndex({booking, setCount, count}){
     const dispatch = useDispatch();
     const {startDate, endDate} = booking
     const start = new Date(startDate)
@@ -61,6 +62,11 @@ export function BookingIndex({booking}){
     const [errors, setErrors] = useState([])
     const [display, setDisplay] = useState(false)
     const { closeModal } = useModal();
+
+    useEffect(() => {
+        let check = new Date(endDate) < new Date() ?  setCount(count + 1) : ''
+    }, [])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         await dispatch(removeBooking(booking.id)).catch(async (res) => {
@@ -84,7 +90,7 @@ export function BookingIndex({booking}){
     const toggleDisplay = () => {
         setDisplay(!display)
     }
-
+    
     return(
         <div style={{display: new Date(endDate) < new Date() ? 'none': 'flex', gap: '10px', width: '100%'}}>
             <div>

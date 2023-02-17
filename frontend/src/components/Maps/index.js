@@ -53,7 +53,7 @@ export function MapContainer2({center, lat, lng, price}){
   }
 
   return (
-    <div style={{width: '75vw', height: '80vh', overflow: 'hidden', borderRadius: '15px'}}>
+    <div style={{width: '75vw', height: '80vh', overflow: 'hidden', borderRadius: '10px'}}>
       <Maps apiKey={key} center={center} lat={lat} lng={lng} price={price} containerStyle={containerStyle} scrollwheel={true} />
     </div>
   );
