@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { CloseModalButton, useModal } from "../../context/Modal";
 // import './SignupForm.css';
 import './index.css';
-import {createReview} from '../../store/reviews'
+import {createReview, setReviewed} from '../../store/reviews'
 
 
 function CreateReviewModal({spot, toggleReviewed}) {
@@ -22,14 +22,13 @@ function CreateReviewModal({spot, toggleReviewed}) {
     setErrors(newErrors)
   }, [review, stars])
 
-  if (!user){
-    return (
-        <div>
-            Need to be loginIn
-        </div>
+  if ( !user || Object?.values(user)?.length < 1) {
+    return(
+      <div>
+        Please sign in
+      </div>
     )
   }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
@@ -43,13 +42,14 @@ function CreateReviewModal({spot, toggleReviewed}) {
         if (data && data.errors) setErrors(Object.values(data.errors));
       });
     console.log('this is the errors', errors)
+    dispatch(setReviewed())
     toggleReviewed()
   };
 
   return (
     <>
       <h1>Create Review</h1>
-      <form className="create-form" onSubmit={handleSubmit}>
+      <form className="create-reviews-form" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
@@ -72,8 +72,10 @@ function CreateReviewModal({spot, toggleReviewed}) {
             placeholder="Stars"
           />
         </label>
-
-        <button className="submitButton" type="submit">Submit</button>
+        <div style={{width: '100%', justifyContent: 'center', display: 'flex'}}>
+          <button className="submitButton reviews-submit" type="submit">Submit</button>
+        </div>
+        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );

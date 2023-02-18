@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
-import { useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { CloseModalButton, useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import { useHistory } from "react-router-dom";
+import { checkIfReviewed } from "../../store/reviews";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -10,15 +12,19 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
-
-
-
+  const history = useHistory()
+  let reviews = useSelector(state => state.reviews.spot)
+  if (reviews === undefined) reviews = {'Reviews': []}
+  console.log('bro wtf plz', reviews)
+  const reviewObj = {"Reviews": Object?.values(reviews)}
+  console.log('what is the history man', history)
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
 
 
     return dispatch(sessionActions.login({ credential, password }))
+    .then((userId) => checkIfReviewed(userId, reviewObj , dispatch))
       .then(closeModal)
       .catch(
         async (res) => {
@@ -63,6 +69,7 @@ function LoginFormModal() {
           />
         </label>
         <button className="submitButton" type="submit">Log In</button>
+        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );

@@ -6,11 +6,17 @@ const LOAD_SPOT = 'spots/loadSpot'
 
 const ADD_SPOT = 'spots/addSpot'
 
+const FILTER_SPOT = 'spots/filterSpot'
+
 const EDIT_SPOT = 'spots/editSpot'
 
 const OFFLOAD_SPOT = 'spots/offloadSpot'
 
 const DELETE_SPOT = 'spots/deleteSpot'
+
+const LOAD_CACHE = 'spots/loadCache'
+
+const SET_CACHE = 'spots/setCache'
 
 export const loadSpots = (spots) => {
     return {
@@ -41,6 +47,27 @@ export const editSpot = (spot) => {
     }
 }
 
+export const loadCache = () => {
+    return{
+        type: LOAD_CACHE
+    }
+}
+
+export const setCache = (spots) => {
+    return{
+        type:SET_CACHE,
+        spots
+    }
+}
+
+export const filterSpot = (filter, reverse) => {
+    return{
+        type: FILTER_SPOT,
+        filter,
+        reverse
+    }
+}
+
 export const offLoadSpot = (spot) => {
     return{
         type:OFFLOAD_SPOT,
@@ -61,6 +88,7 @@ export const fetchSpots = () => async dispatch => {
     if (res.ok){
         const spots = await res.json()
         await dispatch(loadSpots(spots))
+        dispatch(setCache(spots))
     }
 }
 
@@ -73,7 +101,9 @@ export const fetchSingleSpot = (spotId) => async dispatch => {
     }
 }
 
-export const createSpot = (spot, payload) => async dispatch => {
+
+export const createSpot = (spot, payload, key, address) => async dispatch => {
+
     const res = await csrfFetch('/api/spots', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -118,6 +148,36 @@ export const removeSpot = (spot) => async dispatch => {
     }
 }
 
+export const validateAddress = async (payload, key) => {
+    const res = await fetch(`https://addressvalidation.googleapis.com/v1:validateAddress?key=${key}`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    })
+
+    if (res.ok){
+        const body = await res.json()
+        console.log('what is the body rn', body)
+        console.log('what is the data here',  body.result.geocode)
+        let latitude = body.result.geocode.location.latitude? body.result.geocode.location.latitude : 0
+        let longitude = body.result.geocode.location.longitude? body.result.geocode.location.longitude : 0
+        let addressComplete = body.result?.verdict.addressComplete? body.result?.verdict.addressComplete : false
+        let unconfirmedComponentTypes = body.result.address.unconfirmedComponentTypes?  body.result.address.unconfirmedComponentTypes : false
+        // console.log('what ended uyp being the payload', {
+        //     latitude,
+        //     longitude,
+        //     addressComplete,
+        //     unconfirmedComponentTypes
+        // } )
+        return {
+            latitude,
+            longitude,
+            addressComplete,
+            unconfirmedComponentTypes
+        }
+    }
+}
+
 export const updateSpot = (spot, oldSpot) => async dispatch => {
     const res = await csrfFetch(`/api/spots/${oldSpot.id}`, {
         method: 'PUT',
@@ -147,18 +207,40 @@ export const updateSpot = (spot, oldSpot) => async dispatch => {
 
 }
 
-const initialState = {};
+const initialState = { cache: {}, allSpots: {}};
+
+function compare( a, b, param, reverse ) {
+    if ( a[param] < b[param] ){
+      return reverse? 1 : -1;
+    }
+    if ( a[param] > b[param] ){
+      return reverse? -1 : 1;
+    }
+    return 0;
+}
 
 const spotReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_SPOTS:
             newState = Object.assign({}, state);
-            newState.allSpots = {...state.allSpots}
+            newState.allSpots = {}
             const spots = action.spots.Spots
             spots.forEach((spot) => {
                 newState.allSpots[spot.id] = spot
             })
+            return newState;
+        case SET_CACHE:
+            newState = Object.assign({}, state);
+            newState.allSpots = {...state.allSpots}
+            const spotsCache = action.spots?.Spots
+            spotsCache?.forEach((spot) => {
+                newState.cache[spot.id] = spot
+            })
+            return newState;
+        case LOAD_CACHE:
+            newState = Object.assign({}, state)
+            newState.allSpots = {...state.cache}
             return newState;
         case LOAD_SPOT:
             newState = Object.assign({}, state)
@@ -183,6 +265,12 @@ const spotReducer = (state = initialState, action) => {
             newState = Object.assign({}, state)
             newState.singleSpot = {}
             return newState;
+        case FILTER_SPOT:
+            newState = Object.assign({}, state)
+            const nonSpots = Object.values(state.allSpots)
+            let newSpots = nonSpots.sort((a, b) => compare(a,b, action.filter, action.reverse))
+            newState.filter = {spots: newSpots, filter: action.filter}
+            return newState
         case EDIT_SPOT:
             newState = Object.assign({}, state)
             newState.allSpots = {...state.allSpots}

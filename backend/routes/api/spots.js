@@ -4,7 +4,10 @@ const { Spot, User, SpotImage, Review, ReviewImage, Booking, sequelize } = requi
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { response } = require('../../app');
+const fetch = require("node-fetch");
+// import fetch from "node-fetch";
 const router = express.Router();
+const { googleMapsAPIKey } = require('../../config');
 const { Op } = require("sequelize");
 
 router.get('/', async (req, res) => {
@@ -191,8 +194,47 @@ router.get('/:spotId', async(req, res, next) => {
     return res.json(newSpot)
 })
 
+const validateAddress = async (payload) => {
+    const res = await fetch(`https://addressvalidation.googleapis.com/v1:validateAddress?key=${googleMapsAPIKey}`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    }).catch(async (res) => {
+        const data = await res.json();
+
+        if (data && (data.errors || data.message || data.error)) {
+          console.log('did we get here?')
+          return next(data.errors);
+        }
+    });
+
+    if (res.ok){
+        const body = await res.json()
+        // console.log('what is the body rn', body)
+        // console.log('what is the data here',  body.result.geocode)
+        let latitude = body.result.geocode.location.latitude? body.result.geocode.location.latitude : 0
+        let formattedAddres = body.result.address.formattedAddress? body.result.address.formattedAddress : ''
+        let longitude = body.result.geocode.location.longitude? body.result.geocode.location.longitude : 0
+        let addressComplete = body.result?.verdict.addressComplete? body.result?.verdict.addressComplete : false
+        let unconfirmedComponentTypes = body.result.address.unconfirmedComponentTypes?  body.result.address.unconfirmedComponentTypes : false
+        // console.log('what ended uyp being the payload', {
+        //     latitude,
+        //     longitude,
+        //     addressComplete,
+        //     unconfirmedComponentTypes
+        // } )
+        return {
+            latitude,
+            longitude,
+            addressComplete,
+            unconfirmedComponentTypes,
+            formattedAddres
+        }
+    }
+}
+
 router.post('/', requireAuth, async(req, res, next) => {
-    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+    const {address, city, state, country, lat, lng, name, description, price, beds, baths, guests} = req.body;
 
     const { user } = req;
     const id = user.id
@@ -232,17 +274,52 @@ router.post('/', requireAuth, async(req, res, next) => {
         return next(err)
     }
 
+    const payload = {
+        address: {
+            regionCode: country,
+            locality: city,
+            addressLines: [address]
+        },
+    }
+    const validated = await validateAddress(payload).catch(async (res) => {
+        const data = await res.json();
+        console.log('ummmmm are u catching')
+        console.log('ummmmmmmmm what is the data', data)
+        if (data && (data.errors || data.message || data.error)) {
+          console.log('did we get here?')
+          return next(data.errors);
+        }
+    });
+    console.log('what is the validation rn', validated)
+    if (!validated?.addressComplete){
+        console.log('what is the validation rn in the iff ', validated)
+        const err = new Error('Please enter all required information');
+        err.status = 400;
+        const resp = {
+            errors: `The address you provided is invalid: `,
+            inputs: validated?.unconfirmedComponentTypes
+        }
+        err.errors = resp
+        resp.status = 400;
+        return next(err)
+    }
+    const { latitude, longitude, unconfirmedComponentTypes, formattedAddres } = validated
+    console.log('what are the details here', latitude, longitude)
     const newSpot = await Spot.build({
         address,
         city,
         state,
         country,
-        lat,
-        lng,
+        lat: latitude,
+        lng: longitude,
         name,
         description,
         price,
-        ownerId: id
+        beds,
+        baths,
+        guests,
+        ownerId: id,
+        formattedAddres
     })
 
     await newSpot.save();
@@ -312,10 +389,43 @@ router.put('/:spotId', async(req, res, next) => {
         err.message = 'Spot couldn\'t be found';
         return next(err);
     }
+    const payload = {
+        address: {
+            regionCode: country,
+            locality: city,
+            addressLines: [address]
+        },
+    }
 
     if (user.id !== spot.User.id){
         return requireProperAuth(req, res, next);
     }
+
+    const validated = await validateAddress(payload).catch(async (res) => {
+        const data = await res.json();
+        console.log('ummmmm are u catching')
+        console.log('ummmmmmmmm what is the data', data)
+        if (data && (data.errors || data.message || data.error)) {
+          console.log('did we get here?')
+          return next(data.errors);
+        }
+    });
+    console.log('what is the validation rn', validated)
+    if (!validated?.addressComplete){
+        console.log('what is the validation rn in the iff ', validated)
+        const err = new Error('Please enter all required information');
+        err.status = 400;
+        const resp = {
+            errors: `The address you provided is invalid: `,
+            inputs: validated?.unconfirmedComponentTypes
+        }
+        err.errors = resp
+        resp.status = 400;
+        return next(err)
+    }
+    const { latitude, longitude, unconfirmedComponentTypes, formattedAddres } = validated
+    console.log('what are the details here', latitude, longitude)
+
 
     const errors = {}
     if (address) spot.address = address;
@@ -326,14 +436,15 @@ router.put('/:spotId', async(req, res, next) => {
     else errors.state = "State is required"
     if (country) spot.country = country;
     else errors.country = "Country is required"
-    if (lat) spot.lat = lat;
+    if (latitude) spot.lat = latitude;
     else errors.lat = "Latitude is not valid";
-    if (lng) spot.lng = lng;
+    if (longitude) spot.lng = longitude;
     else errors.lng = "Longitude is not valid";
     if (name) spot.name = name;
     else errors.name = "Name must be less than 50 characters";
     if (description) spot.description = description;
     else errors.description = "Description is required";
+    spot.formattedAddres = formattedAddres
     if (price) {
         spot.price = price;
     }
@@ -650,13 +761,59 @@ router.post('/search', async(req, res, next) => {
                     }
                 }
             ]
-        }
+        },
     })
+
+    const Spots = []
+    for (let i = 0; i < spots.length; i++){
+        let spot = spots[i]
+        spot = spot.toJSON();
+        let image = await SpotImage.findOne({
+            where: {
+                spotId: spot.id,
+                preview: true
+            },
+            attributes: {
+                exclude: ['id', 'spotId', 'createdAt', 'updatedAt']
+            },
+        });
+        if (image){
+            const url = image.url
+            spot.previewImage = url;
+
+        }
+        else{
+            spot.previewImage = 'No preview image found'
+        }
+
+        let reviews = await Review.findAll({
+            where: {
+                spotId: spot.id
+            },
+
+        })
+
+        let stars = 0;
+        count = 0
+        if (reviews.length > 0){
+            reviews.forEach(review => {
+                stars += review.stars
+                count++
+            })
+            stars = stars/count
+
+            spot.avgRating = stars
+        } else{
+            spot.avgRating = 'This restaurant has not been rated'
+        }
+
+        Spots.push(spot)
+    }
 
     res.status = 200;
     console.log('11111111111111111111111111111111111111111111111111', spots)
     res.json({
-        search: spots
+        search: Spots
     })
 })
 

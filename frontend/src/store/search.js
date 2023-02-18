@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf"
+import { loadSpots } from "./spots"
 
 export const LOAD_SEARCH = 'search/loadSearch'
 
@@ -47,8 +48,8 @@ export const getSearch = (search) => async dispatch => {
 
     if (res.ok){
         const body = await res.json()
-        dispatch(loadSearch(body.search))
-        return body
+        console.log('this is the body from the search', body)
+        return body.search
     }
 }
 
@@ -75,6 +76,7 @@ const searchReducer = (state = initialState, action) => {
         case CLEAR_SEARCH:
             newState = Object.assign({}, state)
             newState.search = {}
+            newState.array = []
             return newState
       default:
         return state;

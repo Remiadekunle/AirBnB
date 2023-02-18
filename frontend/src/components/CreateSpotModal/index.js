@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useSelector } from "react";
 import { useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { CloseModalButton, useModal } from "../../context/Modal";
 // import './SignupForm.css';
-import { createSpot } from '../../store/spots'
+import { createSpot, fetchSpots } from '../../store/spots'
 import './index.css';
 
 
-function CreateSpotModal() {
+function CreateSpotModal({setIsFiltered, sessionUser}) {
   const dispatch = useDispatch();
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -15,9 +15,13 @@ function CreateSpotModal() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0)
+  const [beds, setBeds] = useState(0)
+  const [baths, setBaths] = useState(0)
+  const [guests, setGuests] = useState(0)
   const [url, setUrl] = useState('');
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  // const sessionUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     let newErrors = []
@@ -25,13 +29,21 @@ function CreateSpotModal() {
     if (price < 1) newErrors.push('Price needs to be greater than $0')
     if (description.length < 50) newErrors.push('Description needs to be atleast 50 chars')
     if (name.length < 1) newErrors.push('Name must be atleast 1 char')
+    if (country.trim().length !== 2) newErrors.push('Please enter the 2 digit country code')
 
     setErrors(newErrors)
   }, [address, city, state, country, name, description, price])
 
+  if ( !sessionUser || Object?.values(sessionUser)?.length < 1) {
+    return(
+      <div>
+        Please sign in
+      </div>
+    )
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (country.trim().length !== 2) return
     setErrors([]);
     const lat = 1;
     const lng = 2;
@@ -45,7 +57,10 @@ function CreateSpotModal() {
         lng,
         name,
         description,
-        price
+        price,
+        beds,
+        baths,
+        guests
     }
     const payload2 = {
       url,
@@ -53,13 +68,42 @@ function CreateSpotModal() {
     }
     let errors;
 
+    const spotTranslate ={
+      'locality': 'City',
+      'route': 'Street Name',
+      'street_number': 'Street Number',
+      'country': 'Country',
+      'administrative_area_level_1': 'State',
+      'postal_code': 'Zip-code',
+      'postal_code_suffix': 'Zipcode suffix',
+      'point_of_interest': 'Street Name'
+    }
 
-    await dispatch(createSpot(payload, payload2)).then(closeModal).catch(async (res) => {
+    const check = await dispatch(createSpot(payload, payload2)).then(() => setIsFiltered(false)).catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(Object.values(data.errors));
-      });
-    // console.log('this is the errors', errors)
+        console.log('ummmmm are u catching')
+        console.log('ummmmmmmmm what is the data', data)
+        if (data && data.errors?.inputs){
+          const mapped = data.errors.inputs.map(input => spotTranslate[input])
+          console.log('were almost there')
+          setErrors([`The address you provided is invalid: ${mapped.join('/')}`])
+          return false
+        }
+        if (data && (data.errors || data.message)) {
+          let errs = data.inputs ? data.inputs: []
 
+          console.log('did we get here?')
+          setErrors(Object.values(data.errors));
+          return false
+        }
+    });
+    await dispatch(fetchSpots())
+    if (check === false) return
+    console.log('these are the errors', errors)
+    console.log('these are the errors', check)
+    return closeModal()
+
+    // console.log('this is the errors', errors)
     // dispatch(sessionActions.signup({ address, city, state, country, name, price }))
     // .then(closeModal)
     // .catch(async (res) => {
@@ -68,7 +112,6 @@ function CreateSpotModal() {
     // });
 
     // return setErrors(['Confirm name field must be the same as the name field']);
-    console.log('these are the errors', errors)
   };
 
   return (
@@ -78,7 +121,7 @@ function CreateSpotModal() {
         <div id="welcome-message">
           Welcome to FairBnB
         </div>
-        <ul>
+        <ul className="errors-list-container">
           {errors && errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
         <label className="create-label">
@@ -168,7 +211,47 @@ function CreateSpotModal() {
             placeholder="Price"
           />
         </label>
+        <label >
+          <div id="create-price">
+            Beds
+          </div>
+          <input
+            type="number"
+            value={beds}
+            onChange={(e) => setBeds(e.target.value)}
+            required
+            // defaultValue={'none'}
+            placeholder="Beds"
+          />
+        </label>
+        <label >
+          <div id="create-price">
+            Baths
+          </div>
+          <input
+            type="number"
+            value={baths}
+            onChange={(e) => setBaths(e.target.value)}
+            required
+            // defaultValue={'none'}
+            placeholder="Baths"
+          />
+        </label>
+        <label >
+          <div id="create-price">
+            Guests
+          </div>
+          <input
+            type="number"
+            value={guests}
+            onChange={(e) => setGuests(e.target.value)}
+            required
+            // defaultValue={'none'}
+            placeholder="Guests"
+          />
+        </label>
         <button className="submitButton" type="submit">Submit</button>
+        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );

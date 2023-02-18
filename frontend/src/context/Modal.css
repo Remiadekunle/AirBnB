@@ -7,6 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 
 #modal-background {
@@ -15,7 +16,7 @@
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 #modal-content {
@@ -24,4 +25,19 @@
     display: flex;
     flex-direction: column;
     border-radius: 10px;
+    /* padding: 10px; */
 }
+
+.close-modal-button-component{
+    position: absolute;
+    top: 1%;
+    right: 0.5%;
+    background-color: #FFFFFF;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    padding: 0;
+    border-style: none;
+    border-radius: 5px;
+}
+

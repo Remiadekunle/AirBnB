@@ -1,5 +1,9 @@
+import { useSelector } from 'react-redux'
+import { CloseModalButton, useModal } from '../../context/Modal'
+import CreateReviewModal from '../CreateReviewModal'
+import DeleteReviewModal from '../DeleteReviewModal'
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem'
 import './index.css'
-
 function ReviewIndex({review}){
 
     console.log(review.User)
@@ -41,3 +45,36 @@ function ReviewIndex({review}){
 }
 
 export default ReviewIndex
+
+
+export function AllReviews({ReviewIndex, reviews, reviewed, toggleReviewed, spot, setReviewdd, user}){
+    const isReviewed = useSelector(state => state.reviews.reviewed)
+    const { closeModal } = useModal();
+   
+    console.log('yo whats the reviewed', isReviewed)
+    return(
+        <div style={{width: '50vw', height: '70vh', display: 'flex', padding: '20px', overflow: 'hidden',}}>
+            <div className='all-reviews-container' style={{display: reviews.length < 1 ? 'none' : 'flex'}}>
+                {reviews.map(review => (
+                    <ReviewIndex review={review}/>
+                ))}
+            </div>
+            <div style={{width: '100%', fontSize: '24px', justifyContent: 'center', height: '60vh', display: reviews.length < 1 ? 'flex' : 'none', padding: '20px', overflow: 'hidden', alignItems: 'center'}}>
+                No reviews
+            </div>
+            <div style={{position: 'absolute', bottom: '2%', right: '2%'}}>
+                {!isReviewed? <button className="review-buttons"><OpenModalMenuItem
+                            itemText="Create Review"
+                            // onItemClick={closeMenu}
+                            // onItemClick={toggleReviewed}
+                            modalComponent={<CreateReviewModal toggleReviewed={toggleReviewed} spot={spot} />}/></button> : <button className="review-buttons"><OpenModalMenuItem
+                            itemText="Delete Your Review"
+                            // onItemClick={closeMenu}
+                            onModalClose={() => setReviewdd(false)}
+                            modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/>
+                    </button>}
+            </div>
+            <CloseModalButton closeModal={closeModal} />
+        </div>
+    )
+}

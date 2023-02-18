@@ -4,9 +4,11 @@ import './homePage.css';
 
 export function SpotIndex( {spot, isHome, setIsHome} ){
     let { id, city, state, price, name, avgRating, previewImage} = spot;
-
+    const preview2 = spot.SpotImages?.url
     const rounded = (num) => {
-        return Number.parseFloat(num).toFixed(1);
+        // console.log('what is thius thing im doing', 5.0 % 1)
+        return Number.parseFloat(num).toFixed(2) % 1 === 0? Number.parseFloat(num).toFixed(1) : Number.parseFloat(num).toFixed(2);
+
     }
     // console.log(rounded(5.333333333333333))
     // console.log(previewImage[0])
@@ -17,19 +19,20 @@ export function SpotIndex( {spot, isHome, setIsHome} ){
     const toggleNav = () => {
         setIsHome(false)
       }
-      console.log('this is the prvw', previewImage )
+    //   console.log('this is the prvw', previewImage )
+    // console.log('what is the previewimg', preview2)
     return (
         <NavLink className={'spot-card-container'} onClick={toggleNav} key={name} to={`/spots/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className="home-Card">
                 <div className='img-border' >
-                    <img  alt='' className='preview-img'  src={`${previewImage}` }></img>
+                    <img  alt='' className='preview-img'  src={`${previewImage ? previewImage : preview2}` }></img>
                 </div>
                 <div className='spot-contents'>
                     <div className='rating-location'>
                         {`${city}, ${state}`}
                         <div className='rating'>
-                            <i id='card-stars' class="fa-solid fa-star fa-xs"></i>
-                            <div >{typeof avgRating === 'number' ? rounded(avgRating) : 'NEW'}</div>
+                            {typeof avgRating === 'number' ? <i id='card-stars' class="fa-solid fa-star fa-xs"></i> : <></>}
+                            <div >{typeof avgRating === 'number' ? rounded(avgRating) : <></>}</div>
                         </div>
 
                     </div>
@@ -37,7 +40,7 @@ export function SpotIndex( {spot, isHome, setIsHome} ){
                     {name}
                     </span>
                     <div className='card-price'>
-                    {`$${price} night`}
+                        <span style={{fontWeight: 'bold'}}>{`$${price}`}</span> night
                     </div>
                 </div>
             </div>

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { CloseModalButton, useModal } from "../../context/Modal";
 // import './SignupForm.css';
 
-import {removeReview} from '../../store/reviews'
+import {removeReview, setReviewedFalse} from '../../store/reviews'
 import './index.css';
 
 function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
     const dispatch = useDispatch();
 
     const [country, setCountry] = useState("");
-    const userId = user.id
+    const userId = user?.id
     console.log('finding the user', userId)
     const review = reviews.find(review => {
         return review.userId === +userId
@@ -34,13 +34,13 @@ function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
         // console.log('this is the errors', errors)
         // console.log(res)
         toggleReviewed()
-
+        dispatch(setReviewedFalse())
 
     };
 
     return (
         <>
-        <h1>Delete Spot</h1>
+        <h1>Delete Review</h1>
         <form onSubmit={handleSubmit}>
             <ul>
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -55,6 +55,7 @@ function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
             />
             </label>
             <button className="submitButton" type="submit">Submit</button>
+            <CloseModalButton closeModal={closeModal} />
         </form>
         </>
     );

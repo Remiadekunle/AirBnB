@@ -8,7 +8,7 @@ import { demoLogIn } from "../../store/session";
 import { checkIfReviewed, setReviewed, setReviewedFalse } from "../../store/reviews";
 import { useHistory } from "react-router-dom";
 
-function ProfileButton({ user, isHome, setIsHome}) {
+function ProfileButton2({ user, isHome, setIsHome}) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -57,7 +57,7 @@ function ProfileButton({ user, isHome, setIsHome}) {
       closeMenu();
     };
 
-    const ulClassName = (isHome? "profile-dropdown": "profile-dropdown2") + (showMenu ? "" : " hidden");
+    const ulClassName = "profile-dropdown2" + (showMenu ? "" : " hidden");
 
     return (
       <>
@@ -107,4 +107,4 @@ function ProfileButton({ user, isHome, setIsHome}) {
     );
 }
 
-  export default ProfileButton;
+export default ProfileButton2;

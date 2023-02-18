@@ -1,0 +1,29 @@
+.create-reviews-form{
+    display: flex;
+    /* overflow-y: scroll; */
+    height: 20vh;
+    position: relative;
+    width: 16vw;
+}
+
+.create-reviews-form::-webkit-scrollbar{
+    display: none;
+}
+
+
+.create-reviews-form label{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.create-reviews-form label input{
+    /* margin: '0 auto'; */
+    padding: 10px 20px;
+    width:max-content;
+}
+
+.reviews-submit{
+    width: 220px;
+
+}

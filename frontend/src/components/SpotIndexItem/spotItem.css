@@ -1,5 +1,16 @@
 .spot-page{
     margin: 0px 20%;
+    padding-bottom: 50px;
+    /* height: 100%; */
+    position: relative;
+}
+
+.things-to-know-containers{
+    width: 330px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .mainImage{
@@ -23,27 +34,47 @@
 .spot-description{
     display: flex;
     width: 100%;
-    height: 580px;
+    height: 730px;
+    padding-bottom: 30px;
+}
+
+.place-offer-class{
+    width: 20px;
 }
 
 .profile-picture{
     width: 50px;
-    height: auto;
+    height: 50px;
     border-radius: 50px;
+    object-fit: cover;
     /* float: right; */
 }
 
 .spot-guests-container{
     width: 100%;
     padding-bottom:30px;
-    border-bottom: 1px solid gray;
+    border-bottom: 0.5px solid #DDDDDD;
     margin-right: 0;
+    position: relative;
 }
 
 .spot-guests{
     display: flex;
     flex-direction: column;
     width: 100%
+}
+.spot-images{
+    margin-bottom: 20px;
+}
+
+.user-name-joined-time{
+    font-size: 14px;
+
+}
+
+.user-name-joined-h2{
+    padding: none;
+    margin: 0;
 }
 
 #hosting-image-container{
@@ -56,7 +87,9 @@
 .profile-picture2{
     height: auto;
     width: 65px;
+    height: 65px;
     border-radius: 50px;
+    object-fit: cover;
 }
 
 #picture-hosting{
@@ -80,13 +113,20 @@
     padding-bottom: 10px;
 }
 
+.identity-checkmark{
+    position: absolute;
+    left: 2px;
+    color: white;
+}
+
 #user-name-joined{
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .fa-shield{
-    color: red;
+    color: #222222;
 }
 
 .reserve-card{
@@ -101,17 +141,21 @@
     border: 1px solid gray;
     border-radius: 7px;
     padding: 25px;
+    box-shadow: 0px 2px 4px 2px rgba(0, 0, 255, .2);
 }
 
 .reserve-button-container{
     display: flex;
     justify-content: center;
+    gap: 10px;
+    flex-direction: column;
 }
 
 .reserve-booking{
     display: flex;
     width: 100%;
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .reserve-price{
@@ -119,20 +163,30 @@
     flex-direction: column;
     justify-content: space-between;
     font-size: 25px;
-    padding-bottom: 15px;
+    /* padding-bottom: 15px; */
     width: 100%;
 }
 
 .reserve-stats{
     float: right;
     font-size: 15px;
+    display: flex;
     align-items: center;
     gap: 50px;
 }
 
+.reserve-price span{
+    font-size: 18px;
+    margin-left: 5px;
+}
+
 .fa-star{
-    color: red;
+    color: #E51D57;
     padding-right: 5px;
+}
+
+.filter-star{
+    color: black;
 }
 
 #hosting-message{
@@ -141,7 +195,7 @@
 
 .spot-extra-info{
     padding: 25px 0px;
-    border-bottom: 1px solid gray;
+    border-bottom: 0.5px solid #DDDDDD;
     width: 100%;
 }
 
@@ -156,8 +210,24 @@
 .description-container{
     width: 100%;
     padding: 25px 0px;
-    border-bottom: 1px solid gray;
+    border-bottom: 0.5px solid #DDDDDD;
 }
+
+.location-google-maps-button{
+    /* display: flex; */
+    border-style: none;
+    background-color: #FFFFFF;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+
+}
+
+/* .star-for-modal-reviews{
+    text-decoration: underline;
+} */
 
 .amenities-container{
     width: 100%;
@@ -172,8 +242,9 @@
     flex-direction: column;
     width: 100%;
     padding: 25px 0px;
-    border-bottom: 1px solid gray;
-    border-top: 1px solid gray;
+    border-bottom: 0.5px solid #DDDDDD;
+    border-top: 0.5px solid #DDDDDD;
+    position: relative;
 }
 
 #review-continer-stats{
@@ -182,15 +253,40 @@
     font-size: 20px;
 }
 
+.spot-description-fair{
+    color: #FB395B;
+    font-weight: 900;
+    font-size: 32px;
+}
+.spot-description-cover{
+    color: #232323;
+    font-weight: 900;
+    font-size: 32px;
+}
+
 .comments-container{
     width: 100%;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    max-height: 560px;
+    overflow-y: hidden;
+}
+
+.view-all-reviews-button{
+    width: 160px;
+    /* height: 40px; */
+    padding: 0px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid black;
+    background-color: white;
+    margin-right: 10px;
 }
 
 .user-container{
     padding: 25px 0px;
-    border-bottom: 1px solid gray;
+    border-bottom: 0.5px solid #DDDDDD;
 }
 
 .spot-left-container{
@@ -215,17 +311,34 @@
 }
 
 .contact-host{
-    padding: 10px 20px;
-    border-radius: 10px;
+    /* padding: 10px 20px; */
+    border-radius: 5px;
     cursor:pointer;
+    height: 45px;
+    width: 150px;
     border: 1px solid black;
+    background-color: #FFFFFF;
+}
+
+.contact-host:hover{
+    background-color: rgb(248,248,248);
 }
 
 .review-buttons{
-    padding: 10px 20px;
+    /* padding: 20px 20px; */
     border-radius: 10px;
+    width: 160px;
+    /* height: 40; */
     cursor:pointer;
+    height: 60px;
+    display: flex;
+    justify-content: center;
     border: 1px solid black;
+    background-color: white;
+}
+
+.review-buttons:hover{
+    background-color: rgb(248,248,248);
 }
 
 #protection-info-container{
@@ -257,19 +370,22 @@
 
 #reserve-button{
     width: 100%;
-    padding: 15px 5px;
+    height: 40px;
+    /* padding: 15px 5px; */
     border: 1px hidden black;
-    background-color: red;
+    background-color: #E51D57;
     border-radius: 10px;
     cursor:pointer;
     font-weight: bold;
     display: flex;
+    align-items: center;
     justify-content: center;
 }
 
 #reserve-button > div{
     display: flex;
     justify-content: center;
+    color: #FFFFFF;
 }
 
 /* #user-container-buttons{
@@ -280,4 +396,38 @@
 .spot-edit-buttons{
     display: flex;
     gap: 15px;
+}
+
+.maps-container{
+    padding-top: 20px;
+    border-bottom: 0.5px solid #DDDDDD;
+    padding-bottom: 30px;
+    z-index: 0;
+}
+
+.footer2-container{
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 0 auto;
+}
+
+/* display: 'flex', justifyContent: 'space-between', width: '60%', margin: '0 auto' */
+
+
+@media screen and (max-width: 1444px) {
+    .spot-page{
+        margin: 0 10%;
+    }
+
+    .header2{
+        padding: 20px 6%;
+    }
+
+    .footer2-container{
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin: 0 auto;
+    }
 }

@@ -56,5 +56,11 @@ export function Modal() {
     );
 }
 
+export function CloseModalButton({closeModal}){
+  return(
+    <button className='close-modal-button-component' onClick={closeModal}><i class="fa-regular fa-circle-xmark fa-2xl"></i></button>
+  )
+}
+
 export const useModal = () => useContext(ModalContext);
 export default ModalProvider;

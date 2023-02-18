@@ -55,8 +55,28 @@ module.exports = {
         type: Sequelize.STRING(256),
         allowNull: false,
       },
+      beds:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      baths:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       price: {
         type: Sequelize.DECIMAL,
+        allowNull: false,
+      },
+      guests: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      isTrendy: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0,
+      },
+      formattedAddres: {
+        type: Sequelize.STRING(256),
         allowNull: false,
       },
       createdAt: {

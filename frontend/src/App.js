@@ -5,27 +5,38 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/HomePage";
 import SpotIndex from "./components/SpotIndexItem";
-import { fetchSpots } from "./store/spots";
+import { fetchSpots, setCache } from "./store/spots";
+import NavigationSpot from "./components/Navigation/nav2";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHome, setIsHome] = useState(true);
+  const [isFiltered, setIsFiltered] = useState(false)
+
+  // useEffect(() => {
+  //   dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+  //   dispatch(fetchSpots()).then(dispatch(setCache()))
+  // }, [dispatch]);
 
   useEffect(() => {
-    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-    dispatch(fetchSpots())
+    (async() => {
+      dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+      await dispatch(fetchSpots())
+      // await dispatch(setCache())
+    })();
   }, [dispatch]);
 
   return isLoaded && (
     <>
-      <Navigation isLoaded={isLoaded} isHome={isHome} setIsHome={setIsHome}/>
       {isLoaded && (
         <Switch>
           <Route exact path={'/'}>
-            <Home isHome={isHome} setIsHome={setIsHome} />
+            <Navigation isLoaded={isLoaded} isHome={isHome} setIsHome={setIsHome} setIsFiltered={setIsFiltered}/>
+            <Home isHome={isHome} setIsHome={setIsHome} isFiltered={isFiltered} />
           </Route>
           <Route path={'/spots/:spotId'}>
+            <NavigationSpot isLoaded={isLoaded} isHome={isHome} setIsHome={setIsHome} setIsFiltered={setIsFiltered} />
             <SpotIndex isHome={isHome} setIsHome={setIsHome}/>
           </Route>
         </Switch>

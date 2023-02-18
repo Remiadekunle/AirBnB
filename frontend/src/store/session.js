@@ -38,7 +38,7 @@ export const login = (user) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data));
-  return response;
+  return data.id;
 };
 
 export const demoLogIn = (user) => async (dispatch) => {
@@ -52,7 +52,7 @@ export const demoLogIn = (user) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data));
-  return response;
+  return data.id;
 }
 
 export const restoreUser  = (user) => async dispatch => {
