@@ -389,10 +389,43 @@ router.put('/:spotId', async(req, res, next) => {
         err.message = 'Spot couldn\'t be found';
         return next(err);
     }
+    const payload = {
+        address: {
+            regionCode: country,
+            locality: city,
+            addressLines: [address]
+        },
+    }
 
     if (user.id !== spot.User.id){
         return requireProperAuth(req, res, next);
     }
+
+    const validated = await validateAddress(payload).catch(async (res) => {
+        const data = await res.json();
+        console.log('ummmmm are u catching')
+        console.log('ummmmmmmmm what is the data', data)
+        if (data && (data.errors || data.message || data.error)) {
+          console.log('did we get here?')
+          return next(data.errors);
+        }
+    });
+    console.log('what is the validation rn', validated)
+    if (!validated?.addressComplete){
+        console.log('what is the validation rn in the iff ', validated)
+        const err = new Error('Please enter all required information');
+        err.status = 400;
+        const resp = {
+            errors: `The address you provided is invalid: `,
+            inputs: validated?.unconfirmedComponentTypes
+        }
+        err.errors = resp
+        resp.status = 400;
+        return next(err)
+    }
+    const { latitude, longitude, unconfirmedComponentTypes, formattedAddres } = validated
+    console.log('what are the details here', latitude, longitude)
+
 
     const errors = {}
     if (address) spot.address = address;
@@ -403,14 +436,15 @@ router.put('/:spotId', async(req, res, next) => {
     else errors.state = "State is required"
     if (country) spot.country = country;
     else errors.country = "Country is required"
-    if (lat) spot.lat = lat;
+    if (latitude) spot.lat = latitude;
     else errors.lat = "Latitude is not valid";
-    if (lng) spot.lng = lng;
+    if (longitude) spot.lng = longitude;
     else errors.lng = "Longitude is not valid";
     if (name) spot.name = name;
     else errors.name = "Name must be less than 50 characters";
     if (description) spot.description = description;
     else errors.description = "Description is required";
+    spot.formattedAddres = formattedAddres
     if (price) {
         spot.price = price;
     }

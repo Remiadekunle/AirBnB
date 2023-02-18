@@ -47,7 +47,7 @@ const Maps = ({ apiKey, lat, lng, price,  containerStyle, scrollwheel}) => {
               }
             } icon={{
               url: 'https://cdn-icons-png.flaticon.com/512/54/54786.png',
-              scaledSize: new window.google.maps.Size(60, 60),
+              scaledSize: new window.google.maps.Size(60, 50),
               label: 'test'
               }}/>
 
