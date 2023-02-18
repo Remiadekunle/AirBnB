@@ -68,12 +68,30 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
     }
     let errors;
 
+    const spotTranslate ={
+      'locality': 'City',
+      'route': 'Street Name',
+      'street_number': 'Street Number',
+      'country': 'Country',
+      'administrative_area_level_1': 'State',
+      'postal_code': 'Zip-code',
+      'postal_code_suffix': 'Zipcode suffix',
+      'point_of_interest': 'Street Name'
+    }
 
     const check = await dispatch(createSpot(payload, payload2)).then(() => setIsFiltered(false)).catch(async (res) => {
         const data = await res.json();
         console.log('ummmmm are u catching')
         console.log('ummmmmmmmm what is the data', data)
+        if (data && data.errors?.inputs){
+          const mapped = data.errors.inputs.map(input => spotTranslate[input])
+          console.log('were almost there')
+          setErrors([`The address you provided is invalid: ${mapped.join('/')}`])
+          return false
+        }
         if (data && (data.errors || data.message)) {
+          let errs = data.inputs ? data.inputs: []
+
           console.log('did we get here?')
           setErrors(Object.values(data.errors));
           return false
@@ -103,7 +121,7 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
         <div id="welcome-message">
           Welcome to FairBnB
         </div>
-        <ul>
+        <ul className="errors-list-container">
           {errors && errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
         <label className="create-label">

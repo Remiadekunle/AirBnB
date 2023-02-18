@@ -51,6 +51,10 @@ form{
     font-size: 40px;
 }
 
+.errors-list-container{
+    list-style: none;
+    color: red;
+}
 
 .create-form{
     display: flex;

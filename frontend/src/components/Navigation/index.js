@@ -48,9 +48,9 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   };
   const payload = {
     address: {
-        regionCode: 'United States',
+        regionCode: 'US',
         locality: 'Union City',
-        addressLines: ['address']
+        addressLines: ['33097 Calistoga']
     },
   }
 

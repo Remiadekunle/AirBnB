@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING,
     state: DataTypes.STRING,
     country: DataTypes.STRING,
+    formattedAddres: DataTypes.STRING,
     lat: {
       type:DataTypes.DECIMAL,
       validate: {

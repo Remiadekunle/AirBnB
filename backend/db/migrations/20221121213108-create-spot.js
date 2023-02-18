@@ -75,6 +75,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: 0,
       },
+      formattedAddres: {
+        type: Sequelize.STRING(256),
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

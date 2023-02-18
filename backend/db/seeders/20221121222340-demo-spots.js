@@ -24,7 +24,8 @@ module.exports = {
         name: 'Nice townhouse in the suburbs',
         description: 'BSHBDEINDOW',
         price: 300,
-        isTrendy: true
+        isTrendy: true,
+        formattedAddres: 'A Street, Union City, NJ, USA'
       },
       {
         ownerId: 2,
@@ -40,7 +41,8 @@ module.exports = {
         name: 'Nice townhouse in the suburbs',
         description: 'anksovnornvr',
         price: 500,
-        isTrendy: true
+        isTrendy: true,
+        formattedAddres: 'B Street, Union City, NJ, USA'
       },
       {
         ownerId: 3,
@@ -56,7 +58,8 @@ module.exports = {
         name: 'Nice townhouse in the suburbs',
         description: 'DnuiNSDiNDWOi',
         price: 600,
-        isTrendy: false
+        isTrendy: false,
+        formattedAddres: 'C Street, Fremont NJ, USA'
       },
       {
         ownerId: 1,
@@ -72,7 +75,8 @@ module.exports = {
         name: 'Nice townhouse in the suburbs',
         description: 'WDjbdiabdawDW',
         price: 400,
-        isTrendy: false
+        isTrendy: false,
+        formattedAddres: 'D Street, San Jose, NJ, USA'
       },
       {
         ownerId: 3,
@@ -88,7 +92,8 @@ module.exports = {
         name: 'Nice townhouse in the suburbs',
         description: 'SHEEEEEEEEEEESH',
         price: 800,
-        isTrendy: true
+        isTrendy: true,
+        formattedAddres: 'D Street, San Jose, CA, USA'
       },
       {
         ownerId: 1,
@@ -104,7 +109,8 @@ module.exports = {
         name: 'Nice townhouse in the suburbs',
         description: 'BSHBDEINDOW',
         price: 300,
-        isTrendy: false
+        isTrendy: false,
+        formattedAddres: 'A Street, Union City, NJ, USA'
       },
       {
         ownerId: 2,
@@ -120,7 +126,8 @@ module.exports = {
         name: 'Nice townhouse in the suburbs',
         description: 'anksovnornvr',
         price: 500,
-        isTrendy: true
+        isTrendy: true,
+        formattedAddres: 'B Street, Union City, CA, USA'
       },
       {
         ownerId: 3,
@@ -136,7 +143,8 @@ module.exports = {
         name: 'Nice townhouse in the suburbs',
         description: 'DnuiNSDiNDWOi',
         price: 600,
-        isTrendy: false
+        isTrendy: false,
+        formattedAddres: 'C Street, Union City, CA, USA'
       },
       {
         ownerId: 1,
@@ -152,7 +160,8 @@ module.exports = {
         name: 'Nice townhouse in the suburbs',
         description: 'WDjbdiabdawDW',
         price: 400,
-        isTrendy: true
+        isTrendy: true,
+        formattedAddres: 'D Street, Fremont, NJ, USA'
       },
       {
         ownerId: 3,
@@ -168,7 +177,8 @@ module.exports = {
         name: 'Nice townhouse in the suburbs',
         description: 'SHEEEEEEEEEEESH',
         price: 800,
-        isTrendy: false
+        isTrendy: false,
+        formattedAddres: 'E Street, San Jose, CA, USA'
       },
     ])
   },

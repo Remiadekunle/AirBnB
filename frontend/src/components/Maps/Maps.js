@@ -43,7 +43,7 @@ const Maps = ({ apiKey, lat, lng, price,  containerStyle, scrollwheel}) => {
               {
                 text: `$${price}.00`,
                 className:'google-maps-label',
-                color: 'blue',
+                color: 'white',
               }
             } icon={{
               url: 'https://cdn-icons-png.flaticon.com/512/54/54786.png',

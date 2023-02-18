@@ -150,7 +150,7 @@ function SpotIndex({isHome, setIsHome}) {
                         <span>{' · '}</span>
                         {/* <span>{`${city}, ${state}, ${country}`}</span> */}
                         <button className="location-google-maps-button">
-                                <OpenModalMenuItem itemText={`${city}, ${state}, ${country}`} modalComponent={<MapContainer2 lat={spot.lat} lng={spot.lng} price={spot.price}/>} />
+                                <OpenModalMenuItem itemText={`${spot.formattedAddres.split(',').slice(1).join(', ')}`} modalComponent={<MapContainer2 lat={spot.lat} lng={spot.lng} price={spot.price}/>} />
                         </button>
                     </div>
                 </div>
@@ -340,7 +340,7 @@ function SpotIndex({isHome, setIsHome}) {
                         Where you'll be
                     </h2>
                     <div style={{marginBottom: '20px'}}>
-                        {`${spot.city}, ${spot.state}, ${spot.country}`}
+                        {`${spot.formattedAddres.split(',').slice(1).join(', ')}`}
                     </div>
                     <MapContainer lat={spot.lat} lng={spot.lng} price={spot.price}/>
                     <div style={{marginTop: '20px'}}>

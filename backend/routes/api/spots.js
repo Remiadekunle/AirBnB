@@ -213,6 +213,7 @@ const validateAddress = async (payload) => {
         // console.log('what is the body rn', body)
         // console.log('what is the data here',  body.result.geocode)
         let latitude = body.result.geocode.location.latitude? body.result.geocode.location.latitude : 0
+        let formattedAddres = body.result.address.formattedAddress? body.result.address.formattedAddress : ''
         let longitude = body.result.geocode.location.longitude? body.result.geocode.location.longitude : 0
         let addressComplete = body.result?.verdict.addressComplete? body.result?.verdict.addressComplete : false
         let unconfirmedComponentTypes = body.result.address.unconfirmedComponentTypes?  body.result.address.unconfirmedComponentTypes : false
@@ -226,7 +227,8 @@ const validateAddress = async (payload) => {
             latitude,
             longitude,
             addressComplete,
-            unconfirmedComponentTypes
+            unconfirmedComponentTypes,
+            formattedAddres
         }
     }
 }
@@ -294,13 +296,14 @@ router.post('/', requireAuth, async(req, res, next) => {
         const err = new Error('Please enter all required information');
         err.status = 400;
         const resp = {
-            errors: `The address you provided is invalid:${validated?.unconfirmedComponentTypes.join(', ')}`
+            errors: `The address you provided is invalid: `,
+            inputs: validated?.unconfirmedComponentTypes
         }
         err.errors = resp
         resp.status = 400;
         return next(err)
     }
-    const { latitude, longitude, unconfirmedComponentTypes } = validated
+    const { latitude, longitude, unconfirmedComponentTypes, formattedAddres } = validated
     console.log('what are the details here', latitude, longitude)
     const newSpot = await Spot.build({
         address,
@@ -315,7 +318,8 @@ router.post('/', requireAuth, async(req, res, next) => {
         beds,
         baths,
         guests,
-        ownerId: id
+        ownerId: id,
+        formattedAddres
     })
 
     await newSpot.save();
