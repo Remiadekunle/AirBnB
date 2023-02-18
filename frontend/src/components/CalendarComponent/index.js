@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import { useDispatch, useSelector } from 'react-redux'
-import { useModal } from '../../context/Modal';
+import { CloseModalButton, useModal } from '../../context/Modal';
 import { createBooking } from '../../store/booking';
 import './index.css'
 
@@ -118,6 +118,7 @@ function CalendarComponent({spot}){
             <button className='bookings-submit-button' onClick={handleSubmit}>
                 Submit
             </button>
+            <CloseModalButton closeModal={closeModal} />
         </div>
     )
 }

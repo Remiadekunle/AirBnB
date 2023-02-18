@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useSelector } from "react";
 import { useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { CloseModalButton, useModal } from "../../context/Modal";
 // import './SignupForm.css';
 import { createSpot, fetchSpots } from '../../store/spots'
 import './index.css';
@@ -251,6 +251,7 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <button className="submitButton" type="submit">Submit</button>
+        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );

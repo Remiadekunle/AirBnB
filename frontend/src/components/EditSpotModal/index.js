@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { useModal } from "../../context/Modal";
+import { CloseModalButton, useModal } from "../../context/Modal";
 
 import './index.css';
 
@@ -204,6 +204,7 @@ function EditSpotModal({spot}) {
           />
         </label>
         <button className="submitButton" type="submit">Submit</button>
+        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );

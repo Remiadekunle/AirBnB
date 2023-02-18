@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { CloseModalButton, useModal } from "../../context/Modal";
 // import './SignupForm.css';
 import './index.css';
 import {createReview, setReviewed} from '../../store/reviews'
@@ -75,6 +75,7 @@ function CreateReviewModal({spot, toggleReviewed}) {
         <div style={{width: '100%', justifyContent: 'center', display: 'flex'}}>
           <button className="submitButton reviews-submit" type="submit">Submit</button>
         </div>
+        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );

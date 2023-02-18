@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useModal } from "../../context/Modal";
+import { CloseModalButton, useModal } from "../../context/Modal";
 // import './SignupForm.css';
 import { removeSpot } from '../../store/spots'
 import './index.css';
@@ -59,6 +59,7 @@ function DeleteSpotModal({spot, setIsHome}) {
             />
             </label>
             <button className="submitButton" type="submit">Submit</button>
+            <CloseModalButton closeModal={closeModal} />
         </form>
         </>
     );

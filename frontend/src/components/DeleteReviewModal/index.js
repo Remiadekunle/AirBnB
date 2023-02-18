@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { CloseModalButton, useModal } from "../../context/Modal";
 // import './SignupForm.css';
 
 import {removeReview, setReviewedFalse} from '../../store/reviews'
@@ -55,6 +55,7 @@ function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
             />
             </label>
             <button className="submitButton" type="submit">Submit</button>
+            <CloseModalButton closeModal={closeModal} />
         </form>
         </>
     );

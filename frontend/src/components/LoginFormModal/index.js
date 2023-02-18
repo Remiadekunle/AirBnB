@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { CloseModalButton, useModal } from "../../context/Modal";
 import "./LoginForm.css";
 import { useHistory } from "react-router-dom";
 import { checkIfReviewed } from "../../store/reviews";
@@ -69,6 +69,7 @@ function LoginFormModal() {
           />
         </label>
         <button className="submitButton" type="submit">Log In</button>
+        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );

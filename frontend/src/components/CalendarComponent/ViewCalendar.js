@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { Calendar } from "react-calendar"
 import { useDispatch, useSelector } from "react-redux"
-import { useModal } from "../../context/Modal"
+import { CloseModalButton, useModal } from "../../context/Modal"
 import { deleteBooking, fetchUserBookings, removeBooking, updateBooking } from "../../store/booking"
 
 function ViewReservations({spot}){
     const dispatch = useDispatch()
     const [count, setCount] = useState(0)
+    const { closeModal } = useModal();
     useEffect(() => {
         dispatch(fetchUserBookings())
     }, [dispatch])
@@ -28,6 +29,7 @@ function ViewReservations({spot}){
                 <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '65%'}}>
                     No Reservations for this spot
                 </div>
+                <CloseModalButton closeModal={closeModal} />
             </div>
         )
     }
@@ -46,6 +48,7 @@ function ViewReservations({spot}){
                     <BookingIndex setCount={setCount} count={count} booking={booking} />
                 ))}
             </div>
+            <CloseModalButton closeModal={closeModal} />
         </div>
     )
 }

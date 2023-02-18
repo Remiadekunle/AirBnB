@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { CloseModalButton, useModal } from '../../context/Modal'
 import CreateReviewModal from '../CreateReviewModal'
 import DeleteReviewModal from '../DeleteReviewModal'
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem'
@@ -48,7 +49,7 @@ export default ReviewIndex
 
 export function AllReviews({ReviewIndex, reviews, reviewed, toggleReviewed, spot, setReviewdd, user}){
     const isReviewed = useSelector(state => state.reviews.reviewed)
-
+    const { closeModal } = useModal();
    
     console.log('yo whats the reviewed', isReviewed)
     return(
@@ -73,6 +74,7 @@ export function AllReviews({ReviewIndex, reviews, reviewed, toggleReviewed, spot
                             modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/>
                     </button>}
             </div>
+            <CloseModalButton closeModal={closeModal} />
         </div>
     )
 }

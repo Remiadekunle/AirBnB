@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { CloseModalButton, useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
 import './SignupForm.css';
 
@@ -94,6 +94,7 @@ function SignupFormModal() {
           />
         </label>
         <button className="submitButton" type="submit">Sign Up</button>
+        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );
