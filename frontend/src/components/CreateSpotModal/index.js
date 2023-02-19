@@ -76,7 +76,8 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
       'administrative_area_level_1': 'State',
       'postal_code': 'Zip-code',
       'postal_code_suffix': 'Zipcode suffix',
-      'point_of_interest': 'Street Name'
+      'point_of_interest': 'Street Name',
+      'premise': 'Street'
     }
 
     const check = await dispatch(createSpot(payload, payload2)).then(() => setIsFiltered(false)).catch(async (res) => {
