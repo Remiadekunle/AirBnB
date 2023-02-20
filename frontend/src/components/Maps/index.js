@@ -8,6 +8,7 @@ const MapContainer = ({center, lat, lng, price}) => {
   // console.log('were just following the flow')
   const key = useSelector((state) => state.maps.key);
   if (key) console.log('we got the key', lat, lng, typeof lat, typeof lng)
+  // console.log('parsing', parseFloat(lat), parseFloat(lng))
   const dispatch = useDispatch();
   const containerStyle = {
     width: '100%',
@@ -26,7 +27,7 @@ const MapContainer = ({center, lat, lng, price}) => {
   }
 
   return (
-    <Maps apiKey={key} center={center} lat={lat} lng={lng} price={price} containerStyle={containerStyle} scrollwheel={false}/>
+    <Maps apiKey={key} center={center} lat={parseFloat(lat)} lng={parseFloat(lng)} price={price} containerStyle={containerStyle} scrollwheel={false}/>
   );
 };
 
@@ -38,6 +39,7 @@ export function MapContainer2({center, lat, lng, price}){
   const key = useSelector((state) => state.maps.key);
   const dispatch = useDispatch();
   if (key) console.log('we got the key', lat, lng, typeof lat, typeof lng)
+  // console.log('parsing', parseFloat(lat))
   const containerStyle = {
     width: '100%',
     height: '100%',
@@ -56,7 +58,7 @@ export function MapContainer2({center, lat, lng, price}){
 
   return (
     <div style={{width: '75vw', height: '80vh', overflow: 'hidden', borderRadius: '10px'}}>
-      <Maps apiKey={key} center={center} lat={lat} lng={lng} price={price} containerStyle={containerStyle} scrollwheel={true} />
+      <Maps apiKey={key} center={center} lat={parseFloat(lat)} lng={parseFloat(lng)} price={price} containerStyle={containerStyle} scrollwheel={true} />
     </div>
   );
 }
