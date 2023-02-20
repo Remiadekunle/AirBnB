@@ -7,6 +7,7 @@ import Maps from './Maps';
 const MapContainer = ({center, lat, lng, price}) => {
   // console.log('were just following the flow')
   const key = useSelector((state) => state.maps.key);
+  if (key) console.log('we got the key', lat, lng)
   const dispatch = useDispatch();
   const containerStyle = {
     width: '100%',
@@ -36,6 +37,7 @@ export function MapContainer2({center, lat, lng, price}){
   // console.log('were just following the flow')
   const key = useSelector((state) => state.maps.key);
   const dispatch = useDispatch();
+  if (key) console.log('we got the key', lat, lng)
   const containerStyle = {
     width: '100%',
     height: '100%',
