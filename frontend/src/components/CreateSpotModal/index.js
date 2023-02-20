@@ -140,7 +140,6 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label>
-
           <input
             type="text"
             value={city}
@@ -150,7 +149,6 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label>
-
           <input
             type="text"
             value={state}
@@ -160,7 +158,6 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label>
-
           <input
             type="text"
             value={country}
@@ -170,7 +167,6 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label>
-
           <input
             type="name"
             value={name}
@@ -180,7 +176,6 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label >
-
           <input
             type="description"
             value={description}
@@ -190,7 +185,6 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label>
-
           <input
             type="url"
             value={url}
@@ -200,55 +194,47 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label >
-          <div id="create-price">
-            Price
-          </div>
           <input
             type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            value={price ? price: 'price'}
+            onChange={(e) => setPrice(parseInt(e.target.value))}
             required
+            min={1}
             // defaultValue={'none'}
             placeholder="Price"
           />
         </label>
         <label >
-          <div id="create-price">
-            Beds
-          </div>
           <input
             type="number"
-            value={beds}
-            onChange={(e) => setBeds(e.target.value)}
+            value={beds ? beds: 'price'}
+            onChange={(e) => setBeds(parseInt(e.target.value))}
             required
-            // defaultValue={'none'}
+            min={1}
             placeholder="Beds"
+            // defaultValue={'none'}
           />
         </label>
         <label >
-          <div id="create-price">
-            Baths
-          </div>
           <input
             type="number"
-            value={baths}
-            onChange={(e) => setBaths(e.target.value)}
+            value={baths ? baths: 'price'}
+            onChange={(e) => setBaths(parseInt(e.target.value))}
             required
-            // defaultValue={'none'}
+            min={1}
             placeholder="Baths"
+            // defaultValue={'none'}
           />
         </label>
         <label >
-          <div id="create-price">
-            Guests
-          </div>
           <input
             type="number"
-            value={guests}
-            onChange={(e) => setGuests(e.target.value)}
+            value={guests ? guests: 'guests'}
+            onChange={(e) => setGuests(parseInt(e.target.value))}
             required
-            // defaultValue={'none'}
+            min={1}
             placeholder="Guests"
+            // defaultValue={'none'}
           />
         </label>
         <button className="submitButton" type="submit">Submit</button>

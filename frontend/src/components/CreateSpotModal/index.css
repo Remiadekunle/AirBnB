@@ -60,7 +60,8 @@ form{
     display: flex;
     overflow-y: scroll;
     /* position: relative; */
-    height: 80vh;
+    height: 60vh;
+    width: 500px;
 }
 
 .create-form::-webkit-scrollbar{
