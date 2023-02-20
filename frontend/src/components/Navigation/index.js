@@ -46,15 +46,15 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
     dispatch(filterSpot(filter, reverse));
     setIsFiltered(true);
   };
-  const payload = {
-    address: {
-        regionCode: 'US',
-        locality: 'Union City',
-        addressLines: ['33097 Calistoga']
-    },
-  }
+  // const payload = {
+  //   address: {
+  //       regionCode: 'US',
+  //       locality: 'Union City',
+  //       addressLines: ['33097 Calistoga']
+  //   },
+  // }
 
-  validateAddress(payload, key)
+  // validateAddress(payload, key)
 
   console.log('this is the windown heigh', window.screenTop)
   const modalClassName = !isHome ? "header2" : "header";
