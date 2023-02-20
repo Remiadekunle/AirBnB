@@ -9,20 +9,22 @@ import MapContainer from "../Maps";
 
 export function Home({isHome, setIsHome, isFiltered}) {
     const dispatch = useDispatch();
-    const initialSpots = useSelector(state => state.spots);
+    const initialSpots = useSelector(state => state.spots.allSpots);
     const filteredSpots = useSelector(state => state.spots.filter?.spots)
     useEffect(() => {
         dispatch(fetchSpots())
     }, [dispatch])
 
     if (Object.keys(initialSpots).length < 1){
+        console.log('are we even in here at all?')
         return(
-            <div style={{backgroundColor: 'red', height: '100%'}}>
-              No spots
+            <div style={{ width: '100%', height: '70vh', display: 'flex', flexDirection: 'column', fontSize: '32px', margin: '0 auto', justifyContent: 'center', alignItems: 'center'}}>
+              No spots found
             </div>
           )
     }
-    const spots = Object.values(initialSpots.allSpots)
+    const spots = Object.values(initialSpots)
+    console.log('how many spots are there rn', initialSpots)
 
 
     return (
