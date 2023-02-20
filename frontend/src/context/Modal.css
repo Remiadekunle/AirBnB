@@ -30,14 +30,18 @@
 
 .close-modal-button-component{
     position: absolute;
-    top: 1%;
-    right: 0.5%;
+    top: 2%;
+    left: 2%;
     background-color: #FFFFFF;
     width: 30px;
     height: 30px;
     cursor: pointer;
     padding: 0;
     border-style: none;
-    border-radius: 5px;
+    border-radius: 50%;
+    border-style: none;
 }
 
+.close-modal-button-component:hover{
+    background-color: rgb(180,180,180)
+}

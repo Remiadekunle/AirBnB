@@ -134,7 +134,7 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
-            className="address-input"
+            className="address-input first"
             autoFocus
             placeholder="Address"
           />
@@ -234,6 +234,7 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
             required
             min={1}
             placeholder="Guests"
+            className="address-input last"
             // defaultValue={'none'}
           />
         </label>
