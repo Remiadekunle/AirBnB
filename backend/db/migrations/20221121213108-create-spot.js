@@ -73,7 +73,7 @@ module.exports = {
       },
       isTrendy: {
         type: Sequelize.BOOLEAN,
-        defaultValue: 0,
+        defaultValue: false,
       },
       formattedAddres: {
         type: Sequelize.STRING(256),
