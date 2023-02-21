@@ -39,17 +39,17 @@ Redux
 
 # 🔍 Get Started on my Server!
 
-<img width="2000" alt="home page" src="https://i.imgur.com/mcRNZop.png">
-
 You can start by clicking on the profile button located in the navbar to either log in or sign up for an account. You can also log in as a demo user.
 
-<img width="2000" alt="log in page" src="https://i.imgur.com/RfveWFC.png">
+<img width="2000" alt="home page" src="https://i.imgur.com/mcRNZop.png">
 
 After logging in you can create start by creating a spot by clicking the create new spot button in the navigation bar on the right of the screen.
 
-<img width="2000" alt="create server" src="https://i.imgur.com/ZUwfUJU.png">
+<img width="2000" alt="log in page" src="https://i.imgur.com/RfveWFC.png">
 
 After Login, you can also start commenting on the spot or the book a trip. If you are on a spot that is owned by you. You are able to edit the spot's information or delete the spot.
+
+<img width="2000" alt="create server" src="https://i.imgur.com/ZUwfUJU.png">
 
 <img width="2000" alt="edit server modal" src="https://i.imgur.com/LcAkCcN.png">
 
