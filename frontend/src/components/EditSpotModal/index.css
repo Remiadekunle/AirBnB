@@ -9,6 +9,9 @@
     padding: 10px;
 }
 
+.edit-form label textarea{
+    padding: 10px;
+}
 
 #edit-price{
     display: flex;
@@ -25,6 +28,9 @@
 }
 
 .edit-form{
-    height: 80vh;
-    width: 400px;
+    height: 60vh;
+    width: 600px;
+}
+.edit-form::-webkit-scrollbar{
+    display: none;
 }

@@ -41,7 +41,6 @@ function EditSpotModal({spot}) {
     setErrors([]);
     const lat = 1;
     const lng = 2;
-    console.log(spot.id)
     const payload = {
         address,
         city,
@@ -74,7 +73,6 @@ function EditSpotModal({spot}) {
         const data = await res.json();
         if (data && data.errors?.inputs){
           const mapped = data.errors.inputs.map(input => spotTranslate[input])
-          console.log('were almost there')
           setErrors([`The address you provided is invalid: ${mapped.join('/')}`])
           return false
         }
@@ -145,12 +143,13 @@ function EditSpotModal({spot}) {
         </label>
         <label>
 
-          <input
+          <textarea
             type="name"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
             placeholder="Description"
+            rows={6}
           />
         </label>
         <label>
@@ -204,7 +203,6 @@ function EditSpotModal({spot}) {
           />
         </label>
         <button className="submitButton" type="submit">Submit</button>
-        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );

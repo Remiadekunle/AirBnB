@@ -13,7 +13,6 @@ function CalendarComponent({spot}){
     const [dates, setDates] = useState([])
     const [total, setTotal] = useState(0)
     const [errors, setErrors] = useState([])
-    console.log('what is the dates varaible', dates)
     const now = new Date()
     const bookingsObj = useSelector(state => state.bookings.spot)
     console.log('what is this bookigns array', bookingsObj)
@@ -25,24 +24,14 @@ function CalendarComponent({spot}){
         const endDat = endDate.getDate()
         const diff = endDate.getDate() -  startDate.getDate()
         const diff2 = endDate.valueOf() -  startDate.valueOf()
-        console.log('what is the difference, diff', diff)
-        console.log('what is the difference, diff2',  diff2)
+
     }
     const handleSubmit = async (e) =>{
         e.preventDefault();
         setErrors([])
         const newErrors = []
         const [startDate, endDate] = dates
-        // console.log('ummmmmmmmmmmmmmmmmmmmmmm what are these values', startDate)
-        // console.log('ok so then what is the month', startDate.getMonth())
-        const startMonth = startDate.getMonth()
-        // console.log('we are testing the values', startDate.getFullYear(), startDate.getUTCMonth(), startDate.getDate())
-        // console.log('we are testing the values', endDate.getFullYear(), endDate.getMonth(), endDate.getDate())
-        const startDat = startDate.getDate()
-        const startYear = startDate.getFullYear()
-        const endMonth = endDate.getMonth()
-        const endDat = endDate.getDate()
-        const endYear = endDate.getFullYear()
+
         const startList = [startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate()]
         const endList = [endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate()]
         // console.log('what is this actual variable', typeof startDate)
@@ -62,8 +51,7 @@ function CalendarComponent({spot}){
     }
     let maxDate = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate())
     // maxDate = maxDate.setFullYear(now.getFullYear() + 1)
-    // console.log('this is the max adate', maxDate)
-    // console.log('what is the new date', now)
+
     const [startDate, endDate] = dates
     return(
         <div style={{width: '800px', display: 'flex', justifyContent: 'center', height: '620px', flexDirection: 'column', alignItems: 'center', padding: '30px'}}>
@@ -118,7 +106,6 @@ function CalendarComponent({spot}){
             <button className='bookings-submit-button' onClick={handleSubmit}>
                 Submit
             </button>
-            <CloseModalButton closeModal={closeModal} />
         </div>
     )
 }

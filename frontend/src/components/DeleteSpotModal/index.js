@@ -26,7 +26,6 @@ function DeleteSpotModal({spot, setIsHome}) {
             if (data && data.errors) setErrors(data.errors);
           });
         // console.log('this is the errors', errors)
-        console.log(res)
         setIsHome(true)
         history.push('/')
 
@@ -59,7 +58,6 @@ function DeleteSpotModal({spot, setIsHome}) {
             />
             </label>
             <button className="submitButton" type="submit">Submit</button>
-            <CloseModalButton closeModal={closeModal} />
         </form>
         </>
     );

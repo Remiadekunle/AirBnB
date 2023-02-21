@@ -64,6 +64,72 @@ module.exports = {
         stars: 5
       },
       {
+        spotId: 5,
+        userId: 3,
+        review: 'Extravagent',
+        stars: 5
+      },
+      {
+        spotId: 6,
+        userId: 3,
+        review: 'Extravagent',
+        stars: 4
+      },
+      {
+        spotId: 7,
+        userId: 3,
+        review: 'Extravagently mid',
+        stars: 3
+      },
+      {
+        spotId: 8,
+        userId: 3,
+        review: 'Extravagent',
+        stars: 4
+      },
+      {
+        spotId: 9,
+        userId: 3,
+        review: 'Extravagent',
+        stars: 5
+      },
+      {
+        spotId: 10,
+        userId: 3,
+        review: 'Extravagent',
+        stars: 3
+      },
+      {
+        spotId: 11,
+        userId: 3,
+        review: 'Extravagent',
+        stars: 5
+      },
+      {
+        spotId: 12,
+        userId: 3,
+        review: 'Extravagent',
+        stars: 4
+      },
+      {
+        spotId: 13,
+        userId: 3,
+        review: 'Extravagent',
+        stars: 4
+      },
+      {
+        spotId: 14,
+        userId: 3,
+        review: 'Extravagent',
+        stars: 5
+      },
+      {
+        spotId: 15,
+        userId: 3,
+        review: 'Extravagently mid',
+        stars: 3
+      },
+      {
         spotId: 4,
         userId: 2,
         review: 'Fire',
@@ -74,7 +140,7 @@ module.exports = {
         userId: 1,
         review: 'MID!!!!!!',
         stars: 3
-      }
+      },
     ])
   },
 

@@ -6,7 +6,6 @@ import OpenModalMenuItem from '../Navigation/OpenModalMenuItem'
 import './index.css'
 function ReviewIndex({review}){
 
-    console.log(review.User)
 
     const monthFinder = (num) => {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'
@@ -50,8 +49,7 @@ export default ReviewIndex
 export function AllReviews({ReviewIndex, reviews, reviewed, toggleReviewed, spot, setReviewdd, user}){
     const isReviewed = useSelector(state => state.reviews.reviewed)
     const { closeModal } = useModal();
-   
-    console.log('yo whats the reviewed', isReviewed)
+
     return(
         <div style={{width: '50vw', height: '70vh', display: 'flex', padding: '20px', overflow: 'hidden',}}>
             <div className='all-reviews-container' style={{display: reviews.length < 1 ? 'none' : 'flex'}}>
@@ -74,7 +72,6 @@ export function AllReviews({ReviewIndex, reviews, reviewed, toggleReviewed, spot
                             modalComponent={<DeleteReviewModal toggleReviewed={toggleReviewed} spot={spot} reviews={reviews} user={ user} setReviewdd={setReviewdd} />}/>
                     </button>}
             </div>
-            <CloseModalButton closeModal={closeModal} />
         </div>
     )
 }

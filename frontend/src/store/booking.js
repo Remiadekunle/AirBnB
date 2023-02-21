@@ -42,7 +42,7 @@ export const fetchBookings = (spotId) => async dispatch => {
 
     if (res.ok){
         const body = await res.json()
-        console.log('these are the bookings', body)
+
         await dispatch(loadBookings(body.bookings))
     }
 }
@@ -51,7 +51,7 @@ export const fetchUserBookings = () => async dispatch => {
     const res = await csrfFetch(`/api/bookings/current`)
     if (res.ok){
         const body = await res.json()
-        console.log('these are the bookings', body)
+
         await dispatch(loadUserBookings(body.bookings))
     }
 }
@@ -67,11 +67,11 @@ export const createBooking = (spotId, startDate, endDate) =>  async dispatch => 
     })
     if (res.ok){
         const body = await res.json()
-        console.log('these are the bookings', body)
+
         await dispatch(addBooking(body))
     } else{
         const body = await res.json()
-        console.log('ummmmm we got the body', body)
+
         return body
     }
 }

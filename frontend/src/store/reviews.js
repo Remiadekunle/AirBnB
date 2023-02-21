@@ -42,13 +42,12 @@ export const setReviewedFalse = () => {
 }
 
 export const checkIfReviewed = (id, reviews, dispatch) => {
-    console.log('yyyyyyyyyyyyyyyyyyyyy we ran')
-    console.log('what are the reviews here plz again', reviews, id)
+
     reviews.Reviews.forEach(review => {
         // console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMM', review, user)
         if (review.userId === id){
             // setReviewdd(true)
-            console.log(' Ummmmmmmmmmmmmmmmmmmmmmmmmmmmmm',review.userId,  id)
+
             dispatch(setReviewed())
         }
     })
@@ -70,8 +69,7 @@ export const fetchreviews = (spotId, userId) => async dispatch => {
         checkIfReviewed(userId, reviews, dispatch)
         await dispatch(loadReviews(reviews))
     } else if (res.status === 404){
-        console.log('hi we hit this spot')
-        console.log(res.status)
+
         const dummy = {Reviews : []}
         await dispatch(loadReviews(dummy))
     }
@@ -83,16 +81,15 @@ export const createReview = (review, spotId, user) => async dispatch => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(review)
     })
-    console.log('testing if we are here')
-    console.log(res)
+
     if (res.ok){
-        console.log('hello we are here')
+
         const body = await res.json();
         body.User = user
         await dispatch(addReview(body))
         return res
     } else {
-        console.log('not good we are here')
+
         // const errorList = await res.JSON()
         // return res
     }

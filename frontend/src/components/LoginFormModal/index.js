@@ -15,9 +15,9 @@ function LoginFormModal() {
   const history = useHistory()
   let reviews = useSelector(state => state.reviews.spot)
   if (reviews === undefined) reviews = {'Reviews': []}
-  console.log('bro wtf plz', reviews)
+
   const reviewObj = {"Reviews": Object?.values(reviews)}
-  console.log('what is the history man', history)
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);

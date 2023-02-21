@@ -94,7 +94,6 @@ export const fetchSpots = () => async dispatch => {
 
 export const fetchSingleSpot = (spotId) => async dispatch => {
     const res = await fetch(`/api/spots/${spotId}`)
-    console.log('we are dispatching')
     if (res.ok){
         const spot = await res.json()
         await dispatch(loadSpot(spot))
@@ -148,35 +147,34 @@ export const removeSpot = (spot) => async dispatch => {
     }
 }
 
-export const validateAddress = async (payload, key) => {
-    const res = await fetch(`https://addressvalidation.googleapis.com/v1:validateAddress?key=${key}`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    })
+// export const validateAddress = async (payload, key) => {
+//     const res = await fetch(`https://addressvalidation.googleapis.com/v1:validateAddress?key=${key}`, {
+//         method: 'POST',
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify(payload)
+//     })
 
-    if (res.ok){
-        const body = await res.json()
-        console.log('what is the body rn', body)
-        console.log('what is the data here',  body.result.geocode)
-        let latitude = body.result.geocode.location.latitude? body.result.geocode.location.latitude : 0
-        let longitude = body.result.geocode.location.longitude? body.result.geocode.location.longitude : 0
-        let addressComplete = body.result?.verdict.addressComplete? body.result?.verdict.addressComplete : false
-        let unconfirmedComponentTypes = body.result.address.unconfirmedComponentTypes?  body.result.address.unconfirmedComponentTypes : false
-        // console.log('what ended uyp being the payload', {
-        //     latitude,
-        //     longitude,
-        //     addressComplete,
-        //     unconfirmedComponentTypes
-        // } )
-        return {
-            latitude,
-            longitude,
-            addressComplete,
-            unconfirmedComponentTypes
-        }
-    }
-}
+//     if (res.ok){
+//         const body = await res.json()
+
+//         let latitude = body.result.geocode.location.latitude? body.result.geocode.location.latitude : 0
+//         let longitude = body.result.geocode.location.longitude? body.result.geocode.location.longitude : 0
+//         let addressComplete = body.result?.verdict.addressComplete? body.result?.verdict.addressComplete : false
+//         let unconfirmedComponentTypes = body.result.address.unconfirmedComponentTypes?  body.result.address.unconfirmedComponentTypes : false
+//         // console.log('what ended uyp being the payload', {
+//         //     latitude,
+//         //     longitude,
+//         //     addressComplete,
+//         //     unconfirmedComponentTypes
+//         // } )
+//         return {
+//             latitude,
+//             longitude,
+//             addressComplete,
+//             unconfirmedComponentTypes
+//         }
+//     }
+// }
 
 export const updateSpot = (spot, oldSpot) => async dispatch => {
     const res = await csrfFetch(`/api/spots/${oldSpot.id}`, {
@@ -189,8 +187,7 @@ export const updateSpot = (spot, oldSpot) => async dispatch => {
 
     if (res.ok){
         body = await res.json();
-        console.log('this is the body',body)
-        console.log('oldspot b4 the change', oldSpot)
+
 
         oldSpot.address = body.address
         oldSpot.city = body.city
@@ -201,7 +198,7 @@ export const updateSpot = (spot, oldSpot) => async dispatch => {
         oldSpot.name = body.name
         oldSpot.price = body.price
         oldSpot.description = body.description
-        console.log('oldspot after the change', oldSpot)
+
         await dispatch(editSpot(oldSpot))
     }
 
@@ -209,7 +206,7 @@ export const updateSpot = (spot, oldSpot) => async dispatch => {
 
 const initialState = { cache: {}, allSpots: {}};
 
-function compare( a, b, param, reverse ) {
+export function compare( a, b, param, reverse ) {
     if ( a[param] < b[param] ){
       return reverse? 1 : -1;
     }

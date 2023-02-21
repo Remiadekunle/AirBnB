@@ -16,7 +16,7 @@ export function Home({isHome, setIsHome, isFiltered}) {
     }, [dispatch])
 
     if (Object.keys(initialSpots).length < 1){
-        console.log('are we even in here at all?')
+
         return(
             <div style={{ width: '100%', height: '70vh', display: 'flex', flexDirection: 'column', fontSize: '32px', margin: '0 auto', justifyContent: 'center', alignItems: 'center'}}>
               No spots found
@@ -24,7 +24,7 @@ export function Home({isHome, setIsHome, isFiltered}) {
           )
     }
     const spots = Object.values(initialSpots)
-    console.log('how many spots are there rn', initialSpots)
+
 
 
     return (

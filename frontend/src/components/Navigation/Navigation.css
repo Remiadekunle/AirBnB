@@ -98,9 +98,6 @@
 }
 
 
-.search-filter-buttons:hover{
-    border-bottom: 1px solid black;
-}
 
 .search-input-button{
     position: absolute;
@@ -116,6 +113,8 @@
 
 .search-input-icon{
     color: #FFFFFF;
+    height: 9%;
+    background-color: none;
 }
 
 .reg-header-container{

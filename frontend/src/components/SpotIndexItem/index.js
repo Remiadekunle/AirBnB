@@ -38,7 +38,6 @@ function SpotIndex({isHome, setIsHome}) {
 
         return () => {
             setIsHome(true)
-            console.log('hey we just left the spot page')
             dispatch(setReviewedFalse())
         }
     }, [dispatch, spotId])
@@ -74,7 +73,6 @@ function SpotIndex({isHome, setIsHome}) {
     reviews.forEach(review => {
         // console.log('before count', totalStars)
         const star = parseInt(review.stars)
-        console.log(star)
         totalStars += star
         startCount++
         // console.log('after count' , totalStars)

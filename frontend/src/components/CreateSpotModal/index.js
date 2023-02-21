@@ -82,26 +82,20 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
 
     const check = await dispatch(createSpot(payload, payload2)).then(() => setIsFiltered(false)).catch(async (res) => {
         const data = await res.json();
-        console.log('ummmmm are u catching')
-        console.log('ummmmmmmmm what is the data', data)
         if (data && data.errors?.inputs){
           const mapped = data.errors.inputs.map(input => spotTranslate[input])
-          console.log('were almost there')
           setErrors([`The address you provided is invalid: ${mapped.join('/')}`])
           return false
         }
         if (data && (data.errors || data.message)) {
           let errs = data.inputs ? data.inputs: []
 
-          console.log('did we get here?')
           setErrors(Object.values(data.errors));
           return false
         }
     });
     await dispatch(fetchSpots())
     if (check === false) return
-    console.log('these are the errors', errors)
-    console.log('these are the errors', check)
     return closeModal()
 
     // console.log('this is the errors', errors)
@@ -134,13 +128,12 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
-            className="address-input"
+            className="address-input first"
             autoFocus
             placeholder="Address"
           />
         </label>
         <label>
-
           <input
             type="text"
             value={city}
@@ -150,7 +143,6 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label>
-
           <input
             type="text"
             value={state}
@@ -160,7 +152,6 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label>
-
           <input
             type="text"
             value={country}
@@ -170,7 +161,6 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label>
-
           <input
             type="name"
             value={name}
@@ -180,17 +170,16 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label >
-
-          <input
+          <textarea
             type="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            rows={6}
             placeholder="Description"
           />
         </label>
         <label>
-
           <input
             type="url"
             value={url}
@@ -200,59 +189,51 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label >
-          <div id="create-price">
-            Price
-          </div>
           <input
             type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            value={price ? price: 'price'}
+            onChange={(e) => setPrice(parseInt(e.target.value))}
             required
+            min={1}
             // defaultValue={'none'}
             placeholder="Price"
           />
         </label>
         <label >
-          <div id="create-price">
-            Beds
-          </div>
           <input
             type="number"
-            value={beds}
-            onChange={(e) => setBeds(e.target.value)}
+            value={beds ? beds: 'price'}
+            onChange={(e) => setBeds(parseInt(e.target.value))}
             required
-            // defaultValue={'none'}
+            min={1}
             placeholder="Beds"
+            // defaultValue={'none'}
           />
         </label>
         <label >
-          <div id="create-price">
-            Baths
-          </div>
           <input
             type="number"
-            value={baths}
-            onChange={(e) => setBaths(e.target.value)}
+            value={baths ? baths: 'price'}
+            onChange={(e) => setBaths(parseInt(e.target.value))}
             required
-            // defaultValue={'none'}
+            min={1}
             placeholder="Baths"
+            // defaultValue={'none'}
           />
         </label>
         <label >
-          <div id="create-price">
-            Guests
-          </div>
           <input
             type="number"
-            value={guests}
-            onChange={(e) => setGuests(e.target.value)}
+            value={guests ? guests: 'guests'}
+            onChange={(e) => setGuests(parseInt(e.target.value))}
             required
-            // defaultValue={'none'}
+            min={1}
             placeholder="Guests"
+            className="address-input last"
+            // defaultValue={'none'}
           />
         </label>
         <button className="submitButton" type="submit">Submit</button>
-        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );
