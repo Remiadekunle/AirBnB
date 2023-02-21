@@ -209,7 +209,7 @@ export const updateSpot = (spot, oldSpot) => async dispatch => {
 
 const initialState = { cache: {}, allSpots: {}};
 
-function compare( a, b, param, reverse ) {
+export function compare( a, b, param, reverse ) {
     if ( a[param] < b[param] ){
       return reverse? 1 : -1;
     }

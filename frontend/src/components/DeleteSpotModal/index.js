@@ -59,7 +59,6 @@ function DeleteSpotModal({spot, setIsHome}) {
             />
             </label>
             <button className="submitButton" type="submit">Submit</button>
-            <CloseModalButton closeModal={closeModal} />
         </form>
         </>
     );

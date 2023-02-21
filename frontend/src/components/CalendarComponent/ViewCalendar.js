@@ -29,7 +29,6 @@ function ViewReservations({spot}){
                 <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '65%'}}>
                     No Reservations for this spot
                 </div>
-                <CloseModalButton closeModal={closeModal} />
             </div>
         )
     }
@@ -48,7 +47,6 @@ function ViewReservations({spot}){
                     <BookingIndex setCount={setCount} count={count} booking={booking} />
                 ))}
             </div>
-            <CloseModalButton closeModal={closeModal} />
         </div>
     )
 }
@@ -93,7 +91,7 @@ export function BookingIndex({booking, setCount, count}){
     const toggleDisplay = () => {
         setDisplay(!display)
     }
-    
+
     return(
         <div style={{display: new Date(endDate) < new Date() ? 'none': 'flex', gap: '10px', width: '100%'}}>
             <div>

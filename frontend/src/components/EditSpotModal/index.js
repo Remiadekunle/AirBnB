@@ -204,7 +204,6 @@ function EditSpotModal({spot}) {
           />
         </label>
         <button className="submitButton" type="submit">Submit</button>
-        <CloseModalButton closeModal={closeModal} />
       </form>
     </>
   );

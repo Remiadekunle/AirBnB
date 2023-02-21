@@ -55,7 +55,6 @@ function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
             />
             </label>
             <button className="submitButton" type="submit">Submit</button>
-            <CloseModalButton closeModal={closeModal} />
         </form>
         </>
     );

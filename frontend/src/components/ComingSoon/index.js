@@ -6,7 +6,6 @@ function ComingSoon({feature}){
     return(
         <div className="comming-soon">
             {`${feature} Coming Soon`}
-            <CloseModalButton closeModal={closeModal} />
         </div>
     )
 }

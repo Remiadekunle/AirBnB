@@ -118,7 +118,6 @@ function CalendarComponent({spot}){
             <button className='bookings-submit-button' onClick={handleSubmit}>
                 Submit
             </button>
-            <CloseModalButton closeModal={closeModal} />
         </div>
     )
 }

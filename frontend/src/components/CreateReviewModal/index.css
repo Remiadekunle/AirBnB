@@ -1,7 +1,7 @@
 .create-reviews-form{
     display: flex;
     /* overflow-y: scroll; */
-    height: 20vh;
+    height: 25vh;
     position: relative;
     width: 16vw;
 }
