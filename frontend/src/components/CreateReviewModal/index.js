@@ -41,7 +41,6 @@ function CreateReviewModal({spot, toggleReviewed}) {
         const data = await res.json();
         if (data && data.errors) setErrors(Object.values(data.errors));
       });
-    console.log('this is the errors', errors)
     dispatch(setReviewed())
     toggleReviewed()
   };

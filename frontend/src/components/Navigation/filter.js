@@ -15,16 +15,16 @@ function FilterComponent({setSearch, setIsFiltered}){
     let filterStyle
     useEffect(() => {
         filterStyle = document.body.scrollTop ? {borderBottom: '0.1px solid #EBEBEB'}: {}
-        console.log('we are running indeed', filterStyle, document.body.scrollTop)
+
     });
 
     const handleFilter = (filter, reverse) => {
-        console.log("clicked");
+
 
         dispatch(filterSpot(filter, reverse));
         setIsFiltered(true);
     };
-    console.log('what is the current val of selected', selected)
+
     return(
         <div style={filterStyle} className="search-filter-container">
           <div

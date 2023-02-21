@@ -17,7 +17,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   const [isModal, setIsModal] = useState(false);
   const [search, setSearch] = useState("");
   const toggleNav = () => {
-    console.log("clicked");
+
     setIsHome(true);
   };
   let filterStyle
@@ -32,7 +32,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
     : isModal
     ? "header3"
     : "header";
-  console.log(placeholder);
+
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -42,7 +42,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   };
 
   const handleFilter = (filter, reverse) => {
-    console.log("clicked");
+
 
     dispatch(filterSpot(filter, reverse));
     setIsFiltered(true);
@@ -57,7 +57,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
 
   // validateAddress(payload, key)
 
-  console.log('this is the windown heigh', window.screenTop)
+
   const modalClassName = !isHome ? "header2" : "header";
 
   return (

@@ -26,7 +26,6 @@ function DeleteSpotModal({spot, setIsHome}) {
             if (data && data.errors) setErrors(data.errors);
           });
         // console.log('this is the errors', errors)
-        console.log(res)
         setIsHome(true)
         history.push('/')
 

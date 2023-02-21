@@ -11,7 +11,6 @@ function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
 
     const [country, setCountry] = useState("");
     const userId = user?.id
-    console.log('finding the user', userId)
     const review = reviews.find(review => {
         return review.userId === +userId
     })
@@ -25,8 +24,6 @@ function DeleteReviewModal({spot, reviews, user, toggleReviewed}) {
 
         let errors;
 
-        console.log(review)
-        console.log('this is a test', user.id,)
         const res = await dispatch(removeReview(spot.id, review)).then(closeModal).catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors);

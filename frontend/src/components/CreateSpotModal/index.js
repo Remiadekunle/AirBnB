@@ -82,26 +82,20 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
 
     const check = await dispatch(createSpot(payload, payload2)).then(() => setIsFiltered(false)).catch(async (res) => {
         const data = await res.json();
-        console.log('ummmmm are u catching')
-        console.log('ummmmmmmmm what is the data', data)
         if (data && data.errors?.inputs){
           const mapped = data.errors.inputs.map(input => spotTranslate[input])
-          console.log('were almost there')
           setErrors([`The address you provided is invalid: ${mapped.join('/')}`])
           return false
         }
         if (data && (data.errors || data.message)) {
           let errs = data.inputs ? data.inputs: []
 
-          console.log('did we get here?')
           setErrors(Object.values(data.errors));
           return false
         }
     });
     await dispatch(fetchSpots())
     if (check === false) return
-    console.log('these are the errors', errors)
-    console.log('these are the errors', check)
     return closeModal()
 
     // console.log('this is the errors', errors)
