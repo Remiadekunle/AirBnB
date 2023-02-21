@@ -170,11 +170,12 @@ function CreateSpotModal({setIsFiltered, sessionUser}) {
           />
         </label>
         <label >
-          <input
+          <textarea
             type="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            rows={6}
             placeholder="Description"
           />
         </label>

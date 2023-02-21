@@ -42,7 +42,7 @@ form{
 }
 
 #modal-content form {
-    padding: 24px;
+    padding: 24px ;
 }
 
 #welcome-message{
@@ -89,6 +89,11 @@ form{
     padding: 10px;
     border-width: 0.5px;
 
+}
+
+.create-form label textarea{
+    padding: 10px;
+    border-width: 0.5px;
 }
 
 .first{

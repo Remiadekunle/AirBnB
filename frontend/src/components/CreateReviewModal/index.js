@@ -9,7 +9,7 @@ import {createReview, setReviewed} from '../../store/reviews'
 function CreateReviewModal({spot, toggleReviewed}) {
   const dispatch = useDispatch();
   const [review, setReview] = useState("");
-  const [stars, setStars] = useState("");
+  const [stars, setStars] = useState(0);
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const user = useSelector(state => state.session.user)
@@ -54,21 +54,25 @@ function CreateReviewModal({spot, toggleReviewed}) {
         </ul>
         <label>
           <input
+            type="number"
+            value={stars}
+            onChange={(e) => setStars(e.target.value)}
+            required
+            min={1}
+            max={5}
+            placeholder="Stars"
+            className="review-input"
+          />
+        </label>
+        <label>
+          <textarea
             type="text"
             value={review}
             onChange={(e) => setReview(e.target.value)}
             required
             className="review-input"
             placeholder="Review"
-          />
-        </label>
-        <label>
-          <input
-            type="text"
-            value={stars}
-            onChange={(e) => setStars(e.target.value)}
-            required
-            placeholder="Stars"
+            rows={'5'}
           />
         </label>
         <div style={{width: '100%', justifyContent: 'center', display: 'flex'}}>

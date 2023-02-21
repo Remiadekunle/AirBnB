@@ -9,6 +9,9 @@
     padding: 10px;
 }
 
+.edit-form label textarea{
+    padding: 10px;
+}
 
 #edit-price{
     display: flex;

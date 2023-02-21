@@ -1,7 +1,7 @@
 .create-reviews-form{
     display: flex;
     /* overflow-y: scroll; */
-    height: 25vh;
+    height: 30vh;
     position: relative;
     width: 16vw;
 }
@@ -20,10 +20,18 @@
 .create-reviews-form label input{
     /* margin: '0 auto'; */
     padding: 10px 20px;
-    width:max-content;
+    /* width:max-content; */
+}
+
+.create-reviews-form label textarea{
+    padding: 10px 20px;
 }
 
 .reviews-submit{
     width: 220px;
 
+}
+
+.review-input{
+    width: 100%;
 }

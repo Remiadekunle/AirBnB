@@ -143,12 +143,13 @@ function EditSpotModal({spot}) {
         </label>
         <label>
 
-          <input
+          <textarea
             type="name"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
             placeholder="Description"
+            rows={6}
           />
         </label>
         <label>
