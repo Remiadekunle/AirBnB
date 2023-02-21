@@ -13,20 +13,9 @@ const { Op } = require("sequelize");
 router.get('/', async (req, res) => {
     let {page, size} = req.query;
 
-    let pagination = {};
-    if ((parseInt(page) >= 1 && parseInt(page) <= 10) && (parseInt(size) >= 1 && parseInt(size) <=20)){
-        pagination.limit = parseInt(size);
-        pagination.offset = size * (page - 1);
-    }else{
-        page = 1;
-        size = 20;
-        pagination.limit = 20;
-        pagination.offset = 0;
-    }
+
     const spots = await Spot.findAll({
-        ...pagination
     });
-    console.log(pagination)
     const Spots = []
     for (let i = 0; i < spots.length; i++){
         let spot = spots[i]
