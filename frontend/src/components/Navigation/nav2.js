@@ -15,7 +15,7 @@ function NavigationSpot({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   const [isModal, setIsModal] = useState(false);
   const [search, setSearch] = useState("");
   const toggleNav = () => {
-    console.log("clicked");
+
     setIsHome(true);
   };
   const placeholder = !isHome
@@ -25,7 +25,7 @@ function NavigationSpot({ isLoaded, isHome, setIsHome, setIsFiltered }) {
     : isModal
     ? "header3"
     : "header";
-  console.log(placeholder);
+
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ function NavigationSpot({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   };
 
   const handleFilter = (filter, reverse) => {
-    console.log("clicked");
+
     dispatch(filterSpot(filter, reverse));
     setIsFiltered(true);
   };

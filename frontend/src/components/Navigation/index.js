@@ -23,7 +23,6 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   let filterStyle
   useEffect(() => {
     filterStyle = document.body.scrollTop ? {borderBottom: '0.1px solid #EBEBEB'}: {}
-    console.log('we are running indeed', filterStyle, document.body.scrollTop)
   });
   const placeholder = !isHome
     ? isModal

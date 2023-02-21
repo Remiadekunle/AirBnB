@@ -48,7 +48,7 @@ export const getSearch = (search) => async dispatch => {
 
     if (res.ok){
         const body = await res.json()
-        console.log('this is the body from the search', body)
+
         return body.search
     }
 }
