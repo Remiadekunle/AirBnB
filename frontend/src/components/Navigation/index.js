@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
@@ -8,6 +8,7 @@ import CreateSpotModal from "../CreateSpotModal";
 import { getSearch } from "../../store/search";
 import { filterSpot, loadCache, loadSpots, validateAddress } from "../../store/spots";
 import FilterComponent from "./filter";
+import SearchResultIndex from "./SearchResults";
 
 
 function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
@@ -15,11 +16,33 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
   const key = useSelector((state) => state.maps.key);
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
+  const spots = useSelector(state => state.spots.searchArr);
   const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([])
+  const [showSearchMenu, setShowSearchMenu] = useState(false)
+  const [selected, setSelected] = useState('')
+  const searchRef = useRef()
   const toggleNav = () => {
 
     setIsHome(true);
+    setSelected('')
+    setSearch('')
+    setIsFiltered(false)
+    dispatch(loadCache())
   };
+
+  useEffect(() => {
+    if(!showSearchMenu) return
+    const closeMenu = (e) => {
+      // console.log('we ran')
+      if (!searchRef.current?.contains(e.target)) {
+        setShowSearchMenu(false);
+      }
+    };
+
+    document.addEventListener('click', closeMenu);
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showSearchMenu])
   let filterStyle
   useEffect(() => {
     filterStyle = document.body.scrollTop ? {borderBottom: '0.1px solid #EBEBEB'}: {}
@@ -56,6 +79,24 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
 
   // validateAddress(payload, key)
 
+  const handleSearchResults = () => {
+    // console.log('we actually got the product here', products)
+    const res = spots.filter(spot => {
+      if (spot.name?.toLowerCase().includes(search.toLowerCase())){
+        return true
+      }
+      else if (spot.description?.toLowerCase().includes(search.toLowerCase())) return true
+      return false
+    })
+    setSearchResults(res)
+  }
+
+
+  const handleSearchToggle = () => {
+    if (search.trim().length < 1) return
+    console.log('firing in the handleSearchToggle')
+    setShowSearchMenu(true)
+  }
 
   const modalClassName = !isHome ? "header2" : "header";
 
@@ -85,15 +126,33 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
               <span className="home-text"> Fairbnb</span>
             </NavLink>
           </div>
-          <form className="search-form" onSubmit={handleSearch}>
-            <input
-              onChange={(e) => setSearch(e.target.value)}
-              className="search-input"
-              placeholder="Search for your dream spot"
-              value={search}
-            ></input>
-            <button className="search-input-button" type="submit"><i class="fa-solid fa-magnifying-glass search-input-icon"></i></button>
-          </form>
+          <div style={{position: 'relative'}} ref={searchRef}>
+            <form className="search-form" onSubmit={handleSearch}>
+              <input
+              onClick={handleSearchToggle}
+                onChange={(e) => {
+                  setSearch(e.target.value)
+                  handleSearchResults()
+                  setShowSearchMenu(true)
+                }}
+                className="search-input"
+                placeholder="Search for your dream spot"
+                value={search}
+              ></input>
+              <button className="search-input-button" type="submit"><i class="fa-solid fa-magnifying-glass search-input-icon"></i></button>
+            </form>
+              <div className='spot-search'  style={{boxShadow: !showSearchMenu?  'none' : '0px -2px 2px 4px rgba(0, 0, 255, .2)'}}>
+                {showSearchMenu ?
+                  <div style={{paddingTop: '10px'}}>
+                    {searchResults.length < 1 ? <div className='search-menu-results-no-results'>No Results</div> : <></>}
+                    {searchResults.map(item => (
+                      <SearchResultIndex spot={item} showSearchMenu={showSearchMenu} setSearch={setSearch} setShowSearchMenu={setShowSearchMenu} />
+                    ))}
+                  </div>
+
+                  : <></> }
+              </div>
+          </div>
           <div className="profile-container2">
             <div className="create-spot">
                 <button className="create-spot-button">
@@ -123,7 +182,7 @@ function Navigation({ isLoaded, isHome, setIsHome, setIsFiltered }) {
         </div>
       </div>
       {isHome ? (
-        <FilterComponent setSearch={setSearch} setIsFiltered={setIsFiltered}/>
+        <FilterComponent setSearch={setSearch} setIsFiltered={setIsFiltered} selected={selected} setSelected={setSelected}/>
       ) : (
         <></>
       )}
