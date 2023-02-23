@@ -48,7 +48,20 @@
     height: 80px;
 }
 
+.spot-search{
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    margin-top: 10px;
+}
 
+.spot-search::-webkit-scrollbar{
+    display: none;
+}
 
 .search-filter-container{
     /* border: 1px solid red; */

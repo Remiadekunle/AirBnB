@@ -9,8 +9,8 @@ import { getSearch } from "../../store/search";
 import { filterSpot, loadCache, loadSpots, validateAddress } from "../../store/spots";
 
 
-function FilterComponent({setSearch, setIsFiltered}){
-    const [selected, setSelected] = useState('')
+function FilterComponent({setSearch, setIsFiltered, selected, setSelected}){
+    
     const dispatch = useDispatch();
     let filterStyle
     useEffect(() => {

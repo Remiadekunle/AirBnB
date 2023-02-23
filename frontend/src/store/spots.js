@@ -223,6 +223,7 @@ const spotReducer = (state = initialState, action) => {
             newState = Object.assign({}, state);
             newState.allSpots = {}
             const spots = action.spots.Spots
+            newState.searchArr = spots
             spots.forEach((spot) => {
                 newState.allSpots[spot.id] = spot
             })
